@@ -3,7 +3,7 @@ import { Button, Text } from "@rneui/themed";
 import { View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export function ButtonQuyTrinh({ title, name }) {
+export function ButtonChuyenHuong({ title, name }) {
   const navigation = useNavigation();
   return (
     <View style={{ flex: 1, alignItems: 'center', }}>

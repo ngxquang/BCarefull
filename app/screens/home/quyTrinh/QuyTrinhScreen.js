@@ -1,18 +1,18 @@
 import { Button } from "@rneui/themed";
 import { Text, View } from "react-native";
-import { ButtonQuyTrinh } from "../../../component/ButtonQuyTrinh";
+import { ButtonChuyenHuong } from "../../../component/ButtonChuyenHuong";
 
 
 function QuyTrinhScreen() {
     return (
         <View style={{flex: 1}}>
             <Text>QuyTrinhScreen</Text>
-            <ButtonQuyTrinh title={"LichSuKham"} name={"LichSuKham"} />
-            <ButtonQuyTrinh title={"ChiDuong"} name={"ChiDuong"} />
-            <ButtonQuyTrinh title={"DonThuoc"} name={"DonThuoc"} />
-            <ButtonQuyTrinh title={"DSDV"} name={"DSDV"} />
-            <ButtonQuyTrinh title={"KetQuaKham"} name={"KetQuaKham"} />
-            <ButtonQuyTrinh title={"ThanhToan"} name={"ThanhToan"} />
+            <ButtonChuyenHuong title={"LichSuKham"} name={"LichSuKham"} />
+            <ButtonChuyenHuong title={"ChiDuong"} name={"ChiDuong"} />
+            <ButtonChuyenHuong title={"DonThuoc"} name={"DonThuoc"} />
+            <ButtonChuyenHuong title={"DSDV"} name={"DSDV"} />
+            <ButtonChuyenHuong title={"KetQuaKham"} name={"KetQuaKham"} />
+            <ButtonChuyenHuong title={"ThanhToan"} name={"ThanhToan"} />
         </View>
     );
 }

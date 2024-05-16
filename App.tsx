@@ -22,6 +22,9 @@ import DSDVScreen from './app/screens/home/quyTrinh/DSDVScreen';
 import ThanhToanScreen from './app/screens/home/quyTrinh/ThanhToanScreen';
 import KetQuaKhamScreen from './app/screens/home/quyTrinh/KetQuaKhamScreen';
 import LichSuKhamScreen from './app/screens/home/quyTrinh/LichSuKhamSreen';
+import LogoutScreen from './app/screens/auth/LogoutScreen';
+import LoginScreen from './app/screens/auth/LoginScreen';
+import RegisterScreen from './app/screens/auth/RegisterScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -78,6 +81,11 @@ function App(): React.JSX.Element {
         </Stack.Group>
 
         <Stack.Screen name="ThongTin" component={ThongTinScreen} />
+        <Stack.Group>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Logout" component={LogoutScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

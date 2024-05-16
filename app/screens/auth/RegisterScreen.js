@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Button, ButtonGroup, withTheme, Text } from '@rneui/themed';
 
-const Register = () => {
+const RegisterScreen = () => {
   return (
     <View>
       <Text>Register Screen</Text>
@@ -10,4 +10,4 @@ const Register = () => {
   );
 }
 
-export default Register;
+export default RegisterScreen;
