@@ -5,7 +5,7 @@ import { BCarefulTheme } from "./Theme";
 import Fonts from "../../assets/fonts/Fonts";
 import LinearGradient from "react-native-linear-gradient";
 
-export function ButtonIcon({ title, name, navigation }) {
+export function ButtonHome({ title, name, navigation }) {
   let img = 0;
   if (name == 'DatLich') {
     img = require('../../assets/images/DatLich.png')

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, ThemeProvider, } from "@rneui/themed";
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { BCarefulTheme2 } from "../../component/Theme";
-import { ButtonIcon } from "../../component/ListButton";
+import { ButtonHome } from "../../component/ButtonHome";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Fonts from "../../../assets/fonts/Fonts";
 import LinearGradient from "react-native-linear-gradient";
@@ -24,12 +24,12 @@ function HomeScreen({ navigation }) {
                 </Text>
                 <View style={styles.menu}>
                     <View style={[styles.column, { paddingRight: 10 }]}>
-                        <ButtonIcon title={'Đặt lịch khám'} name={'DatLich'} navigation={navigation} />
-                        <ButtonIcon title={'Theo dõi sức khỏe'} name={'TheoDoi'} navigation={navigation} />
+                        <ButtonHome title={'Đặt lịch khám'} name={'DatLich'} navigation={navigation} />
+                        <ButtonHome title={'Theo dõi sức khỏe'} name={'TheoDoi'} navigation={navigation} />
                     </View>
                     <View style={[styles.column, { paddingLeft: 10 }]}>
-                        <ButtonIcon title={'Quy trình khám'} name={'QuyTrinh'} navigation={navigation} />
-                        <ButtonIcon title={'Lịch uống thuốc'} name={'LichThuoc'} navigation={navigation} />
+                        <ButtonHome title={'Quy trình khám'} name={'QuyTrinh'} navigation={navigation} />
+                        <ButtonHome title={'Lịch uống thuốc'} name={'LichThuoc'} navigation={navigation} />
                     </View>
                 </View>
                 <View style={{ flex: 1, backgroundColor: 'green' }} navigation={navigation} />
