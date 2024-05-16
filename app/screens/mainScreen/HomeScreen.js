@@ -1,29 +1,38 @@
 import React from "react";
 import { Button, ThemeProvider } from "@rneui/themed";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { BCarefulTheme, BCarefulTheme2 } from "../../component/Theme";
+import { BCarefulTheme2 } from "../../component/Theme";
 import { ButtonIcon } from "../../component/ListButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Fonts from "../../../assets/fonts/Fonts";
+import LinearGradient from "react-native-linear-gradient";
+
 
 function HomeScreen({ navigation }) {
     return (
         <ThemeProvider theme={BCarefulTheme2}>
             <SafeAreaView style={styles.container}>
-                <Text>HomeScreen</Text>
+                <Text style={styles.title}>Bcareful
+                    <Text style={{ fontFamily: Fonts.medium, fontSize: 24, }}> Xin chào,</Text>
+                </Text>
                 <View style={styles.menu}>
-                    <View style={[styles.column, {paddingRight: 10}]}>
+                    <View style={[styles.column, { paddingRight: 10 }]}>
                         <ButtonIcon title={'Đặt lịch khám'} name={'DatLich'} navigation={navigation} />
                         <ButtonIcon title={'Theo dõi sức khỏe'} name={'TheoDoi'} navigation={navigation} />
                     </View>
-                    <View style={[styles.column, {paddingLeft: 10}]}>
+                    <View style={[styles.column, { paddingLeft: 10 }]}>
                         <ButtonIcon title={'Quy trình khám'} name={'QuyTrinh'} navigation={navigation} />
                         <ButtonIcon title={'Lịch uống thuốc'} name={'LichThuoc'} navigation={navigation} />
                     </View>
                 </View>
                 <View style={{ flex: 1, backgroundColor: 'green' }} navigation={navigation} />
-                <View style={{ flex: 1, backgroundColor: 'yellow' }} navigation={navigation} />
-            </SafeAreaView>
-        </ThemeProvider>
+                <View style={{ flex: 1, backgroundColor: 'yellow' }} navigation={navigation}>
+
+
+                </View>
+
+            </SafeAreaView >
+        </ThemeProvider >
     );
 }
 
@@ -38,12 +47,20 @@ const styles = StyleSheet.create({
     },
     column: {
         flex: 1,
+        justifyContent: 'center',
     },
     menu: {
         flex: 1,
         flexDirection: 'row',
-        alignContent: 'space-between'
-    }
+        alignContent: 'space-between',
+        paddingTop: 10,
+
+    },
+    title: {
+        fontFamily: Fonts.bold,
+        color: 'black',
+        fontSize: 28,
+    },
 });
 
 export default HomeScreen;

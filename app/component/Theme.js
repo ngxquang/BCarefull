@@ -8,6 +8,7 @@ export const BCarefulTheme = {
     ...DefaultTheme.colors,
     primary: 'rgb(120,100,234)',
     secondary: 'rgb(234,121,58)',
+    background: 'white',
   },
  
 };

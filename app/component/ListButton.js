@@ -3,6 +3,7 @@ import { Button, Text } from "@rneui/themed";
 import { View, Image } from "react-native";
 import { BCarefulTheme } from "./Theme";
 import Fonts from "../../assets/fonts/Fonts";
+import LinearGradient from "react-native-linear-gradient";
 
 export function ButtonIcon({ title, name, navigation }) {
   let img = 0;
@@ -17,36 +18,41 @@ export function ButtonIcon({ title, name, navigation }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <Button
-        type="outline"
-        onPress={() => navigation.navigate(name)}
-        buttonStyle={{
-          borderColor: BCarefulTheme.colors.primary,
-          borderWidth: 3,
-          borderRadius: 15,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          padding: 5,
-        }}
-      >
-        <Image
-          source={img}
-          style={{
-            width: 'auto',
-            height: '80%',
-            aspectRatio: 1,
-            resizeMode: 'contain',
-            marginRight: 8,
+    <View style={{ flex: 1, alignItems: 'center', }}>
+      <LinearGradient
+        colors={[BCarefulTheme.colors.primary, BCarefulTheme.colors.secondary]}
+        start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+        style={{
+          justifyContent: 'flex-end',
+          padding: 3,
+          width: '100%',
+          borderRadius: 5
+        }}>
+        <Button
+          type="solid"
+          onPress={() => navigation.navigate(name)}
+          buttonStyle={{
+            backgroundColor: 'white',
+            padding: 10,
+            borderRadius: 5
+
           }}
-        />
-        <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
-          <Text style={{ fontFamily: Fonts.bold, color: 'black', flexShrink: 1 }}>
-            {title}
-          </Text>
-        </View>
-      </Button>
+        >
+          <Image
+            source={img}
+            style={{
+              flex: 1,
+              aspectRatio: 1,
+              resizeMode: 'contain',
+            }}
+          />
+          <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', marginLeft: 8,}}>
+            <Text style={{ fontFamily: Fonts.bold, color: 'black', }}>
+              {title}
+            </Text>
+          </View>
+        </Button>
+      </LinearGradient>
     </View>
   );
 }
