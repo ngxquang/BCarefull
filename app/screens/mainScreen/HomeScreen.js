@@ -1,16 +1,23 @@
 import React from "react";
-import { Button, ThemeProvider } from "@rneui/themed";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, ThemeProvider, } from "@rneui/themed";
+import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { BCarefulTheme2 } from "../../component/Theme";
 import { ButtonIcon } from "../../component/ListButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Fonts from "../../../assets/fonts/Fonts";
 import LinearGradient from "react-native-linear-gradient";
 
+import BackgroundImage1 from "../../../assets/images/Vector01.png";
+import BackgroundImage2 from "../../../assets/images/Vector02.png";
+import BackgroundImage3 from "../../../assets/images/Vector03.png";
+
 
 function HomeScreen({ navigation }) {
     return (
         <ThemeProvider theme={BCarefulTheme2}>
+            {/* <Image source={BackgroundImage1} style={{ position: 'absolute', height: 100, width: 500 }} />
+            <Image source={BackgroundImage2} style={{ position: 'absolute', height: 100, width: 400 }} />
+            <Image source={BackgroundImage3} style={{ position: 'absolute', height: 100, width: 400 }} /> */}
             <SafeAreaView style={styles.container}>
                 <Text style={styles.title}>Bcareful
                     <Text style={{ fontFamily: Fonts.medium, fontSize: 24, }}> Xin chào,</Text>
@@ -27,10 +34,7 @@ function HomeScreen({ navigation }) {
                 </View>
                 <View style={{ flex: 1, backgroundColor: 'green' }} navigation={navigation} />
                 <View style={{ flex: 1, backgroundColor: 'yellow' }} navigation={navigation}>
-
-
                 </View>
-
             </SafeAreaView >
         </ThemeProvider >
     );
