@@ -7,6 +7,7 @@ function QuyTrinhScreen() {
     return (
         <View style={{flex: 1}}>
             <Text>QuyTrinhScreen</Text>
+            <ButtonQuyTrinh title={"LichSuKham"} name={"LichSuKham"} />
             <ButtonQuyTrinh title={"ChiDuong"} name={"ChiDuong"} />
             <ButtonQuyTrinh title={"DonThuoc"} name={"DonThuoc"} />
             <ButtonQuyTrinh title={"DSDV"} name={"DSDV"} />

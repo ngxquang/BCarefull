@@ -21,6 +21,7 @@ import DonThuocScreen from './app/screens/home/quyTrinh/DonThuocScreen';
 import DSDVScreen from './app/screens/home/quyTrinh/DSDVScreen';
 import ThanhToanScreen from './app/screens/home/quyTrinh/ThanhToanScreen';
 import KetQuaKhamScreen from './app/screens/home/quyTrinh/KetQuaKhamScreen';
+import LichSuKhamScreen from './app/screens/home/quyTrinh/LichSuKhamSreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -71,6 +72,7 @@ function App(): React.JSX.Element {
             <Stack.Screen name="DSDV" component={DSDVScreen} />
             <Stack.Screen name="KetQuaKham" component={KetQuaKhamScreen} />
             <Stack.Screen name="ThanhToan" component={ThanhToanScreen} />
+            <Stack.Screen name="LichSuKham" component={LichSuKhamScreen} />
           </Stack.Group>
           <Stack.Screen name="TheoDoi" component={TheoDoiScreen} />
         </Stack.Group>

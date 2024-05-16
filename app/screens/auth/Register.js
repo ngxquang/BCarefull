@@ -4,13 +4,9 @@ import { Button, ButtonGroup, withTheme, Text } from '@rneui/themed';
 
 const Register = () => {
   return (
-    <>
-    <ScrollView>
-      <View>
+    <View>
       <Text>Register Screen</Text>
-      </View>
-    </ScrollView>
-  </>
+    </View>
   );
 }
 
