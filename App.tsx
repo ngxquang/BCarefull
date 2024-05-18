@@ -25,6 +25,7 @@ import LichSuKhamScreen from './app/screens/home/quyTrinh/LichSuKhamSreen';
 import LogoutScreen from './app/screens/auth/LogoutScreen';
 import LoginScreen from './app/screens/auth/LoginScreen';
 import RegisterScreen from './app/screens/auth/RegisterScreen';
+import ChonHoSo from './app/component/ChonHoSo';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,7 +37,7 @@ function HomeTabsScreen() {
       initialRouteName="Home"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
-          let iconName;
+          let iconName = "";
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
@@ -70,6 +71,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name="LichThuoc" component={LichThuocScreen} />
           <Stack.Screen name="QuyTrinh" component={QuyTrinhScreen} />
           <Stack.Group>
+            <Stack.Screen name="HoSo" component={ChonHoSo} />
             <Stack.Screen name="ChiDuong" component={ChiDuongScreen} />
             <Stack.Screen name="DonThuoc" component={DonThuocScreen} />
             <Stack.Screen name="DSDV" component={DSDVScreen} />
