@@ -22,12 +22,14 @@ function LichSuKhamScreen() {
   );
   const phieuKhamRenderItem = ({item}) => (
     <View style={styles.listItem}>
-      <Button style={styles.listItemText}>{item.MAPK + ": " + item.TENDV}</Button>
+      <Button style={styles.listItemText}>
+        {item.NGAYKHAMMIN + ' PK' + item.MAPK + ' ' + item.TENDV + ' ' + item.TRANGTHAITH}
+      </Button>
     </View>
   );
 
   useEffect(() => {
-    dispatch(fetchLSKByIdBnAction(172));
+    dispatch(fetchLSKByIdBnAction(171));
   }, []);
 
   return (
@@ -47,10 +49,7 @@ function LichSuKhamScreen() {
         <IFNgay title={'Từ:'} />
         <IFNgay title={'Đến:'} />
       </View>
-      <FlatList
-        data={lichSuKham}
-        renderItem={phieuKhamRenderItem}
-      />
+      <FlatList data={lichSuKham} renderItem={phieuKhamRenderItem} />
     </View>
   );
 }
