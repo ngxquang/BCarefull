@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, ScrollView, Dimensions, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { View, ScrollView, Dimensions, StyleSheet, Text, TouchableOpacity, Image, Linking } from 'react-native';
 import Fonts from '../../assets/fonts/Fonts';
 import { BCarefulTheme } from './Theme';
 
-let { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 const pageWidth = screenWidth - 40 - 24; // Chiều rộng của trang trừ đi padding 20px mỗi bên
 
 const Carousel = ({ data }) => {
@@ -51,6 +51,10 @@ const Carousel = ({ data }) => {
     scrollToPage(currentPage, false);
   };
 
+  const openLink = (url) => {
+    Linking.openURL(url).catch(err => console.error("Couldn't load page", err));
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -64,21 +68,21 @@ const Carousel = ({ data }) => {
         contentOffset={{ x: pageWidth, y: 0 }} // Bắt đầu từ trang giả đầu tiên
       >
         {/* Trang giả */}
-        <View style={styles.page}>
+        <TouchableOpacity style={styles.page} onPress={() => openLink(data[data.length - 1].path)}>
           <Image source={{ uri: data[data.length - 1].img }} style={styles.image} />
           <Text style={styles.text}>{data[data.length - 1].title}</Text>
-        </View>
+        </TouchableOpacity>
         {data.map((item, index) => (
-          <View key={index} style={styles.page}>
+          <TouchableOpacity key={index} style={styles.page} onPress={() => openLink(item.path)}>
             <Image source={{ uri: item.img }} style={styles.image} />
             <Text style={styles.text}>{item.title}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
         {/* Trang giả */}
-        <View style={styles.page}>
+        <TouchableOpacity style={styles.page} onPress={() => openLink(data[0].path)}>
           <Image source={{ uri: data[0].img }} style={styles.image} />
           <Text style={styles.text}>{data[0].title}</Text>
-        </View>
+        </TouchableOpacity>
       </ScrollView>
       <View style={styles.pagination}>
         {data.map((_, index) => (
