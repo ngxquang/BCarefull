@@ -16,13 +16,14 @@ import {
   Dimensions,
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
+import {login} from '../../redux/slice/authSlice';
 import {useDispatch} from 'react-redux';
-import {registerUser} from '../../services/userService';
 
-const RegisterScreen = ({navigation}) => {
+const ForgotPassword = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConFirmPassword] = useState('');
 
@@ -33,7 +34,7 @@ const RegisterScreen = ({navigation}) => {
   };
   const [objValidInput, setObjValidInput] = useState(defaultObjValidInput);
 
-  const handleRegister = async () => {
+  const handleRegister = () => {
     setObjValidInput(defaultObjValidInput);
     if (!phoneNumber) {
       setObjValidInput({...defaultObjValidInput, isValidPhoneNumber: false});
@@ -54,20 +55,14 @@ const RegisterScreen = ({navigation}) => {
       Alert.alert('Lỗi', 'Mật khẩu không đồng nhất. Vui lòng nhập lại...');
       return;
     }
-    console.log(JSON.stringify({phoneNumber, password}));
-
-    const response = await registerUser(phoneNumber, password);
-
-    if (response && response.data && response.data.errcode === 0) {
-      Alert.alert('', `${response.data.message}`);
-      navigation.navigate('Login');
-      setPhoneNumber('');
-      setPassword('');
-    }
-    if (response && response.data && response.data.errcode !== 0) {
-      console.log('response', response);
-      Alert.alert('Error', `${response.data.message}`);
-    }
+    const data = {
+      isAuthenticated: true,
+    };
+    dispatch(login(data));
+    Alert.alert('Thành công', 'Đăng nhập thành công');
+    navigation.navigate('HomeTabs');
+    setUsername('');
+    setPassword('');
   };
 
   return (
@@ -121,9 +116,7 @@ const RegisterScreen = ({navigation}) => {
                 </View>
               </View>
               <View style={styles.itemGroup}>
-                <View style={styles.password}>
-                  <Text style={styles.itemText}>Mật Khẩu</Text>
-                </View>
+                <Text style={styles.itemText}>Mật Khẩu</Text>
                 <TextInput
                   style={[
                     styles.itemTextInput,
@@ -135,10 +128,8 @@ const RegisterScreen = ({navigation}) => {
                     {color: objValidInput.isValidPassword ? 'black' : 'red'},
                   ]}
                   value={password}
-                  onChangeText={value => setPassword(value)}
                   //   onBlur={handleUsernameBlur}
-                  autoCapitalize="none"
-                  secureTextEntry={true}
+                  onChangeText={value => setPassword(value)}
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidPassword && (
@@ -181,9 +172,9 @@ const RegisterScreen = ({navigation}) => {
                 </View>
               </View>
               {/* <View style={styles.saveInfo}>
-                <TouchableOpacity style={styles.saveInfoBtn} />
-                <Text style={styles.saveInfoText}>Lưu Thông Tin Đăng Nhập</Text>
-              </View> */}
+                  <TouchableOpacity style={styles.saveInfoBtn} />
+                  <Text style={styles.saveInfoText}>Lưu Thông Tin Đăng Nhập</Text>
+                </View> */}
             </View>
             <View style={styles.container023}>
               <TouchableOpacity
@@ -328,4 +319,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default ForgotPassword;
