@@ -28,11 +28,13 @@ import ForgotPassword from './app/screens/auth/ForgotPasswordScreen';
 import LoginScreen from './app/screens/auth/LoginScreen';
 import RegisterScreen from './app/screens/auth/RegisterScreen';
 import ChonHoSo from './app/component/ChonHoSo';
+import { Linking, AppState } from 'react-native';
+import { useEffect, useState } from 'react';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 const Home = createBottomTabNavigator();
+
 function HomeTabsScreen() {
   return (
     <Home.Navigator
@@ -63,9 +65,37 @@ function HomeTabsScreen() {
 }
 
 function App(): React.JSX.Element {
+  const linking = {
+    prefixes: ['bcareful://'],
+    config: {
+      screens: {
+        DSDV: 'dsdv',
+      }
+    }
+  };
+
+  const handleDeepLink = async ({ url }: { url: string }) => {
+    console.log(">>>>>>>>>ham handle deeplink dược sọi")
+    if (url) {
+      console.log('Parsed parameters:', url);
+    }
+    else {
+      console.log('>>>>>>> ko nhan duoc url deeplink');
+    }
+  };
+
+  useEffect(() => {
+    // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
+    const linkingListener = Linking.addEventListener('url', handleDeepLink);
+
+    return () => {
+      linkingListener.remove();
+    };
+  })
+  
   return (
     <Provider store={store}>
-      <NavigationContainer theme={BCarefulTheme}>
+      <NavigationContainer theme={BCarefulTheme} linking={linking}>
         <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
           {/* Home */}
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
@@ -75,7 +105,7 @@ function App(): React.JSX.Element {
             <Stack.Screen name="QuyTrinh" component={QuyTrinhScreen} />
             <Stack.Group>
               <Stack.Screen name="HoSo" component={ChonHoSo} />
-            <Stack.Screen name="ChiDuong" component={ChiDuongScreen} />
+              <Stack.Screen name="ChiDuong" component={ChiDuongScreen} />
               <Stack.Screen name="DonThuoc" component={DonThuocScreen} />
               <Stack.Screen name="DSDV" component={DSDVScreen} />
               <Stack.Screen name="KetQuaKham" component={KetQuaKhamScreen} />

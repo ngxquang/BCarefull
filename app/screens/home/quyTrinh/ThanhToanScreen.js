@@ -15,12 +15,14 @@ function ThanhToanScreen() {
       })
       .catch(err => console.error('An error occurred', err));
   };
+
   const handleThanhToan = async () => {
     const response = await axios.post('hoadon/test-momo');
     // const jsonRes = JSON.parse(response.data);
     console.log("DEEPLINK>>>>>", response.data.data.deeplink);
     openDeepLink(response.data.data.deeplink);
   };
+  
   return (
     <View>
       <Text>ThanhToanScreen</Text>
