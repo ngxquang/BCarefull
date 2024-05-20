@@ -8,31 +8,71 @@ import {
   StyleSheet,
   Modal,
 } from 'react-native';
+import Fonts from '../../../assets/fonts/Fonts';
 
 function NotificationScreen() {
   const [selectedTab, setSelectedTab] = useState('all');
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [readNotifications, setReadNotifications] = useState([
-
-    { id: '1', title: 'Thông báo 1 read', date: '2024-05-15', content: 'Thông báo về cuộc họp tổng kết cuối năm vào ngày 20/12.' },
-    { id: '2', title: 'Thông báo 2 read', date: '2024-05-18', content: 'Lịch nghỉ Tết Nguyên Đán năm nay từ ngày 10/02 đến 16/02.' },
-    { id: '3', title: 'Thông báo 3 read', date: '2024-05-17', content: 'Công ty sẽ tổ chức buổi dã ngoại vào cuối tuần này tại công viên ABC.' },
-    { id: '4', title: 'Thông báo 4 read', date: '2024-05-21', content: 'Đăng ký khóa học nâng cao kỹ năng mềm từ ngày 01/06.' },
-
+    {
+      id: '1',
+      title: 'Thông báo 1 read',
+      date: '2024-05-15',
+      content: 'Thông báo về cuộc họp tổng kết cuối năm vào ngày 20/12.',
+    },
+    {
+      id: '2',
+      title: 'Thông báo 2 read',
+      date: '2024-05-18',
+      content: 'Lịch nghỉ Tết Nguyên Đán năm nay từ ngày 10/02 đến 16/02.',
+    },
+    {
+      id: '3',
+      title: 'Thông báo 3 read',
+      date: '2024-05-17',
+      content:
+        'Công ty sẽ tổ chức buổi dã ngoại vào cuối tuần này tại công viên ABC.',
+    },
+    {
+      id: '4',
+      title: 'Thông báo 4 read',
+      date: '2024-05-21',
+      content: 'Đăng ký khóa học nâng cao kỹ năng mềm từ ngày 01/06.',
+    },
   ]);
 
   const [unreadNotifications, setUnreadNotifications] = useState([
-
-    { id: '5', title: 'Thông báo 5 unread', date: '2024-05-20', content: 'Thông báo về việc thay đổi chính sách bảo hiểm y tế từ tháng sau.' },
-    { id: '6', title: 'Thông báo 6 unread', date: '2024-05-16', content: 'Lịch kiểm tra sức khỏe định kỳ sẽ diễn ra vào ngày 25/05.' },
-    { id: '7', title: 'Thông báo 7 unread', date: '2024-05-10', content: 'Công ty tuyển dụng thêm nhân viên cho vị trí kỹ thuật viên IT.' },
-    { id: '8', title: 'Thông báo 8 unread', date: '2024-05-3', content: 'Khuyến mãi đặc biệt cho nhân viên khi mua sản phẩm của công ty trong tháng này.' },
-
-  ])
+    {
+      id: '5',
+      title: 'Thông báo 5 unread',
+      date: '2024-05-20',
+      content:
+        'Thông báo về việc thay đổi chính sách bảo hiểm y tế từ tháng sau.',
+    },
+    {
+      id: '6',
+      title: 'Thông báo 6 unread',
+      date: '2024-05-16',
+      content: 'Lịch kiểm tra sức khỏe định kỳ sẽ diễn ra vào ngày 25/05.',
+    },
+    {
+      id: '7',
+      title: 'Thông báo 7 unread',
+      date: '2024-05-10',
+      content: 'Công ty tuyển dụng thêm nhân viên cho vị trí kỹ thuật viên IT.',
+    },
+    {
+      id: '8',
+      title: 'Thông báo 8 unread',
+      date: '2024-05-3',
+      content:
+        'Khuyến mãi đặc biệt cho nhân viên khi mua sản phẩm của công ty trong tháng này.',
+    },
+  ]);
 
   // sort thong bao
-  const sortedNotifications = (notifications) => {
+  const sortedNotifications = notifications => {
     return notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
   };
 
@@ -44,38 +84,45 @@ function NotificationScreen() {
 
   // Hien thi danh sach thong bao
   const renderNotification = ({item}) => {
-    const isUnread = unreadNotifications.some(notification => notification.id === item.id);
+    const isUnread = unreadNotifications.some(
+      notification => notification.id === item.id,
+    );
 
     return (
       <TouchableOpacity
-      style={[
-        styles.notificationContainer,
-        isUnread ? styles.unreadNotification : styles.readNotification,
-      ]}
-
-      onPress={() => {
-        setSelectedNotification(item);
-        setModalVisible(true);
-        if (isUnread) { // Nếu thông báo chưa đọc
-          // Chuyển thông báo từ mảng chưa đọc sang mảng đã đọc
-          setUnreadNotifications(unreadNotifications.filter(notification => notification.id !== item.id));
-          setReadNotifications([...readNotifications, item]);
-        }
-      }}
-    >
+        style={[
+          styles.notificationContainer,
+          isUnread ? styles.unreadNotification : styles.readNotification,
+        ]}
+        onPress={() => {
+          setSelectedNotification(item);
+          setModalVisible(true);
+          if (isUnread) {
+            // Nếu thông báo chưa đọc
+            // Chuyển thông báo từ mảng chưa đọc sang mảng đã đọc
+            setUnreadNotifications(
+              unreadNotifications.filter(
+                notification => notification.id !== item.id,
+              ),
+            );
+            setReadNotifications([...readNotifications, item]);
+          }
+        }}>
         {isUnread && <View style={styles.unreadDot} />}
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.date}>{item.date}</Text>
         <Text style={styles.content}>{item.content}</Text>
-    </TouchableOpacity>
+      </TouchableOpacity>
     );
-}
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Thông Báo</Text>
-        <TouchableOpacity style={styles.markAllAsReadButton} onPress={markAllAsRead}>
+        <TouchableOpacity
+          style={styles.markAllAsReadButton}
+          onPress={markAllAsRead}>
           <Text style={styles.markAllAsReadButtonText}>Đọc hết</Text>
         </TouchableOpacity>
       </View>
@@ -104,9 +151,16 @@ function NotificationScreen() {
       </View>
 
       <FlatList
-        data={selectedTab === 'all' ? sortedNotifications([...unreadNotifications, ...readNotifications]) : sortedNotifications(unreadNotifications)} // Hiển thị thông báo theo tab đã chọn
+        data={
+          selectedTab === 'all'
+            ? sortedNotifications([
+                ...unreadNotifications,
+                ...readNotifications,
+              ])
+            : sortedNotifications(unreadNotifications)
+        } // Hiển thị thông báo theo tab đã chọn
         renderItem={renderNotification}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         contentContainerStyle={styles.listContent}
       />
 
@@ -117,14 +171,13 @@ function NotificationScreen() {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-          
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>{selectedNotification?.title}</Text>
             <Text style={styles.modalContent}>
               {selectedNotification?.content}
             </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.closeButtonText}>Đóng</Text>
@@ -166,10 +219,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#7864EA',
   },
   header: {
+    fontFamily: Fonts.bold,
     fontSize: 30,
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   markAllAsReadButton: {
@@ -182,10 +235,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   tabText: {
+    fontFamily: Fonts.bold,
     fontSize: 18,
     color: '#000',
   },
   selectedTabText: {
+    fontFamily: Fonts.bold,
     fontSize: 18,
     color: '#7864EA',
   },
@@ -195,7 +250,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
   },
   unreadNotification: {
-    backgroundColor: '#f0f0f0', 
+    backgroundColor: '#f0f0f0',
     fontWeight: 'bold',
   },
   unreadDot: {
@@ -206,16 +261,18 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
+    fontFamily: Fonts.bold,
     fontSize: 18,
-    fontWeight: 'bold',
     textTransform: 'uppercase',
     color: '#7864EA',
   },
   date: {
+    fontFamily: Fonts.bold,
     fontSize: 14,
     color: '#888',
   },
   content: {
+    fontFamily: Fonts.bold,
     fontSize: 16,
     color: '#333',
     marginTop: 5,
@@ -224,6 +281,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalView: {
     width: '80%',
@@ -242,12 +300,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: Fonts.bold,
     marginBottom: 10,
     textTransform: 'uppercase',
     color: '#7864EA',
   },
   modalContent: {
+    fontFamily: Fonts.bold,
     fontSize: 16,
     color: '#333',
     marginBottom: 20,
