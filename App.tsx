@@ -25,12 +25,14 @@ import LichSuKhamScreen from './app/screens/home/quyTrinh/LichSuKhamSreen';
 import LogoutScreen from './app/screens/auth/LogoutScreen';
 import LoginScreen from './app/screens/auth/LoginScreen';
 import RegisterScreen from './app/screens/auth/RegisterScreen';
+import CarouselScreen from './app/screens/auth/CarouselScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 const Home = createBottomTabNavigator();
 function HomeTabsScreen() {
+  let name = '';
+
   return (
     <Home.Navigator
       initialRouteName="Home"
@@ -62,7 +64,9 @@ function HomeTabsScreen() {
 function App(): React.JSX.Element {
   return (
     <NavigationContainer theme={BCarefulTheme}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        initialRouteName="Carousel"
+        screenOptions={{headerShown: false}}>
         {/* Home */}
         <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
         <Stack.Group>
@@ -82,6 +86,7 @@ function App(): React.JSX.Element {
 
         <Stack.Screen name="ThongTin" component={ThongTinScreen} />
         <Stack.Group>
+          <Stack.Screen name="Carousel" component={CarouselScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Logout" component={LogoutScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />

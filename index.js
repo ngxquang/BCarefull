@@ -7,4 +7,4 @@ import App from './App';
 import CarouselScreen from './app/screens/auth/CarouselScreen';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => CarouselScreen);
+AppRegistry.registerComponent(appName, () => App);
