@@ -11,7 +11,7 @@ import HomeScreen from './app/screens/mainScreen/HomeScreen';
 import NotificationScreen from './app/screens/mainScreen/NotificationScreen';
 import ProfileScreen from './app/screens/mainScreen/ProfileScreen';
 import InformationScreen from './app/screens/mainScreen/InformationScreen';
-import DatLichScreen from './app/screens/home/DatLichSreen';
+import DatLichScreen from './app/screens/home/datLich/DatLichSreen';
 import LichThuocScreen from './app/screens/home/LichThuocScreen';
 import QuyTrinhScreen from './app/screens/home/quyTrinh/QuyTrinhScreen';
 import TheoDoiScreen from './app/screens/home/TheoDoiScreen';
@@ -35,8 +35,8 @@ function HomeTabsScreen() {
     <Home.Navigator
       initialRouteName="Home"
       screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
+        tabBarIcon: ({focused, color}) => {
+          let iconName = '';
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
