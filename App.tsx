@@ -30,6 +30,8 @@ import RegisterScreen from './app/screens/auth/RegisterScreen';
 import ChonHoSo from './app/component/ChonHoSo';
 import { Linking, AppState } from 'react-native';
 import { useEffect, useState } from 'react';
+import socket from './app/setup/socket';
+import { Alert } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -85,6 +87,11 @@ function App(): React.JSX.Element {
   };
 
   useEffect(() => {
+    socket.emit("send-message", {message: 'HELLO FROM MOBILE'});
+    socket.on("receive-message", (data: object)=>{
+      Alert.alert("Co nguoi khac dang nhap");
+    })
+    
     // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
     const linkingListener = Linking.addEventListener('url', handleDeepLink);
 
