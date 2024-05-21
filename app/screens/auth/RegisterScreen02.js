@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Button, ButtonGroup, withTheme} from '@rneui/themed';
 import {
   View,
   Text,
@@ -13,34 +12,37 @@ import {
   Alert,
   ScrollView,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
-import {useDispatch} from 'react-redux';
-import {registerUser} from '../../services/userService';
 
-const RegisterScreen = ({navigation}) => {
+// NHAP PASSWORD
+const verifyPassword = password => {
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
+};
+
+const RegisterScreen02 = ({navigation, route}) => {
+  console.log('route2', route.params);
   const isDarkMode = useColorScheme() === 'dark';
-  const dispatch = useDispatch();
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConFirmPassword] = useState('');
 
   const defaultObjValidInput = {
-    isValidPhoneNumber: true,
     isValidPassword: true,
+    isPassword: true,
     isValidConfirmPassword: true,
   };
   const [objValidInput, setObjValidInput] = useState(defaultObjValidInput);
 
-  const handleRegister = async () => {
+  const handlePassword = async () => {
     setObjValidInput(defaultObjValidInput);
-    if (!phoneNumber) {
-      setObjValidInput({...defaultObjValidInput, isValidPhoneNumber: false});
-      return;
-    }
     if (!password) {
       setObjValidInput({...defaultObjValidInput, isValidPassword: false});
+      return;
+    }
+    if (!verifyPassword(password)) {
+      setObjValidInput({...defaultObjValidInput, isPassword: false});
       return;
     }
     if (!confirmPassword) {
@@ -54,20 +56,7 @@ const RegisterScreen = ({navigation}) => {
       Alert.alert('Lỗi', 'Mật khẩu không đồng nhất. Vui lòng nhập lại...');
       return;
     }
-    console.log(JSON.stringify({phoneNumber, password}));
-
-    const response = await registerUser(phoneNumber, password);
-
-    if (response && response.data && response.data.errcode === 0) {
-      Alert.alert('', `${response.data.message}`);
-      navigation.navigate('Login');
-      setPhoneNumber('');
-      setPassword('');
-    }
-    if (response && response.data && response.data.errcode !== 0) {
-      console.log('response', response);
-      Alert.alert('Error', `${response.data.message}`);
-    }
+    navigation.navigate('Register03', {...route.params, password});
   };
 
   return (
@@ -93,33 +82,9 @@ const RegisterScreen = ({navigation}) => {
           <View style={styles.container02}>
             <View style={styles.container021}>
               <Text style={styles.title}>Chào Mừng Đến Với BCareful!</Text>
-              <Text style={styles.content}>Đăng Ký Để Tiếp Tục</Text>
+              <Text style={styles.content}>Nhập Password Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>
-              <View style={styles.itemGroup}>
-                <Text style={styles.itemText}>Số Điện Thoại</Text>
-                <TextInput
-                  style={[
-                    styles.itemTextInput,
-                    {
-                      borderColor: objValidInput.isValidPhoneNumber
-                        ? '#7864EA'
-                        : 'red',
-                    },
-                    {color: objValidInput.isValidPhoneNumber ? 'black' : 'red'},
-                  ]}
-                  value={phoneNumber}
-                  //   onBlur={handleUsernameBlur}
-                  onChangeText={value => setPhoneNumber(value)}
-                />
-                <View style={styles.error}>
-                  {!objValidInput.isValidPhoneNumber && (
-                    <Text style={styles.errorText}>
-                      Chưa nhập số điện thoại
-                    </Text>
-                  )}
-                </View>
-              </View>
               <View style={styles.itemGroup}>
                 <View style={styles.password}>
                   <Text style={styles.itemText}>Mật Khẩu</Text>
@@ -143,6 +108,12 @@ const RegisterScreen = ({navigation}) => {
                 <View style={styles.error}>
                   {!objValidInput.isValidPassword && (
                     <Text style={styles.errorText}>Chưa nhập mật khẩu</Text>
+                  )}
+                  {!objValidInput.isPassword && (
+                    <Text style={styles.errorText}>
+                      Mật khẩu ít nhất 8 kí tự (chữ hoa, thường, số, ký tự đặc
+                      biệt).
+                    </Text>
                   )}
                 </View>
               </View>
@@ -180,20 +151,17 @@ const RegisterScreen = ({navigation}) => {
                   )}
                 </View>
               </View>
-              {/* <View style={styles.saveInfo}>
-                <TouchableOpacity style={styles.saveInfoBtn} />
-                <Text style={styles.saveInfoText}>Lưu Thông Tin Đăng Nhập</Text>
-              </View> */}
             </View>
             <View style={styles.container023}>
               <TouchableOpacity
                 style={styles.registerBtn}
-                onPress={handleRegister}>
-                <Text style={styles.registerText}>Đăng Ký</Text>
+                onPress={handlePassword}>
+                <Text style={styles.registerText}>Tiếp tục</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.container03}>
+            <Text style={styles.forgotPasswordText}>Đã có tài khoản?</Text>
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {
@@ -243,6 +211,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'back',
+    marginTop: 140,
   },
   container03: {
     flex: 1,
@@ -253,6 +222,11 @@ const styles = StyleSheet.create({
   logo: {
     marginLeft: 40,
     marginTop: 80,
+  },
+  forgotPasswordText: {
+    color: '#606060',
+    fontSize: 12,
+    fontFamily: Fonts.regural,
   },
   title: {
     fontFamily: Fonts.bold,
@@ -328,4 +302,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default RegisterScreen02;

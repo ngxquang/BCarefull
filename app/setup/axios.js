@@ -77,7 +77,7 @@ instance.interceptors.response.use(
       }
       default: {
         Alert.alert('Lỗi ở server');
-        return error.response.data;
+        return error.response?.data;
       }
     }
   },
