@@ -68,7 +68,7 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <NavigationContainer theme={BCarefulTheme}>
-        <Stack.Navigator initialRouteName='Register01' screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
           {/* Home */}
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
           <Stack.Group>

@@ -19,6 +19,8 @@ import {verifyUser} from '../../services/userService';
 import {fetchAllBenhNhanAction} from '../../redux/slice/getAllBenhNhanSlice';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 //NHAP EMAIL VA GUI XAC THUC
 const verifyEmail = email => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,38 +31,50 @@ const RegisterScreen01 = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
-  const [maBN, setMaBN] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [displayPatients, setDisplayPatients] = useState([]);
   const patients = useSelector(state => state.benhNhan?.data) || [];
   const selectDropdownRef = useRef();
   const [oldPatient, setOldPatient] = useState({});
   console.log('patient', patients);
+  console.log('oldPatient', oldPatient.MABN);
+
   useEffect(() => {
     dispatch(fetchAllBenhNhanAction());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (patients) {
       let filteredPatients = [...patients];
-      if (maBN) {
+      if (email) {
         filteredPatients = filteredPatients.filter(
-          data => +data.MABN === +maBN,
+          data => data.EMAIL === email,
         );
+        setDisplayPatients(filteredPatients);
+        if (filteredPatients.length === 0) {
+          setOldPatient({});
+        }
+      } else {
+        setDisplayPatients([]);
       }
-      setDisplayPatients(filteredPatients);
     }
-  }, [patients, maBN]);
+  }, [email]);
+
   console.log('displayPatients', displayPatients);
 
   const defaultObjValidInput = {
     isValidEmail: true,
     isEmail: true,
-    isExistMaBN: true,
+    isRegister: true,
   };
   const [objValidInput, setObjValidInput] = useState(defaultObjValidInput);
 
   const openDropdown = () => {
-    selectDropdownRef.current?.openDropdown();
+    if (displayPatients.length > 0) {
+      selectDropdownRef.current?.openDropdown();
+    } else {
+      setObjValidInput({...defaultObjValidInput, isRegister: false});
+    }
   };
 
   const handleVerify = async () => {
@@ -73,12 +87,14 @@ const RegisterScreen01 = ({navigation}) => {
       setObjValidInput({...defaultObjValidInput, isEmail: false});
       return;
     }
+
+    setIsLoading(true);
     const response = await verifyUser(email);
     console.log('email', email);
-    console.log('maBN', maBN);
 
     if (response && response.data && response.data.errcode === 0) {
-      navigation.navigate('VerificationForm', {email, maBN});
+      setIsLoading(false);
+      navigation.navigate('VerificationForm', {...oldPatient, email});
     }
     if (response && response.data && response.data.errcode !== 0) {
       Alert.alert('Error', `${response.data.message}`);
@@ -91,6 +107,11 @@ const RegisterScreen01 = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Spinner
+        visible={isLoading}
+        textContent={'Loading...'}
+        textStyle={styles.spinnerTextStyle}
+      />
       <ImageBackground
         source={require('../../../assets/images/BackgroundLogin.png')}
         resizeMode="cover"
@@ -117,49 +138,21 @@ const RegisterScreen01 = ({navigation}) => {
             <View style={styles.container022}>
               <View>
                 <Text style={styles.itemText}>Email</Text>
-                <TextInput
-                  style={[
-                    styles.itemTextInput,
-                    {
-                      borderColor:
-                        objValidInput.isValidEmail && objValidInput.isEmail
-                          ? '#7864EA'
-                          : 'red',
-                    },
-                    {
-                      color:
-                        objValidInput.isValidEmail && objValidInput.isEmail
-                          ? 'black'
-                          : 'red',
-                    },
-                  ]}
-                  value={email}
-                  onChangeText={value => setEmail(value)}
-                />
-                <View style={styles.error}>
-                  {!objValidInput.isValidEmail && (
-                    <Text style={styles.errorText}>Chưa nhập email</Text>
-                  )}
-                  {!objValidInput.isEmail && (
-                    <Text style={styles.errorText}>
-                      Email không đúng định dạng.
-                    </Text>
-                  )}
-                </View>
-              </View>
-              <View>
-                <Text style={styles.itemText}>Mã Bệnh Nhân (Nếu có)</Text>
                 <View style={styles.itemGroup}>
                   <TextInput
                     style={[
                       styles.itemTextInput,
                       {
-                        borderColor: objValidInput.isExistMaBN
-                          ? '#7864EA'
-                          : 'red',
+                        borderColor:
+                          objValidInput.isValidEmail && objValidInput.isEmail
+                            ? '#7864EA'
+                            : 'red',
                       },
                       {
-                        color: objValidInput.isExistMaBN ? 'black' : 'red',
+                        color:
+                          objValidInput.isValidEmail && objValidInput.isEmail
+                            ? 'black'
+                            : 'red',
                       },
                       {
                         borderWidth: 4,
@@ -169,8 +162,8 @@ const RegisterScreen01 = ({navigation}) => {
                         flexGrow: 1,
                       },
                     ]}
-                    value={maBN}
-                    onChangeText={value => setMaBN(value)}
+                    value={email}
+                    onChangeText={value => setEmail(value)}
                   />
                   <TouchableOpacity
                     style={[
@@ -183,16 +176,41 @@ const RegisterScreen01 = ({navigation}) => {
                         borderBottomRightRadius: 8,
                       },
                       {
-                        backgroundColor: !maBN ? '#999' : '#E8D5FF',
+                        borderColor:
+                          objValidInput.isValidEmail && objValidInput.isEmail
+                            ? '#7864EA'
+                            : 'red',
                       },
                       {
-                        color: !maBN ? 'black' : 'white',
+                        color:
+                          objValidInput.isValidEmail && objValidInput.isEmail
+                            ? 'black'
+                            : 'red',
+                      },
+                      {
+                        backgroundColor:
+                          email && verifyEmail(email) ? '#E8D5FF' : '#999',
                       },
                     ]}
-                    disabled={maBN === ''}
+                    disabled={!(email && verifyEmail(email))}
                     onPress={openDropdown}>
                     <Icon name={'account-search'} style={styles.iconStyle} />
                   </TouchableOpacity>
+                </View>
+                <View style={styles.error}>
+                  {!objValidInput.isValidEmail && (
+                    <Text style={styles.errorText}>Chưa nhập email.</Text>
+                  )}
+                  {!objValidInput.isEmail && (
+                    <Text style={styles.errorText}>
+                      Email không đúng định dạng.
+                    </Text>
+                  )}
+                  {!objValidInput.isRegister && (
+                    <Text style={styles.errorText}>
+                      Không tìm thấy hồ sơ tương ứng với email.
+                    </Text>
+                  )}
                 </View>
                 <SelectDropdown
                   ref={selectDropdownRef}
@@ -205,7 +223,7 @@ const RegisterScreen01 = ({navigation}) => {
                         ...(isSelected && {backgroundColor: '#D2D9DF'}),
                       }}>
                       <Text style={styles.dropdownItemTxtStyle}>
-                        {item.HOTEN + '' + item.SDT}
+                        {item.HOTEN + ' - ' + item.SDT}
                       </Text>
                       <Icon name={'chevron-right'} style={styles.iconStyle} />
                     </View>
@@ -218,16 +236,76 @@ const RegisterScreen01 = ({navigation}) => {
                 <View style={styles.displayTTBN}>
                   <Text style={styles.itemText}>Thông tin bệnh nhân</Text>
                   <View style={[styles.itemTextInput]}>
-                    <TextInput
-                      style={[styles.itemText, {fontFamily: Fonts.regural}]}
-                      value={oldPatient.HOTEN}
-                      readOnly={true}
-                    />
-                    <TextInput
-                      style={[styles.itemText, {fontFamily: Fonts.regural}]}
-                      value={oldPatient.SDT}
-                      readOnly={true}
-                    />
+                    <View
+                      style={[
+                        styles.itemGroup,
+                        {justifyContent: 'center', alignItems: 'center'},
+                      ]}>
+                      <Icon
+                        name={'information'}
+                        style={[styles.iconStyle, {marginRight: 8}]}
+                      />
+                      <TextInput
+                        style={[
+                          styles.itemText,
+                          {fontFamily: Fonts.regural, flex: 1},
+                        ]}
+                        value={oldPatient.HOTEN}
+                        editable={false}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <View
+                        style={[
+                          styles.itemGroup,
+                          {
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flex: 1, // Thêm flex: 1 để chia đều không gian
+                            marginRight: 4, // Thêm khoảng cách giữa các View con nếu cần
+                          },
+                        ]}>
+                        <Icon
+                          name={'barcode'}
+                          style={[styles.iconStyle, {marginRight: 8}]}
+                        />
+                        <TextInput
+                          style={[
+                            styles.itemText,
+                            {fontFamily: Fonts.regural, flex: 1},
+                          ]}
+                          value={'BN - ' + oldPatient.MABN}
+                          editable={false}
+                        />
+                      </View>
+                      <View
+                        style={[
+                          styles.itemGroup,
+                          {
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flex: 1, // Thêm flex: 1 để chia đều không gian
+                          },
+                        ]}>
+                        <Icon
+                          name={'cellphone'}
+                          style={[styles.iconStyle, {marginRight: 8}]}
+                        />
+                        <TextInput
+                          style={[
+                            styles.itemText,
+                            {fontFamily: Fonts.regural, flex: 1},
+                          ]}
+                          value={oldPatient.SDT}
+                          editable={false}
+                        />
+                      </View>
+                    </View>
                   </View>
                 </View>
               ) : (
@@ -259,6 +337,9 @@ const RegisterScreen01 = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  spinnerTextStyle: {
+    color: '#FFF',
   },
   dropdownButtonStyle: {
     backgroundColor: '#E8D5FF',
@@ -326,13 +407,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'back',
-    marginTop: 10
+    marginTop: 10,
   },
   container03: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginVertical: 20
+    marginVertical: 20,
   },
   logo: {
     marginLeft: 40,
@@ -375,8 +456,7 @@ const styles = StyleSheet.create({
   },
   displayTTBN: {
     height: 160,
-    marginTop: 30,
-    backgroundColor: 'yellow',
+    marginTop: 14,
   },
   errorText: {
     color: 'red',

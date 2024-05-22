@@ -280,6 +280,7 @@ const styles = StyleSheet.create({
     borderColor: '#7864EA',
     backgroundColor: '#E8D5FF',
     fontFamily: Fonts.regural,
+    paddingLeft: 8,
   },
   errorText: {
     color: 'red',
