@@ -26,7 +26,10 @@ import KetQuaKhamScreen from './app/screens/home/quyTrinh/KetQuaKhamScreen';
 import LichSuKhamScreen from './app/screens/home/quyTrinh/LichSuKhamSreen';
 import ForgotPassword from './app/screens/auth/ForgotPasswordScreen';
 import LoginScreen from './app/screens/auth/LoginScreen';
-import RegisterScreen from './app/screens/auth/RegisterScreen';
+import RegisterScreen01 from './app/screens/auth/RegisterScreen01';
+import RegisterScreen02 from './app/screens/auth/RegisterScreen02';
+import RegisterScreen03 from './app/screens/auth/RegisterScreen03';
+import VerificationForm from './app/screens/auth/VerificationForm';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -87,7 +90,10 @@ function App(): React.JSX.Element {
           <Stack.Group>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Register01" component={RegisterScreen01} />
+            <Stack.Screen name="Register02" component={RegisterScreen02} />
+            <Stack.Screen name="Register03" component={RegisterScreen03} />
+            <Stack.Screen name="VerificationForm" component={VerificationForm} />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

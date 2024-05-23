@@ -13,7 +13,6 @@ import {
   Alert,
   ScrollView,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 // import Home from './home'
 import Fonts from '../../../assets/fonts/Fonts';
@@ -21,31 +20,40 @@ import {login} from '../../redux/slice/authSlice';
 import {useDispatch} from 'react-redux';
 import {loginUser} from '../../services/userService';
 
+const isValidEmail = email => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 const LoginScreen = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
-
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const defaultObjValidInput = {
-    isValidPhoneNumber: true,
+    isValidEmail: true,
+    isEmail: true,
     isValidPassword: true,
   };
   const [objValidInput, setObjValidInput] = useState(defaultObjValidInput);
-  
+
   const handleLogin = async () => {
     setObjValidInput(defaultObjValidInput);
-    if (!phoneNumber) {
-      setObjValidInput({...defaultObjValidInput, isValidPhoneNumber: false});
+    if (!email) {
+      setObjValidInput({...defaultObjValidInput, isValidEmail: false});
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setObjValidInput({...defaultObjValidInput, isEmail: false});
       return;
     }
     if (!password) {
       setObjValidInput({...defaultObjValidInput, isValidPassword: false});
       return;
     }
-    console.log(JSON.stringify({phoneNumber, password}));
+    console.log(JSON.stringify({email, password}));
 
-    const response = await loginUser(phoneNumber, password);
+    const response = await loginUser(email, password);
 
     if (response && response.data && response.data.errcode === 0) {
       console.log('response', response);
@@ -72,7 +80,7 @@ const LoginScreen = ({navigation}) => {
       dispatch(login(data));
       Alert.alert('', `${response.data.message}`);
       navigation.navigate('HomeTabs');
-      setPhoneNumber('');
+      setEmail('');
       setPassword('');
     }
     if (response && response.data && response.data.errcode !== 0) {
@@ -110,25 +118,33 @@ const LoginScreen = ({navigation}) => {
             </View>
             <View style={styles.container022}>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemText}>Số Điện Thoại</Text>
+                <Text style={styles.itemText}>Email</Text>
                 <TextInput
                   style={[
                     styles.itemTextInput,
                     {
-                      borderColor: objValidInput.isValidPhoneNumber
-                        ? '#7864EA'
-                        : 'red',
+                      borderColor:
+                        objValidInput.isValidEmail && objValidInput.isEmail
+                          ? '#7864EA'
+                          : 'red',
                     },
-                    {color: objValidInput.isValidPhoneNumber ? 'black' : 'red'},
+                    {
+                      color:
+                        objValidInput.isValidEmail && objValidInput.isEmail
+                          ? 'black'
+                          : 'red',
+                    },
                   ]}
-                  value={phoneNumber}
-                  //   onBlur={handleUsernameBlur}
-                  onChangeText={value => setPhoneNumber(value)}
+                  value={email}
+                  onChangeText={value => setEmail(value)}
                 />
                 <View style={styles.error}>
-                  {!objValidInput.isValidPhoneNumber && (
+                  {!objValidInput.isValidEmail && (
+                    <Text style={styles.errorText}>Chưa nhập email</Text>
+                  )}
+                  {!objValidInput.isEmail && (
                     <Text style={styles.errorText}>
-                      Chưa nhập số điện thoại
+                      Email không đúng định dạng.
                     </Text>
                   )}
                 </View>
@@ -149,7 +165,6 @@ const LoginScreen = ({navigation}) => {
                   ]}
                   value={password}
                   onChangeText={value => setPassword(value)}
-                  //   onBlur={handlePasswordBlur}
                   autoCapitalize="none"
                   secureTextEntry={true}
                 />
@@ -184,7 +199,7 @@ const LoginScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.createButton}
               onPress={() => {
-                navigation.navigate('Register');
+                navigation.navigate('Register01');
               }}>
               <Text style={styles.createText}>Đăng Kí Tài Khoản Mới</Text>
             </TouchableOpacity>
@@ -265,6 +280,7 @@ const styles = StyleSheet.create({
     borderColor: '#7864EA',
     backgroundColor: '#E8D5FF',
     fontFamily: Fonts.regural,
+    paddingLeft: 8,
   },
   errorText: {
     color: 'red',

@@ -14,6 +14,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
+import { registerUserTK } from '../../services/userService';
 
 // NHAP PASSWORD
 const verifyPassword = password => {
@@ -27,6 +28,9 @@ const RegisterScreen02 = ({navigation, route}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [password, setPassword] = useState('');
   const [confirmPassword, setConFirmPassword] = useState('');
+  const maBN = route.params.MABN || null;
+  const email = route.params.email;
+  console.log(maBN, email)
 
   const defaultObjValidInput = {
     isValidPassword: true,
@@ -56,7 +60,18 @@ const RegisterScreen02 = ({navigation, route}) => {
       Alert.alert('Lỗi', 'Mật khẩu không đồng nhất. Vui lòng nhập lại...');
       return;
     }
-    navigation.navigate('Register03', {...route.params, password});
+    if (maBN) {
+      const response = await registerUserTK({email, password, maBN});
+
+      if (response && response.data && response.data.errcode === 0) {
+        Alert.alert('Thành công', `${response.data.message}`);
+        navigation.navigate('Login');
+      } else {
+        Alert.alert('Lỗi', `${response.data.message}`);
+      }
+    } else {
+      navigation.navigate('Register03', {...route.params, password});
+    }
   };
 
   return (
@@ -211,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'back',
-    marginTop: 140,
+    marginTop: 32,
   },
   container03: {
     flex: 1,

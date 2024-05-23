@@ -25,11 +25,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // NHAP HO SO DANG KI (PASSWORD, INFO)
 const RegisterScreen03 = ({navigation, route}) => {
   const isDarkMode = useColorScheme() === 'dark';
+  console.log('route3', route.params);
   const dispatch = useDispatch();
   const selectDropdownRef = useRef();
   const patients = useSelector(state => state.benhNhan?.data) || [];
   const gioiTinh = [{gioiTinh: 'Nam'}, {gioiTinh: 'Nữ'}, {gioiTinh: 'Khác'}];
-  const [oldPatientID, setOldPatientID] = useState(0);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   useEffect(() => {
@@ -37,8 +37,8 @@ const RegisterScreen03 = ({navigation, route}) => {
   }, [dispatch]);
 
   const formDataDefault = {
-    // email: route.params.email,
-    // password: route.params.password,
+    email: route.params.email ? route.params.email : '',
+    password: route.params.password ? route.params.password : '',
     hoTen: '',
     cccd: '',
     gioiTinh: '',
@@ -51,7 +51,6 @@ const RegisterScreen03 = ({navigation, route}) => {
 
   const [formData, setFormData] = useState(formDataDefault);
   console.log('formData', formData);
-  console.log('oldPatientID', oldPatientID);
 
   const defaultObjValidInput = {
     isValidHoTen: true,
@@ -60,36 +59,8 @@ const RegisterScreen03 = ({navigation, route}) => {
 
   const [objValidInput, setObjValidInput] = useState(defaultObjValidInput);
 
-  const openDropdown = () => {
-    selectDropdownRef.current?.openDropdown();
-  };
-
   const handleChange = (fieldName, value) => {
     setFormData({...formData, [fieldName]: value});
-  };
-
-  const handlePatientSelect = selectedItem => {
-    const patient = patients.find(
-      patient => patient.HOTEN === selectedItem.HOTEN,
-    );
-    if (patient) {
-      setFormData({
-        ...formDataDefault,
-        maBN: patient.MABN,
-        hoTen: patient.HOTEN,
-        cccd: patient.CCCD,
-        gioiTinh: patient.GIOITINH,
-        ngaySinh: new Date(patient.NGAYSINH).toLocaleDateString('vi-VN'),
-        soDienThoai: patient.SDT,
-        diaChi: patient.DIACHI,
-        tienSuBenh: patient.TIENSUBENH,
-        diUng: patient.DIUNG,
-      });
-      setOldPatientID(patient.MABN);
-    } else {
-      setFormData({...formDataDefault, hoTen: selectedItem.HOTEN});
-      setOldPatientID(0);
-    }
   };
 
   const handleRegister = async () => {
@@ -103,24 +74,13 @@ const RegisterScreen03 = ({navigation, route}) => {
       return;
     }
 
-    if (oldPatientID && oldPatientID !== 0) {
-      const response = await registerUserTK(formData);
+    const response = await registerUserTK_BN(formData);
 
-      if (response && response.data && response.data.errcode === 0) {
-        Alert.alert('Thành công', `${response.data.message}`);
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Lỗi', `${response.data.message}`);
-      }
+    if (response && response.data && response.data.errcode === 0) {
+      Alert.alert('Thành công', `${response.data.message}`);
+      navigation.navigate('Login');
     } else {
-      const response = await registerUserTK_BN(formData);
-
-      if (response && response.data && response.data.errcode === 0) {
-        Alert.alert('Thành công', `${response.data.message}`);
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Lỗi', `${response.data.message}`);
-      }
+      Alert.alert('Lỗi', `${response.data.message}`);
     }
   };
 
@@ -157,51 +117,51 @@ const RegisterScreen03 = ({navigation, route}) => {
             <View style={styles.container022}>
               <View>
                 <Text style={styles.itemText}>Họ Tên</Text>
-                <View style={styles.itemGroup}>
-                  <TextInput
-                    style={[styles.itemTextInput, {flexGrow: 1}]}
-                    placeholder="Nhập hoặc chọn Họ Tên"
-                    value={formData.hoTen}
-                    onChangeText={value => handleChange('hoTen', value)}
-                  />
-                  <TouchableOpacity
-                    style={[styles.dropdownButtonStyle, {width: 60}]}
-                    onPress={openDropdown}>
-                    <Icon
-                      name={'chevron-down'}
-                      style={styles.dropdownButtonArrowStyle}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <SelectDropdown
-                  ref={selectDropdownRef}
-                  data={patients}
-                  onSelect={selectedItem => handlePatientSelect(selectedItem)}
-                  renderItem={(item, index, isSelected) => (
-                    <View
-                      style={{
-                        ...styles.dropdownItemStyle,
-                        ...(isSelected && {backgroundColor: '#D2D9DF'}),
-                      }}>
-                      <Text style={styles.dropdownItemTxtStyle}>
-                        {item.HOTEN}
-                      </Text>
-                    </View>
-                  )}
-                  showsVerticalScrollIndicator={true}
-                  dropdownStyle={styles.dropdownMenuStyle}
-                  search={true}
-                  searchPlaceHolder={'Tìm kiếm...'}
+                <TextInput
+                  style={[
+                    styles.itemTextInput,
+                    {
+                      borderColor: objValidInput.isValidHoTen
+                        ? '#7864EA'
+                        : 'red',
+                    },
+                    {
+                      color: objValidInput.isValidHoTen ? 'black' : 'red',
+                    },
+                    {marginBottom: 0},
+                  ]}
+                  value={formData.hoTen}
+                  onChangeText={value => handleChange('hoTen', value)}
                 />
+                <View style={styles.error}>
+                  {!objValidInput.isValidHoTen && (
+                    <Text style={styles.errorText}>Chưa nhập họ tên</Text>
+                  )}
+                </View>
               </View>
               <View>
                 <Text style={styles.itemText}>CCCD</Text>
                 <TextInput
-                  style={[styles.itemTextInput]}
+                  style={[
+                    styles.itemTextInput,
+                    {
+                      borderColor: objValidInput.isValidCCCD
+                        ? '#7864EA'
+                        : 'red',
+                    },
+                    {
+                      color: objValidInput.isValidCCCD ? 'black' : 'red',
+                    },
+                    {marginBottom: 0},
+                  ]}
                   value={formData.cccd}
                   onChangeText={value => handleChange('cccd', value)}
                 />
+                <View style={styles.error}>
+                  {!objValidInput.isValidCCCD && (
+                    <Text style={styles.errorText}>Chưa nhập CCCD</Text>
+                  )}
+                </View>
               </View>
               <View style={styles.itemGroup}>
                 <View>
@@ -215,7 +175,9 @@ const RegisterScreen03 = ({navigation, route}) => {
                     renderButton={(selectedItem, isOpened) => (
                       <View style={[styles.dropdownButtonStyle, {width: 130}]}>
                         <Text style={styles.dropdownButtonTxtStyle}>
-                          {(selectedItem && selectedItem.gioiTinh) || (formData.gioiTinh) || 'Chọn'}
+                          {(selectedItem && selectedItem.gioiTinh) ||
+                            formData.gioiTinh ||
+                            'Chọn'}
                         </Text>
                         <Icon
                           name={isOpened ? 'chevron-up' : 'chevron-down'}
@@ -342,6 +304,14 @@ const styles = StyleSheet.create({
     borderColor: 'back',
     marginVertical: 30,
   },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    fontFamily: Fonts.regural,
+  },
+  error: {
+    height: 20,
+  },
   dropdownButtonStyle: {
     backgroundColor: '#E8D5FF',
     borderRadius: 10,
@@ -419,6 +389,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     paddingHorizontal: 12,
     paddingVertical: 10,
+    marginBottom: 20,
   },
   registerBtn: {
     backgroundColor: '#EA793A',

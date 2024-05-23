@@ -35,17 +35,17 @@ const VerificationForm = ({navigation, route}) => {
 
   const handleConfirm = async () => {
     const email = route.params.email;
-    const maBN = route.params.maBN;
 
     console.log('email', email, 'otp', otp);
     const response = await confirmUser(email, otp);
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert('', `${response.data.message}`);
       clearInterval(interval);
-      navigation.navigate('Register02', {email, maBN});
+      navigation.navigate('Register02', {...route.params});
     } else {
       console.log('response', response);
       Alert.alert('Error', `${response.data.message}`);
+      clearInterval(interval);
     }
   };
 
