@@ -36,12 +36,15 @@ import { useEffect, useState } from 'react';
 import socket from './app/setup/socket';
 import { Alert } from 'react-native';
 import axios from './app/setup/axios';
+import CarouselScreen from './app/screens/auth/CarouselScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const Home = createBottomTabNavigator();
 
 function HomeTabsScreen() {
+  let name = '';
+
   return (
     <Home.Navigator
       initialRouteName="Profile"
