@@ -38,7 +38,7 @@ const Home = createBottomTabNavigator();
 function HomeTabsScreen() {
   return (
     <Home.Navigator
-      initialRouteName="Home"
+      initialRouteName="Profile"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName = '';
@@ -86,7 +86,6 @@ function App(): React.JSX.Element {
             <Stack.Screen name="TheoDoi" component={TheoDoiScreen} />
           </Stack.Group>
 
-          <Stack.Screen name="ThongTin" component={ThongTinScreen} />
           <Stack.Group>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

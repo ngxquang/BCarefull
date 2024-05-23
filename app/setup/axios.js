@@ -2,7 +2,7 @@ import axios from 'axios';
 import {Alert} from 'react-native';
 // import { toast } from "react-toastify";
 import store from "../redux/store";
-// import { useNavigate } from "react-router-dom";
+import { useNavigation } from '@react-navigation/native';
 
 //Create an instance of axios
 const instance = axios.create({
@@ -44,10 +44,11 @@ instance.interceptors.response.use(
   function (error) {
     console.log('>>> error', error);
     const status = error.response?.status || 500;
-
+    const navigation = useNavigation();
     switch (status) {
       case 401: {
         Alert.alert('Không xác thực người dùng. Vui lòng đăng nhập...');
+        navigation.navigate('Login')
         return error.response.data;
       }
 
