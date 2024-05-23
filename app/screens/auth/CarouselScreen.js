@@ -95,7 +95,7 @@ const CarouselScreen = ({navigation}) => {
   };
 
   const handleRegister = () => {
-    navigation.navigate('Register');
+    navigation.navigate('Register01');
   };
 
   return (

@@ -123,7 +123,7 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
-        <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName='Carousel' screenOptions={{headerShown: false}}>
           {/* Home */}
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
           <Stack.Group>
@@ -149,6 +149,7 @@ function App(): React.JSX.Element {
             <Stack.Screen name="Register02" component={RegisterScreen02} />
             <Stack.Screen name="Register03" component={RegisterScreen03} />
             <Stack.Screen name="VerificationForm" component={VerificationForm} />
+            <Stack.Screen name="Carousel" component={CarouselScreen} />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
