@@ -21,6 +21,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {fetchAllBenhNhanAction} from '../../redux/slice/getAllBenhNhanSlice';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import socket from '../../setup/socket';
 
 // NHAP HO SO DANG KI (PASSWORD, INFO)
 const RegisterScreen03 = ({navigation, route}) => {
@@ -78,6 +79,7 @@ const RegisterScreen03 = ({navigation, route}) => {
 
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert('Thành công', `${response.data.message}`);
+      socket.emit("send-message", {actionName: 'DSBN'});
       navigation.navigate('Login');
     } else {
       Alert.alert('Lỗi', `${response.data.message}`);
