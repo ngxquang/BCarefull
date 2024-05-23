@@ -1,5 +1,5 @@
 const Fonts = {
-    regural: 'BaiJamjureeRegular',
+    regular: 'BaiJamjureeRegular',
     bold: 'BaiJamjureeBold',
     light: 'BaiJamjureeLight',
     medium: 'BaiJamjureeMedium',

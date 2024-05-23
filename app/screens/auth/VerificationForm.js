@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
   },
   text: {
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
     color: '#000000',
     fontSize: 16,
   },

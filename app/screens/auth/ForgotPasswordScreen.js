@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   content: {
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
     fontSize: 16,
     color: '#000000',
     marginTop: -10,
@@ -267,12 +267,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#7864EA',
     backgroundColor: '#E8D5FF',
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   errorText: {
     color: 'red',
     fontSize: 12,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   error: {
     height: 20,

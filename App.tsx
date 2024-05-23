@@ -84,19 +84,19 @@ function App(): React.JSX.Element {
     console.log(">>>>>>>>>ham handle deeplink dược sọi")
     if (url) {
       console.log('Parsed parameters:', url);
-      const response = await axios.post("/hoadon/thanhtoan", {
-        MAHD: 204,
-        MALOAIHD: 1,
-        THANHTIEN: 300000,
-        maLT: 102,
-        tttt: "Đã thanh toán",
-        tdtt: new Date(),
-        pttt: 'Chuyển khoản',
-      });
-      if (response.status === 200) {
-        socket.emit("send-message", {actionName: 'DSHD', maID: 181});
-        socket.emit("send-message", {actionName: 'DSDK'});
-      }
+      // const response = await axios.post("/hoadon/thanhtoan", {
+      //   MAHD: 204,
+      //   MALOAIHD: 1,
+      //   THANHTIEN: 300000,
+      //   maLT: 102,
+      //   tttt: "Đã thanh toán",
+      //   tdtt: new Date(),
+      //   pttt: 'Chuyển khoản',
+      // });
+      // if (response.status === 200) {
+      //   socket.emit("send-message", {actionName: 'DSHD', maID: 181});
+      //   socket.emit("send-message", {actionName: 'DSDK'});
+      // }
     }
     else {
       console.log('>>>>>>> ko nhan duoc url deeplink');

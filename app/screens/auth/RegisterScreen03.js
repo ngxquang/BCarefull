@@ -38,8 +38,8 @@ const RegisterScreen03 = ({navigation, route}) => {
   }, [dispatch]);
 
   const formDataDefault = {
-    email: route.params.email ? route.params.email : '',
-    password: route.params.password ? route.params.password : '',
+    // email: route.params.email ? route.params.email : '',
+    // password: route.params.password ? route.params.password : '',
     hoTen: '',
     cccd: '',
     gioiTinh: '',
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 12,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   error: {
     height: 20,

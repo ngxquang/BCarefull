@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 12,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   error: {
     height: 20,

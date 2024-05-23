@@ -28,8 +28,8 @@ const isValidEmail = email => {
 const LoginScreen = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('1@gmail.com');
+  const [password, setPassword] = useState('Abc@1234');
   const defaultObjValidInput = {
     isValidEmail: true,
     isEmail: true,
@@ -79,7 +79,7 @@ const LoginScreen = ({navigation}) => {
 
       dispatch(login(data));
       Alert.alert('', `${response.data.message}`);
-      navigation.navigate('HomeTabs');
+      navigation.navigate('LichSuKham');
       setEmail('');
       setPassword('');
     }
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   content: {
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
     fontSize: 16,
     color: '#000000',
     marginTop: -10,
@@ -279,13 +279,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#7864EA',
     backgroundColor: '#E8D5FF',
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
     paddingLeft: 8,
   },
   errorText: {
     color: 'red',
     fontSize: 12,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   error: {
     height: 24,
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     color: '#606060',
     fontSize: 10,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   saveInfo: {
     flexDirection: 'row',
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
   },
   saveInfoText: {
     marginLeft: 14,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   loginButton: {
     backgroundColor: '#7864EA',

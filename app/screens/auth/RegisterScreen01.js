@@ -248,7 +248,7 @@ const RegisterScreen01 = ({navigation}) => {
                       <TextInput
                         style={[
                           styles.itemText,
-                          {fontFamily: Fonts.regural, flex: 1},
+                          {fontFamily: Fonts.regular, flex: 1},
                         ]}
                         value={oldPatient.HOTEN}
                         editable={false}
@@ -277,7 +277,7 @@ const RegisterScreen01 = ({navigation}) => {
                         <TextInput
                           style={[
                             styles.itemText,
-                            {fontFamily: Fonts.regural, flex: 1},
+                            {fontFamily: Fonts.regular, flex: 1},
                           ]}
                           value={'BN - ' + oldPatient.MABN}
                           editable={false}
@@ -299,7 +299,7 @@ const RegisterScreen01 = ({navigation}) => {
                         <TextInput
                           style={[
                             styles.itemText,
-                            {fontFamily: Fonts.regural, flex: 1},
+                            {fontFamily: Fonts.regular, flex: 1},
                           ]}
                           value={oldPatient.SDT}
                           editable={false}
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
   questionText: {
     color: '#606060',
     fontSize: 12,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   title: {
     fontFamily: Fonts.bold,
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   content: {
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
     fontSize: 16,
     color: '#000000',
     marginTop: -10,
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#7864EA',
     backgroundColor: '#E8D5FF',
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
     paddingLeft: 8,
   },
   displayTTBN: {
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 12,
-    fontFamily: Fonts.regural,
+    fontFamily: Fonts.regular,
   },
   error: {
     height: 20,
