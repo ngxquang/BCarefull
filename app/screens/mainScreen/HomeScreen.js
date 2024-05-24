@@ -15,9 +15,6 @@ import BackgroundImage3 from "../../../assets/images/Vector03.png";
 function HomeScreen({ navigation }) {
     return (
         <ThemeProvider theme={BCarefulTheme2}>
-            {/* <Image source={BackgroundImage1} style={{ position: 'absolute', height: 100, width: 500 }} />
-            <Image source={BackgroundImage2} style={{ position: 'absolute', height: 100, width: 400 }} />
-            <Image source={BackgroundImage3} style={{ position: 'absolute', height: 100, width: 400 }} /> */}
             <SafeAreaView style={styles.container}>
                 <Text style={styles.title}>Bcareful
                     <Text style={{ fontFamily: Fonts.medium, fontSize: 24, }}> Xin chào,</Text>

@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, Text } from "@rneui/themed";
+import { Button, Icon, Text } from "@rneui/themed";
 import { View, Image } from "react-native";
 import { BCarefulTheme } from "./Theme";
 import Fonts from "../../assets/fonts/Fonts";
 import LinearGradient from "react-native-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 export function ButtonHome({ title, name, navigation }) {
   let img = 0;
@@ -46,7 +47,7 @@ export function ButtonHome({ title, name, navigation }) {
               resizeMode: 'contain',
             }}
           />
-          <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', marginLeft: 8,}}>
+          <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', marginLeft: 8, }}>
             <Text style={{ fontFamily: Fonts.bold, color: 'black', }}>
               {title}
             </Text>
@@ -55,4 +56,16 @@ export function ButtonHome({ title, name, navigation }) {
       </LinearGradient>
     </View>
   );
+}
+
+
+export function BackToHomeBtn() {
+  const navigation = useNavigation();
+  return (
+    <Button
+      type="clear"
+      onPress={() => navigation.popToTop()}>
+      <Icon name="home" type="ionicon" color={BCarefulTheme.colors.primary} />
+    </Button>
+  )
 }
