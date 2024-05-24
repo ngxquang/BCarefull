@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 3,
         borderRadius: 10,
-        borderColor: '#7864EA',
+        borderColor: BCarefulTheme.colors.primary,
         backgroundColor: '#E8D5FF',
         fontFamily: Fonts.regular,
         padding: 8,

@@ -21,6 +21,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import {BCarefulTheme} from '../../component/Theme';
+import { Button } from '@rneui/themed';
 
 const ProfileScreen = ({navigation, route}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -144,7 +145,7 @@ const ProfileScreen = ({navigation, route}) => {
             />
             <View style={styles.container022}>
               <View>
-                <Text style={styles.itemText}>Họ Tên</Text>
+                <Text style={styles.itemText}>Họ và Tên</Text>
                 <TextInput
                   style={[
                     styles.itemTextInput,
@@ -217,7 +218,7 @@ const ProfileScreen = ({navigation, route}) => {
               </View>
               <View style={styles.itemGroup}>
                 <View>
-                  <Text style={styles.itemText}>Giới Tính</Text>
+                  <Text style={styles.itemText}>Giới tính</Text>
                   <SelectDropdown
                     data={gioiTinh}
                     // defaultValue={userInfo.gioiTinh}
@@ -254,7 +255,7 @@ const ProfileScreen = ({navigation, route}) => {
                 </View>
 
                 <View>
-                  <Text style={styles.itemText}>Ngày Sinh</Text>
+                  <Text style={styles.itemText}>Ngày sinh</Text>
                   <TouchableOpacity
                     onPress={() => setDatePickerVisibility(true)}>
                     <TextInput
@@ -274,7 +275,7 @@ const ProfileScreen = ({navigation, route}) => {
               {showMore && (
                 <>
                   <View>
-                    <Text style={styles.itemText}>Số Điện Thoại</Text>
+                    <Text style={styles.itemText}>Số điện thoại</Text>
                     <TextInput
                       style={[styles.itemTextInput]}
                       value={formData.soDienThoai}
@@ -282,7 +283,7 @@ const ProfileScreen = ({navigation, route}) => {
                     />
                   </View>
                   <View>
-                    <Text style={styles.itemText}>Địa Chỉ</Text>
+                    <Text style={styles.itemText}>Địa chỉ</Text>
                     <TextInput
                       style={[styles.itemTextInput]}
                       value={formData.diaChi}
@@ -290,7 +291,7 @@ const ProfileScreen = ({navigation, route}) => {
                     />
                   </View>
                   <View>
-                    <Text style={styles.itemText}>Tiền Sử Bệnh</Text>
+                    <Text style={styles.itemText}>Tiền sử bệnh</Text>
                     <TextInput
                       style={[styles.itemTextInput]}
                       value={formData.tienSuBenh}
@@ -298,7 +299,7 @@ const ProfileScreen = ({navigation, route}) => {
                     />
                   </View>
                   <View>
-                    <Text style={styles.itemText}>Dị Ứng</Text>
+                    <Text style={styles.itemText}>Dị ứng</Text>
                     <TextInput
                       style={[styles.itemTextInput]}
                       value={formData.diUng}
@@ -317,9 +318,9 @@ const ProfileScreen = ({navigation, route}) => {
               </TouchableOpacity>
             </View>
             <View style={styles.container023}>
-              <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
+              <Button buttonStyle={styles.saveBtn} onPress={handleSave}>
                 <Text style={styles.saveText}>Lưu thông tin</Text>
-              </TouchableOpacity>
+              </Button>
             </View>
           </View>
         </ScrollView>
@@ -435,16 +436,16 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   itemTextInput: {
+    marginBottom: 20,
+    flex: 1,
     fontSize: 16,
-    borderWidth: 4,
-    color: '#000000',
+    borderWidth: 3,
     borderRadius: 10,
-    borderColor: BCarefulTheme.colors.primary,
+    borderColor: '#7864EA',
     backgroundColor: '#E8D5FF',
     fontFamily: Fonts.regular,
+    padding: 8,
     paddingHorizontal: 12,
-    paddingVertical: 10,
-    marginBottom: 20,
   },
   saveBtn: {
     backgroundColor: BCarefulTheme.colors.primary,
@@ -455,7 +456,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     fontFamily: Fonts.bold,
-    width: '40%',
   },
   saveText: {
     color: '#FFFFFF',

@@ -1,5 +1,5 @@
-import {Button} from '@rneui/themed';
-import React, {useState} from 'react';
+import { Button } from '@rneui/themed';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,9 @@ import {
   Modal,
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
-import {Icon} from '@rneui/themed';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Icon } from '@rneui/themed';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { BCarefulTheme } from '../../component/Theme';
 
 function NotificationScreen() {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -85,7 +86,7 @@ function NotificationScreen() {
   };
 
   // Hien thi danh sach thong bao
-  const renderNotification = ({item}) => {
+  const renderNotification = ({ item }) => {
     const isUnread = unreadNotifications.some(
       notification => notification.id === item.id,
     );
@@ -133,7 +134,7 @@ function NotificationScreen() {
 
       <View style={styles.tabContainer}>
         <TouchableOpacity
-          style={[styles.tab, selectedTab === 'all' && styles.selectedTab]}
+          style={[selectedTab === 'all' ? styles.selectedTab : styles.tab]}
           onPress={() => setSelectedTab('all')}>
           <Text
             style={
@@ -143,7 +144,7 @@ function NotificationScreen() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tab, selectedTab === 'unread' && styles.selectedTab]}
+          style={[ selectedTab === 'unread' ? styles.selectedTab : styles.tab,]}
           onPress={() => setSelectedTab('unread')}>
           <Text
             style={
@@ -158,9 +159,9 @@ function NotificationScreen() {
         data={
           selectedTab === 'all'
             ? sortedNotifications([
-                ...unreadNotifications,
-                ...readNotifications,
-              ])
+              ...unreadNotifications,
+              ...readNotifications,
+            ])
             : sortedNotifications(unreadNotifications)
         } // Hiển thị thông báo theo tab đã chọn
         renderItem={renderNotification}
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingTop: 10,
   },
   tab: {
     flex: 1,
@@ -220,8 +221,18 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
   },
   selectedTab: {
-    borderBottomWidth: 4,
-    borderBottomColor: '#7864EA',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderBottomWidth: 2,
+    // borderColor: '#ddd',
+    borderBottomWidth: 5,
+    borderRightColor: '#ddd',
+    borderLeftColor: '#ddd',
+    borderTopColor: '#ddd',
+    borderBottomColor: BCarefulTheme.colors.primary,
   },
   header: {
     fontFamily: Fonts.bold,
@@ -231,7 +242,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   markAllAsReadButton: {
-    backgroundColor: '#7864EA',
+    backgroundColor: BCarefulTheme.colors.primary,
     padding: 10,
     borderRadius: 10,
   },
@@ -247,7 +258,8 @@ const styles = StyleSheet.create({
   selectedTabText: {
     fontFamily: Fonts.bold,
     fontSize: 18,
-    color: '#7864EA',
+    color: BCarefulTheme.colors.primary,
+    bottom: -2,
   },
   notificationContainer: {
     padding: 15,
@@ -262,14 +274,14 @@ const styles = StyleSheet.create({
     width: 7,
     height: 7,
     borderRadius: 10,
-    backgroundColor: '#7864EA',
+    backgroundColor: BCarefulTheme.colors.primary,
     marginRight: 10,
   },
   title: {
     fontFamily: Fonts.bold,
     fontSize: 18,
     textTransform: 'uppercase',
-    color: '#7864EA',
+    color: BCarefulTheme.colors.primary,
   },
   date: {
     fontFamily: Fonts.bold,
@@ -308,7 +320,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     marginBottom: 10,
     textTransform: 'uppercase',
-    color: '#7864EA',
+    color: BCarefulTheme.colors.primary,
   },
   modalContent: {
     fontFamily: Fonts.bold,
@@ -317,7 +329,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   closeButton: {
-    backgroundColor: '#7864EA',
+    backgroundColor: BCarefulTheme.colors.primary,
     padding: 10,
     borderRadius: 10,
   },
