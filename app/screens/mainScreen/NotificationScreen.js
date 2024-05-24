@@ -9,6 +9,8 @@ import {
   Modal,
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
+import {Icon} from '@rneui/themed';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function NotificationScreen() {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -117,13 +119,15 @@ function NotificationScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Thông Báo</Text>
         <TouchableOpacity
-          style={styles.markAllAsReadButton}
+          // style={styles.markAllAsReadButton}
           onPress={markAllAsRead}>
-          <Text style={styles.markAllAsReadButtonText}>Đọc hết</Text>
+          {/* <Text style={styles.markAllAsReadButtonText}>Đọc hết</Text> */}
+          {/* <FontistoIcon name={'arrow-swap'} style={styles.icon} /> */}
+          <Icon name="checkmark-done" type="ionicon" color={'#000'} />
         </TouchableOpacity>
       </View>
 
@@ -185,13 +189,14 @@ function NotificationScreen() {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -228,7 +233,7 @@ const styles = StyleSheet.create({
   markAllAsReadButton: {
     backgroundColor: '#7864EA',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   markAllAsReadButtonText: {
     color: 'white',
@@ -256,7 +261,7 @@ const styles = StyleSheet.create({
   unreadDot: {
     width: 7,
     height: 7,
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: '#7864EA',
     marginRight: 10,
   },
@@ -314,7 +319,7 @@ const styles = StyleSheet.create({
   closeButton: {
     backgroundColor: '#7864EA',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   closeButtonText: {
     color: 'white',

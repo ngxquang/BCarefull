@@ -80,7 +80,7 @@ function getStyles(index) {
 const styles = StyleSheet.create({
   common: {
     padding: 4,
-    borderRadius: 4,
+    borderRadius: 10,
     borderWidth: 1,
     marginVertical: 4,
     justifyContent: 'center',

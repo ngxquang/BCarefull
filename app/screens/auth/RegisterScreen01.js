@@ -157,8 +157,8 @@ const RegisterScreen01 = ({navigation}) => {
                       {
                         borderWidth: 4,
                         borderRadius: 0,
-                        borderTopLeftRadius: 8,
-                        borderBottomLeftRadius: 8,
+                        borderTopLeftRadius: 10,
+                        borderBottomLeftRadius: 10,
                         flexGrow: 1,
                       },
                     ]}
@@ -172,8 +172,8 @@ const RegisterScreen01 = ({navigation}) => {
                         width: 60,
                         borderWidth: 4,
                         borderRadius: 0,
-                        borderTopRightRadius: 8,
-                        borderBottomRightRadius: 8,
+                        borderTopRightRadius: 10,
+                        borderBottomRightRadius: 10,
                       },
                       {
                         borderColor:
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
   },
   dropdownMenuStyle: {
     backgroundColor: '#E8D5FF',
-    borderRadius: 8,
+    borderRadius: 10,
   },
   dropdownItemStyle: {
     width: '100%',
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 4,
     borderColor: '#7864EA',
   },

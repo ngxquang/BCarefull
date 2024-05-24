@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
   chainLeft: {
     borderWidth: 2,
     borderColor: 'red',
-    borderRadius: 5,
+    borderRadius: 10,
     width: 10,
     height: 10,
   },

@@ -79,7 +79,7 @@ const LoginScreen = ({navigation}) => {
 
       dispatch(login(data));
       Alert.alert('', `${response.data.message}`);
-      navigation.navigate('LichSuKham');
+      navigation.navigate('HomeTabs');
       setEmail('');
       setPassword('');
     }

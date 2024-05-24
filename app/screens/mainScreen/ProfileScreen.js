@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
   },
   dropdownMenuStyle: {
     backgroundColor: '#E8D5FF',
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 4,
     borderColor: BCarefulTheme.colors.primary,
   },

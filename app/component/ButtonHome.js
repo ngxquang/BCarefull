@@ -64,7 +64,7 @@ export function BackToHomeBtn() {
   return (
     <Button
       type="clear"
-      onPress={() => navigation.popToTop()}>
+      onPress={() => navigation.navigate('Home')}>
       <Icon name="home" type="ionicon" color={BCarefulTheme.colors.primary} />
     </Button>
   )

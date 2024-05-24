@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   dropdownMenuStyle: {
     backgroundColor: '#E8D5FF',
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 4,
     borderColor: '#7864EA',
   },
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     backgroundColor: '#E8D5FF',
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 4,
     borderColor: '#7864EA',
     paddingHorizontal: 12,
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EA793A',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 12,
+    borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 16,
