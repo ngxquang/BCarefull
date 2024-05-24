@@ -11,7 +11,7 @@ import {
 import Fonts from '../../../assets/fonts/Fonts';
 import { Icon } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BCarefulTheme } from '../../component/Theme';
+import { BCarefulTheme, style } from '../../component/Theme';
 
 function NotificationScreen() {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -112,15 +112,15 @@ function NotificationScreen() {
           }
         }}>
         {isUnread && <View style={styles.unreadDot} />}
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.date}>{item.date}</Text>
-        <Text style={styles.content}>{item.content}</Text>
+        <Text style={[style.h3, style.primary, style.upperCase]}>{item.title}</Text>
+        <Text style={[style.t4, style.italic]}>{item.date}</Text>
+        <Text style={style.h4}>{item.content}</Text>
       </TouchableOpacity>
     );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={style.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Thông Báo</Text>
         <TouchableOpacity
@@ -195,10 +195,6 @@ function NotificationScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -276,12 +272,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: BCarefulTheme.colors.primary,
     marginRight: 10,
-  },
-  title: {
-    fontFamily: Fonts.bold,
-    fontSize: 18,
-    textTransform: 'uppercase',
-    color: BCarefulTheme.colors.primary,
   },
   date: {
     fontFamily: Fonts.bold,

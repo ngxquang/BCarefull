@@ -19,6 +19,7 @@ import Fonts from '../../../assets/fonts/Fonts';
 import {login} from '../../redux/slice/authSlice';
 import {useDispatch} from 'react-redux';
 import {loginUser} from '../../services/userService';
+import { style, BCarefulTheme } from '../../component/Theme';
 
 const isValidEmail = email => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,7 +29,7 @@ const isValidEmail = email => {
 const LoginScreen = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('1@gmail.com');
+  const [email, setEmail] = useState('22520357@gm.uit.edu.vn');
   const [password, setPassword] = useState('Abc@1234');
   const defaultObjValidInput = {
     isValidEmail: true,
@@ -113,15 +114,15 @@ const LoginScreen = ({navigation}) => {
           </View>
           <View style={styles.container02}>
             <View style={styles.container021}>
-              <Text style={styles.title}>Chào Mừng Trở Lại BCareful!</Text>
-              <Text style={styles.content}>Đăng Nhập Để Tiếp Tục</Text>
+              <Text style={[style.h1]}>Chào Mừng Trở Lại BCareful!</Text>
+              <Text style={style.p1}>Đăng Nhập Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemText}>Email</Text>
+                <Text style={style.h4}>Email</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor:
                         objValidInput.isValidEmail && objValidInput.isEmail
@@ -140,22 +141,22 @@ const LoginScreen = ({navigation}) => {
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidEmail && (
-                    <Text style={styles.errorText}>Chưa nhập email</Text>
+                    <Text style={[style.t3, style.danger]}>Chưa nhập email</Text>
                   )}
                   {!objValidInput.isEmail && (
-                    <Text style={styles.errorText}>
+                    <Text style={[style.t3, style.danger]}>
                       Email không đúng định dạng.
                     </Text>
                   )}
                 </View>
               </View>
-              <View style={styles.itemGroup}>
-                <View style={styles.password}>
-                  <Text style={styles.itemText}>Mật Khẩu</Text>
+              <View>
+                <View style={style.spacebtw}>
+                  <Text style={style.h4}>Mật Khẩu</Text>
                 </View>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidPassword
                         ? '#7864EA'
@@ -170,38 +171,38 @@ const LoginScreen = ({navigation}) => {
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidPassword ? (
-                    <Text style={styles.errorText}>Chưa nhập password</Text>
+                    <Text style={[style.t3, style.danger]}>Chưa nhập password</Text>
                   ) : (
                     <></>
                   )}
                 </View>
               </View>
-              <View style={styles.saveInfo}>
+              <View style={style.row}>
                 <TouchableOpacity style={styles.saveInfoBtn} />
-                <Text style={styles.saveInfoText}>Lưu Thông Tin Đăng Nhập</Text>
+                <Text style={[style.t3, style.px3]}>Lưu Thông Tin Đăng Nhập</Text>
               </View>
             </View>
             <View style={styles.container023}>
               <TouchableOpacity
-                style={styles.loginButton}
+                style={style.btn}
                 onPress={handleLogin}>
-                <Text style={styles.loginText}>Đăng Nhập</Text>
+                <Text style={[style.h4, style.white]}>Đăng Nhập</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('ForgotPassword');
                 }}>
-                <Text style={styles.forgotPasswordText}>Quên Mật Khẩu?</Text>
+                <Text style={style.t4}>Quên Mật Khẩu?</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.container03}>
             <TouchableOpacity
-              style={styles.createButton}
+              style={style.btnOutlineSub}
               onPress={() => {
                 navigation.navigate('Register01');
               }}>
-              <Text style={styles.createText}>Đăng Kí Tài Khoản Mới</Text>
+              <Text style={style.h4}>Đăng Kí Tài Khoản Mới</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -256,103 +257,24 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginTop: 80,
   },
-  title: {
-    fontFamily: Fonts.bold,
-    fontSize: 26,
-    color: '#000000',
-  },
-  content: {
-    fontFamily: Fonts.regular,
-    fontSize: 16,
-    color: '#000000',
-    marginTop: -10,
-  },
-  itemGroup: {},
-  itemText: {
-    color: '#000000',
-    fontSize: 16,
-    fontFamily: Fonts.bold,
-  },
-  itemTextInput: {
-    fontSize: 16,
-    borderWidth: 4,
-    borderRadius: 10,
-    borderColor: '#7864EA',
-    backgroundColor: '#E8D5FF',
-    fontFamily: Fonts.regular,
-    paddingLeft: 8,
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-    fontFamily: Fonts.regular,
-  },
   error: {
     height: 24,
-  },
-  password: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   forgotPasswordText: {
     color: '#606060',
     fontSize: 10,
     fontFamily: Fonts.regular,
   },
-  saveInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   saveInfoBtn: {
-    borderColor: '#EA793A',
+    borderColor: BCarefulTheme.colors.secondary,
     borderWidth: 4,
     borderRadius: 10,
     width: 20,
     height: 20,
   },
-  saveInfoText: {
-    marginLeft: 14,
-    fontFamily: Fonts.regular,
-  },
-  loginButton: {
-    backgroundColor: '#7864EA',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 16,
-    fontFamily: Fonts.bold,
-    width: '40%',
-    marginTop: 30,
-  },
-  loginText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 16,
-    fontFamily: 'Nunito-Regular',
-  },
   newText: {
     color: '#A8A8A8',
-    fontFamily: 'Nunito-Regular',
-  },
-  createButton: {
-    borderColor: '#EA793A',
-    borderWidth: 4,
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    fontSize: 16,
-    fontFamily: Fonts.bold,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '54%',
-    marginHorizontal: 'auto',
-  },
-  createText: {
-    fontSize: 16,
-    color: '#000000',
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.regular,
   },
 });
 
