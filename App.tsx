@@ -47,7 +47,7 @@ function HomeTabsScreen() {
 
   return (
     <Home.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Notification"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName = '';
@@ -123,7 +123,7 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
-        <Stack.Navigator initialRouteName='Carousel' screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
           {/* Home */}
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
           <Stack.Group>

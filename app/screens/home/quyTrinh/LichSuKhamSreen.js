@@ -16,11 +16,17 @@ import {IFNgay} from '../../../component/Layout/TabLayout/InputForm';
 import {fetchLSKByIdBnAction} from '../../../redux/action/fetchPhieuKhamAction';
 import Fonts from '../../../../assets/fonts/Fonts';
 import {BCarefulTheme} from '../../../component/Theme';
+import {TTKICon} from '../../../component/StatusIcon';
+import { compareDates } from '../../../util/appUtil';
 
 function LichSuKhamScreen() {
   const dispatch = useDispatch();
   const lichSuKham = useSelector(state => state.phieuKham.lskByIdBn) || [];
-  const user = useSelector(state => state.auth?.user.account.userInfo[0]); // user chứa token, isAuthenticated, account
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  const [displayLSK, setDisplayLSK] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   console.log('user', user);
   console.log('lickSuKham', lichSuKham);
   const [trangThaiList, setTrangThaiList] = useState([
@@ -30,13 +36,69 @@ function LichSuKhamScreen() {
     {id: 4, title: 'Đã hủy'},
   ]);
 
+  useEffect(() => {
+    if (lichSuKham) {
+      let filteredLSK = [...lichSuKham];
+      // Lọc theo ngày bắt đầu và ngày kết thúc
+      if (startDate && endDate) {
+        filteredLSK = filteredLSK.filter((data) => {
+          const formatedNGAYKHAM = new Date(data.NGAYKHAM);
+          return (
+            compareDates(startDate, formatedNGAYKHAM) >= 0 &&
+            compareDates(formatedNGAYKHAM, endDate) >= 0
+          );
+        });
+      } else if (startDate) {
+        // Chỉ có ngày bắt đầu
+        filteredLSK = filteredLSK.filter((data) => {
+          const formatedNGAYKHAM = new Date(data.NGAYKHAM);
+
+          return compareDates(startDate, formatedNGAYKHAM) >= 0;
+        });
+      } else if (endDate) {
+        // Chỉ có ngày kết thúc
+        filteredLSK = filteredLSK.filter((data) => {
+          const formatedNGAYKHAM = new Date(data.NGAYKHAM);
+
+          return compareDates(formatedNGAYKHAM, endDate) >= 0;
+        });
+      }
+
+      // Lọc theo từ khóa tìm kiếm
+      console.log('searchKeyword', searchKeyword);
+      if (searchKeyword) {
+        filteredLSK = filteredLSK.filter(
+          data => data.TRANGTHAITH === searchKeyword,
+        );
+      }
+      console.log('filteredLSK', filteredLSK);
+      console.log('startDate', startDate);
+      console.log('endDate', endDate);
+
+      setDisplayLSK(filteredLSK);
+    }
+  }, [lichSuKham, searchKeyword, startDate, endDate]);
+
   const trangThaiRenderItem = ({item}) => (
-    <View style={styles.listItem}>
-      <Button
-        title={item.title}
-        style={styles.listItemText}
-        onPress={() => {}}
-      />
+    <View
+      style={
+        item.title === searchKeyword
+          ? styles.listItemActive
+          : styles.listItemPassive
+      }>
+      <TouchableOpacity
+        onPress={() => {
+          setSearchKeyword(item.title);
+        }}>
+        <Text
+          style={
+            item.title === searchKeyword
+              ? styles.listItemTextActive
+              : styles.listItemTextPassive
+          }>
+          {item.title}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -50,11 +112,16 @@ function LichSuKhamScreen() {
       <View style={styles.bodyRight}>
         <View style={styles.listItemDateTime}>
           <Text style={styles.dateTime}>{item.NGAYKHAMMIN}</Text>
-          <Text style={styles.trangThaiThucHien}>{item.TRANGTHAITH}</Text>
+          <View>
+            <TTKICon
+              style={styles.trangThaiThucHien}
+              value={item.TRANGTHAITH}
+            />
+          </View>
         </View>
         <View style={styles.listItemDetail}>
           <TouchableOpacity style={styles.detail}>
-            <View style={{flex: 4}}>
+            <View style={{flex: 5}}>
               <Text style={styles.maPhieuKham}>MAPK - {item.MAPK}</Text>
               <Text style={styles.tenDichVu}>{item.TENDV.toUpperCase()}</Text>
             </View>
@@ -98,14 +165,14 @@ function LichSuKhamScreen() {
           Chọn ngày
         </Text>
         <View style={styles.dateRange}>
-          <IFNgay title={'Từ ngày'} />
+          <IFNgay title={'Từ ngày'} onDateChange={value => setStartDate(value)}/>
           <FontistoIcon name={'arrow-swap'} style={styles.icon} />
-          <IFNgay title={'Đến ngày'} />
+          <IFNgay title={'Đến ngày'} onDateChange={value => setEndDate(value)}/>
         </View>
       </View>
       <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
         <View style={styles.body}>
-          <FlatList data={lichSuKham} renderItem={phieuKhamRenderItem} />
+          <FlatList data={displayLSK} renderItem={phieuKhamRenderItem} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -169,7 +236,20 @@ const styles = StyleSheet.create({
     padding: 2,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+  },
+  listItemActive: {
+    flex: 1,
+    padding: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: BCarefulTheme.colors.primary,
+    borderBottomWidth: 4,
+  },
+  listItemPassive: {
+    flex: 1,
+    padding: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   bodyLeft: {
     flex: 1,
@@ -186,6 +266,7 @@ const styles = StyleSheet.create({
   },
   listItemDateTime: {
     flex: 3,
+    paddingHorizontal: 10,
   },
   listItemDetail: {
     flex: 5,
@@ -197,7 +278,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 10,
     alignItems: 'center',
-    justifyContent: 'space-around',
     flexDirection: 'row',
     borderColor: BCarefulTheme.colors.primary,
     paddingVertical: 10,
@@ -205,15 +285,23 @@ const styles = StyleSheet.create({
   listItemText: {
     fontSize: 16,
   },
+  listItemTextActive: {
+    fontFamily: Fonts.bold,
+    fontSize: 16,
+    color: BCarefulTheme.colors.primary,
+  },
+  listItemTextPassive: {
+    fontFamily: Fonts.regular,
+    fontSize: 16,
+    color: '#000',
+  },
   dateTime: {
     fontFamily: Fonts.regular,
     fontSize: 14,
     color: '#000',
   },
   trangThaiThucHien: {
-    fontFamily: Fonts.regular,
-    fontSize: 16,
-    color: '#000',
+    paddingHorizontal: 20,
   },
   maPhieuKham: {
     fontFamily: Fonts.regular,

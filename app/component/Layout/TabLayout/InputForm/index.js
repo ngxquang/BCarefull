@@ -1,4 +1,3 @@
-import {color} from '@rneui/base';
 import React, {useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import DatePicker from 'react-native-date-picker';
@@ -6,19 +5,25 @@ import {BCarefulTheme} from '../../../Theme';
 import Fonts from '../../../../../assets/fonts/Fonts';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
 
-export function IFNgay({title, style}) {
-  const [chosenDate, setChosenDate] = useState(new Date());
+export function IFNgay({title, style, onDateChange}) {
   const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const formatDate = date => {
+    if (!date) return 'dd/mm/yyyy';
+    return date.toLocaleDateString('en-GB'); // This will format the date as dd/mm/yyyy
+  };
 
   return (
     <View>
       <DatePicker
         modal
         open={open}
-        date={chosenDate}
+        date={selectedDate || new Date()}
         onConfirm={date => {
           setOpen(false);
-          setChosenDate(date);
+          setSelectedDate(date);
+          onDateChange(date);
         }}
         onCancel={() => {
           setOpen(false);
@@ -29,7 +34,7 @@ export function IFNgay({title, style}) {
         <View style={styles.status}>
           <FontistoIcon name={'calendar'} style={styles.icon} />
           <Text style={styles.date} onPress={() => setOpen(true)}>
-            {chosenDate.toLocaleDateString()}
+            {formatDate(selectedDate)}
           </Text>
         </View>
       </View>
