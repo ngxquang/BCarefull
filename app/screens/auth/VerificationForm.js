@@ -4,6 +4,7 @@ import {OtpInput} from 'react-native-otp-entry';
 import {confirmUser} from '../../services/userService';
 import Fonts from '../../../assets/fonts/Fonts';
 import {verifyUser} from '../../services/userService';
+import { style } from '../../component/Theme';
 
 
 // XAC THUC EMAIL 
@@ -50,11 +51,11 @@ const VerificationForm = ({navigation, route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[style.container, style.center]}>
       <View style={styles.content}>
-        <Text style={styles.title}>Nhập mã OTP</Text>
-        <Text style={styles.text}>Vui lòng kiểm tra Email và nhập mã OTP</Text>
-        <Text style={styles.text}>chúng tôi vừa gửi cho bạn.</Text>
+        <Text style={style.h1}>Nhập mã OTP</Text>
+        <Text style={style.t1}>Vui lòng kiểm tra Email và nhập mã OTP</Text>
+        <Text style={style.t1}>chúng tôi vừa gửi cho bạn.</Text>
       </View>
 
       <OtpInput
@@ -76,29 +77,22 @@ const VerificationForm = ({navigation, route}) => {
         }}
       />
       <View style={styles.resendCode}>
-        <Text style={styles.text}>Không nhận được mã?</Text>
+        <Text style={style.t1}>Không nhận được mã?</Text>
         <TouchableOpacity onPress={handleResendOtp}>
-          <Text style={styles.btnText}> Gửi lại mã.</Text>
+          <Text style={[style.h4, style.primary]}> Gửi lại mã.</Text>
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.text}>Mã OTP hết hạn sau: {countdown}s</Text>
+      <Text style={style.t1}>Mã OTP hết hạn sau: {countdown}s</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleConfirm}>
-        <Text style={styles.submitBtnText}>Xác Nhận</Text>
+      <TouchableOpacity style={[style.btn]} onPress={handleConfirm}>
+        <Text style={[style.h3, style.white]}>Xác Nhận</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
   content: {
     marginBottom: 20,
     justifyContent: 'center',
@@ -132,11 +126,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: Fonts.bold,
   },
-  text: {
-    fontFamily: Fonts.regular,
-    color: '#000000',
-    fontSize: 16,
-  },
   submitBtnText: {
     fontFamily: Fonts.bold,
     color: '#ffffff',
@@ -149,7 +138,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   pinCodeText: {
-    color: '#ffffff',
+    color: '#000000',
   },
   focusStick: {
     color: '#ffffff',

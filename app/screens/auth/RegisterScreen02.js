@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
 import { registerUserTK } from '../../services/userService';
+import { style } from '../../component/Theme';
 
 // NHAP PASSWORD
 const verifyPassword = password => {
@@ -96,17 +97,17 @@ const RegisterScreen02 = ({navigation, route}) => {
           </View>
           <View style={styles.container02}>
             <View style={styles.container021}>
-              <Text style={styles.title}>Chào Mừng Đến Với BCareful!</Text>
-              <Text style={styles.content}>Nhập Password Để Tiếp Tục</Text>
+              <Text style={style.h1}>Chào Mừng Đến Với BCareful!</Text>
+              <Text style={style.p1}>Nhập Password Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>
               <View style={styles.itemGroup}>
-                <View style={styles.password}>
-                  <Text style={styles.itemText}>Mật Khẩu</Text>
+                <View style={style.spacebtw}>
+                  <Text style={style.h4}>Mật Khẩu</Text>
                 </View>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidPassword
                         ? '#7864EA'
@@ -122,10 +123,10 @@ const RegisterScreen02 = ({navigation, route}) => {
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidPassword && (
-                    <Text style={styles.errorText}>Chưa nhập mật khẩu</Text>
+                    <Text style={[style.t3, style.danger]}>Chưa nhập mật khẩu</Text>
                   )}
                   {!objValidInput.isPassword && (
-                    <Text style={styles.errorText}>
+                    <Text style={[style.t3, style.danger]}>
                       Mật khẩu ít nhất 8 kí tự (chữ hoa, thường, số, ký tự đặc
                       biệt).
                     </Text>
@@ -134,11 +135,11 @@ const RegisterScreen02 = ({navigation, route}) => {
               </View>
               <View style={styles.itemGroup}>
                 <View style={styles.password}>
-                  <Text style={styles.itemText}>Xác Nhận Mật Khẩu</Text>
+                  <Text style={style.h4}>Xác Nhận Mật Khẩu</Text>
                 </View>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidConfirmPassword
                         ? '#7864EA'
@@ -158,7 +159,7 @@ const RegisterScreen02 = ({navigation, route}) => {
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidConfirmPassword ? (
-                    <Text style={styles.errorText}>
+                    <Text style={[style.t3, style.danger]}>
                       Vui lòng xác nhận lại mật khẩu
                     </Text>
                   ) : (
@@ -167,22 +168,22 @@ const RegisterScreen02 = ({navigation, route}) => {
                 </View>
               </View>
             </View>
-            <View style={styles.container023}>
+            <View style={style.row}>
               <TouchableOpacity
-                style={styles.registerBtn}
+                style={style.btnSub}
                 onPress={handlePassword}>
-                <Text style={styles.registerText}>Tiếp tục</Text>
+                <Text style={[style.h4, style.white]}>Tiếp tục</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.container03}>
-            <Text style={styles.forgotPasswordText}>Đã có tài khoản?</Text>
+            <Text style={style.h4}>Đã có tài khoản?</Text>
             <TouchableOpacity
-              style={styles.loginBtn}
+              style={style.btnOutline}
               onPress={() => {
                 navigation.navigate('Login');
               }}>
-              <Text style={styles.loginText}>Đăng Nhập Tài Khoản</Text>
+              <Text style={style.h4}>Đăng Nhập Tài Khoản</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -253,11 +254,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000000',
     marginTop: -10,
-  },
-  itemText: {
-    color: '#000000',
-    fontSize: 16,
-    fontFamily: Fonts.bold,
   },
   itemTextInput: {
     fontSize: 16,

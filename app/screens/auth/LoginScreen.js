@@ -115,7 +115,7 @@ const LoginScreen = ({navigation}) => {
           <View style={styles.container02}>
             <View style={styles.container021}>
               <Text style={[style.h1]}>Chào Mừng Trở Lại BCareful!</Text>
-              <Text style={style.p1}>Đăng Nhập Để Tiếp Tục</Text>
+              <Text style={style.t1}>Đăng Nhập Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>
               <View style={styles.itemGroup}>
@@ -182,7 +182,10 @@ const LoginScreen = ({navigation}) => {
                 <Text style={[style.t3, style.px3]}>Lưu Thông Tin Đăng Nhập</Text>
               </View>
             </View>
-            <View style={styles.container023}>
+
+          </View>
+          <View style={styles.container03}>
+          <View style={styles.container023}>
               <TouchableOpacity
                 style={style.btn}
                 onPress={handleLogin}>
@@ -195,8 +198,6 @@ const LoginScreen = ({navigation}) => {
                 <Text style={style.t4}>Quên Mật Khẩu?</Text>
               </TouchableOpacity>
             </View>
-          </View>
-          <View style={styles.container03}>
             <TouchableOpacity
               style={style.btnOutlineSub}
               onPress={() => {

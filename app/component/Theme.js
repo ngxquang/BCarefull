@@ -87,7 +87,7 @@ export const style = StyleSheet.create(
     },
     h4: {
       fontFamily: Fonts.bold,
-      fontSize: 16,
+      fontSize: 18,
       color: '#000000',
     },
     h5: {
