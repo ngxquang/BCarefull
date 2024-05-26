@@ -5,8 +5,6 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  StatusBar,
-  SafeAreaView,
   useColorScheme,
   TextInput,
   Alert,
@@ -15,6 +13,7 @@ import {
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
 import { registerUserTK } from '../../services/userService';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 // NHAP PASSWORD
 const verifyPassword = password => {
@@ -24,8 +23,6 @@ const verifyPassword = password => {
 };
 
 const RegisterScreen02 = ({navigation, route}) => {
-  console.log('route2', route.params);
-  const isDarkMode = useColorScheme() === 'dark';
   const [password, setPassword] = useState('');
   const [confirmPassword, setConFirmPassword] = useState('');
   const maBN = route.params.MABN || null;
@@ -80,11 +77,6 @@ const RegisterScreen02 = ({navigation, route}) => {
         source={require('../../../assets/images/BackgroundLogin.png')}
         resizeMode="cover"
         style={styles.image}>
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        />
         <ScrollView
           style={styles.scrollView}
           keyboardShouldPersistTaps="hanlde">

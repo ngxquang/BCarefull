@@ -5,8 +5,6 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  StatusBar,
-  SafeAreaView,
   useColorScheme,
   TextInput,
   Alert,
@@ -16,10 +14,11 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import Fonts from '../../../assets/fonts/Fonts';
 import {verifyUser} from '../../services/userService';
-import {fetchAllBenhNhanAction} from '../../redux/slice/getAllBenhNhanSlice';
+import { fetchAllBenhNhanAction } from '../../redux/action/fetchAllBenhNhanAction';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 //NHAP EMAIL VA GUI XAC THUC
 const verifyEmail = email => {
@@ -28,7 +27,6 @@ const verifyEmail = email => {
 };
 
 const RegisterScreen01 = ({navigation}) => {
-  const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -36,8 +34,6 @@ const RegisterScreen01 = ({navigation}) => {
   const patients = useSelector(state => state.benhNhan?.data) || [];
   const selectDropdownRef = useRef();
   const [oldPatient, setOldPatient] = useState({});
-  console.log('patient', patients);
-  console.log('oldPatient', oldPatient.MABN);
 
   useEffect(() => {
     dispatch(fetchAllBenhNhanAction());
@@ -59,8 +55,6 @@ const RegisterScreen01 = ({navigation}) => {
       }
     }
   }, [email]);
-
-  console.log('displayPatients', displayPatients);
 
   const defaultObjValidInput = {
     isValidEmail: true,
@@ -116,11 +110,6 @@ const RegisterScreen01 = ({navigation}) => {
         source={require('../../../assets/images/BackgroundLogin.png')}
         resizeMode="cover"
         style={styles.image}>
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        />
         <ScrollView
           style={styles.scrollView}
           keyboardShouldPersistTaps="hanlde">
@@ -266,8 +255,7 @@ const RegisterScreen01 = ({navigation}) => {
                           {
                             justifyContent: 'center',
                             alignItems: 'center',
-                            flex: 1, // Thêm flex: 1 để chia đều không gian
-                            marginRight: 4, // Thêm khoảng cách giữa các View con nếu cần
+                            flex: 1,
                           },
                         ]}>
                         <Icon
@@ -289,7 +277,8 @@ const RegisterScreen01 = ({navigation}) => {
                           {
                             justifyContent: 'center',
                             alignItems: 'center',
-                            flex: 1, // Thêm flex: 1 để chia đều không gian
+                            flex: 1,
+                            flexGrow: 1,
                           },
                         ]}>
                         <Icon
@@ -493,7 +482,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '54%',
+    width: '60%',
     marginHorizontal: 'auto',
   },
   loginText: {

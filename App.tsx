@@ -47,7 +47,7 @@ function HomeTabsScreen() {
 
   return (
     <Home.Navigator
-      initialRouteName="Notification"
+      initialRouteName="Home"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color}) => {
           let iconName = '';

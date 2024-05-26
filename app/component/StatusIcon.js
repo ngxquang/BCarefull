@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Fonts from '../../assets/fonts/Fonts';
 
 const stylesMap = ['danger', 'warning', 'success', 'info'];
 
-function TTKICon({ value }) {
+function TTKICon({value}) {
   const values = [
     'Đã hủy',
     'Chưa thực hiện',
@@ -15,12 +15,23 @@ function TTKICon({ value }) {
   const style = getStyles(stt);
   return (
     <View style={[styles.common, style]}>
-      <Text style={styles.text}>{values[stt]}</Text>
+      <Text style={[styles.text, style]}>{values[stt]}</Text>
     </View>
   );
 }
 
-function TTTT({ value }) {
+function TTTTIcon({value = 'Không có đơn'}) {
+  const values = ['Không có đơn', 'Chưa thanh toán', 'Đã thanh toán'];
+  const stt = findIndexByValue(values, value);
+  const style = getStyles(stt);
+  return (
+    <View style={[styles.common, style]}>
+      <Text style={[styles.text, style]}>{values[stt]}</Text>
+    </View>
+  );
+}
+
+function TTCLS({value}) {
   const values = ['Không có đơn', 'Chưa thanh toán', 'Đã thanh toán'];
   const stt = findIndexByValue(values, value);
   const style = getStyles(stt);
@@ -31,18 +42,7 @@ function TTTT({ value }) {
   );
 }
 
-function TTCLS({ value }) {
-  const values = ['Không có đơn', 'Chưa thanh toán', 'Đã thanh toán'];
-  const stt = findIndexByValue(values, value);
-  const style = getStyles(stt);
-  return (
-    <View style={[styles.common, style]}>
-      <Text style={styles.text}>{values[stt]}</Text>
-    </View>
-  );
-}
-
-function TTT({ value }) {
+function TTT({value}) {
   const values = ['Không có đơn', 'Chưa thanh toán', 'Đã thanh toán'];
   const stt = findIndexByValue(values, value);
   const style = getStyles(stt);
@@ -79,21 +79,21 @@ function getStyles(index) {
 
 const styles = StyleSheet.create({
   common: {
-    padding: 4,
+    padding: 2,
     borderRadius: 10,
     borderWidth: 1,
-    marginVertical: 4,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   text: {
     fontFamily: Fonts.bold,
-    fontSize: 16
+    fontSize: 16,
   },
   danger: {
     backgroundColor: 'rgba(255, 0, 0, 0.1)',
     borderColor: 'red',
     color: 'red',
+    borderRadius: 10,
   },
   warning: {
     backgroundColor: 'rgba(255, 255, 0, 0.1)',
@@ -104,12 +104,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 255, 0, 0.1)',
     borderColor: 'green',
     color: 'green',
+    borderRadius: 10,
   },
   info: {
     backgroundColor: 'rgba(0, 0, 255, 0.1)',
     borderColor: 'blue',
     color: 'blue',
+    borderRadius: 10,
   },
 });
 
-export { TTKICon, TTTT, TTCLS, TTT };
+export {TTKICon, TTTTIcon, TTCLS, TTT};

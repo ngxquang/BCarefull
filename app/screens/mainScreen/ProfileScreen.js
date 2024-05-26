@@ -4,9 +4,7 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  SafeAreaView,
   ImageBackground,
-  StatusBar,
   ScrollView,
   TouchableOpacity,
   Alert,
@@ -15,12 +13,13 @@ import {
 import Fonts from '../../../assets/fonts/Fonts';
 import {useColorScheme} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {registerUserTK_BN, updateUser} from '../../services/userService';
+import {updateUser} from '../../services/userService';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import {BCarefulTheme} from '../../component/Theme';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const ProfileScreen = ({navigation, route}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -126,11 +125,6 @@ const ProfileScreen = ({navigation, route}) => {
         source={require('../../../assets/images/BackgroundLogin.png')}
         resizeMode="cover"
         style={styles.image}>
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        />
         <ScrollView
           style={styles.scrollView}
           keyboardShouldPersistTaps="handled">
@@ -346,7 +340,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 34,
+    marginVertical: 10,
   },
   container02: {
     flex: 1,
@@ -455,7 +449,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     fontFamily: Fonts.bold,
-    width: '40%',
+    width: '50%',
   },
   saveText: {
     color: '#FFFFFF',

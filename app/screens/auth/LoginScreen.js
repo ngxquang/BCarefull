@@ -6,19 +6,17 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  StatusBar,
-  SafeAreaView,
-  useColorScheme,
   TextInput,
   Alert,
   ScrollView,
   StyleSheet,
 } from 'react-native';
-// import Home from './home'
 import Fonts from '../../../assets/fonts/Fonts';
 import {login} from '../../redux/slice/authSlice';
 import {useDispatch} from 'react-redux';
 import {loginUser} from '../../services/userService';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {BCarefulTheme} from '../../component/Theme';
 
 const isValidEmail = email => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,7 +24,6 @@ const isValidEmail = email => {
 };
 
 const LoginScreen = ({navigation}) => {
-  const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
   const [email, setEmail] = useState('1@gmail.com');
   const [password, setPassword] = useState('Abc@1234');
@@ -96,14 +93,8 @@ const LoginScreen = ({navigation}) => {
         source={require('../../../assets/images/BackgroundLogin.png')}
         resizeMode="cover"
         style={styles.image}>
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        />
         <ScrollView
           style={styles.scrollView}
-          // contentContainerStyle={{flexGrow: 1}}
           keyboardShouldPersistTaps="hanlde">
           <View style={styles.container01}>
             <Image
@@ -267,7 +258,6 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginTop: -10,
   },
-  itemGroup: {},
   itemText: {
     color: '#000000',
     fontSize: 16,
@@ -277,7 +267,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 4,
     borderRadius: 10,
-    borderColor: '#7864EA',
+    borderColor: BCarefulTheme.colors.primary,
     backgroundColor: '#E8D5FF',
     fontFamily: Fonts.regular,
     paddingLeft: 8,
@@ -304,7 +294,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   saveInfoBtn: {
-    borderColor: '#EA793A',
+    borderColor: BCarefulTheme.colors.secondary,
     borderWidth: 4,
     borderRadius: 10,
     width: 20,
@@ -312,10 +302,11 @@ const styles = StyleSheet.create({
   },
   saveInfoText: {
     marginLeft: 14,
+    color: BCarefulTheme.colors.secondary,
     fontFamily: Fonts.regular,
   },
   loginButton: {
-    backgroundColor: '#7864EA',
+    backgroundColor: BCarefulTheme.colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
@@ -332,12 +323,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Nunito-Regular',
   },
-  newText: {
-    color: '#A8A8A8',
-    fontFamily: 'Nunito-Regular',
-  },
   createButton: {
-    borderColor: '#EA793A',
+    borderColor: BCarefulTheme.colors.secondary,
     borderWidth: 4,
     borderRadius: 12,
     paddingHorizontal: 14,
@@ -346,7 +333,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '54%',
+    width: '60%',
     marginHorizontal: 'auto',
   },
   createText: {

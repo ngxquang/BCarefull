@@ -224,6 +224,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#7864EA',
   },
   header: {
+    color: '#000',
     fontFamily: Fonts.bold,
     fontSize: 30,
     justifyContent: 'center',

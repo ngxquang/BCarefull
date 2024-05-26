@@ -1,30 +1,5 @@
-// app/redux/slice/getAllBenhNhanSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../../setup/axios';
-
-export const fetchAllBenhNhanAction = createAsyncThunk(
-  'fetchAllBenhNhanAction',
-  async () => {
-    try {
-      const response = await axios.get('/benhnhan/getAll/noMaTK');
-      return response.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
-
-export const fetchBenhNhanByIdAction = createAsyncThunk(
-  "fetchBenhNhanById",
-  async (maBN) => {
-    try {
-      const response = await axios.get(`/benhnhan/getById/${maBN}`);
-      return response.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllBenhNhanAction, fetchBenhNhanByIdAction } from '../action/fetchAllBenhNhanAction';
 
 const initialState = {
   data: [],
@@ -34,18 +9,18 @@ const initialState = {
 
 const fetchAllBenhNhanSlice = createSlice({
   name: 'patients',
-  initialState,
+  initialState: initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchAllBenhNhanAction.pending, (state) => {
+      .addCase(fetchAllBenhNhanAction.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(fetchAllBenhNhanAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchAllBenhNhanAction.rejected, (state) => {
+      .addCase(fetchAllBenhNhanAction.rejected, (state, action) => {
         state.isLoading = false;
       })
       .addCase(fetchBenhNhanByIdAction.fulfilled, (state, action) => {

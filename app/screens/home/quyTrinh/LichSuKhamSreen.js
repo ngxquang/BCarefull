@@ -5,28 +5,26 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
-  Button,
+  ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {IFNgay} from '../../../component/Layout/TabLayout/InputForm';
 import {fetchLSKByIdBnAction} from '../../../redux/action/fetchPhieuKhamAction';
 import Fonts from '../../../../assets/fonts/Fonts';
 import {BCarefulTheme} from '../../../component/Theme';
 import {TTKICon} from '../../../component/StatusIcon';
-import { compareDates } from '../../../util/appUtil';
+import {compareDates} from '../../../util/appUtil';
 
-function LichSuKhamScreen() {
+function LichSuKhamScreen({navigation}) {
   const dispatch = useDispatch();
   const lichSuKham = useSelector(state => state.phieuKham.lskByIdBn) || [];
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const [displayLSK, setDisplayLSK] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   console.log('user', user);
   console.log('lickSuKham', lichSuKham);
   const [trangThaiList, setTrangThaiList] = useState([
@@ -41,7 +39,7 @@ function LichSuKhamScreen() {
       let filteredLSK = [...lichSuKham];
       // Lọc theo ngày bắt đầu và ngày kết thúc
       if (startDate && endDate) {
-        filteredLSK = filteredLSK.filter((data) => {
+        filteredLSK = filteredLSK.filter(data => {
           const formatedNGAYKHAM = new Date(data.NGAYKHAM);
           return (
             compareDates(startDate, formatedNGAYKHAM) >= 0 &&
@@ -50,14 +48,14 @@ function LichSuKhamScreen() {
         });
       } else if (startDate) {
         // Chỉ có ngày bắt đầu
-        filteredLSK = filteredLSK.filter((data) => {
+        filteredLSK = filteredLSK.filter(data => {
           const formatedNGAYKHAM = new Date(data.NGAYKHAM);
 
           return compareDates(startDate, formatedNGAYKHAM) >= 0;
         });
       } else if (endDate) {
         // Chỉ có ngày kết thúc
-        filteredLSK = filteredLSK.filter((data) => {
+        filteredLSK = filteredLSK.filter(data => {
           const formatedNGAYKHAM = new Date(data.NGAYKHAM);
 
           return compareDates(formatedNGAYKHAM, endDate) >= 0;
@@ -111,17 +109,21 @@ function LichSuKhamScreen() {
       </View>
       <View style={styles.bodyRight}>
         <View style={styles.listItemDateTime}>
-          <Text style={styles.dateTime}>{item.NGAYKHAMMIN}</Text>
+          <Text style={styles.dateTime}>
+            {item.NGAYKHAMMIN.split(' - ')[0]}
+          </Text>
+          <Text style={styles.dateTime}>
+            {item.NGAYKHAMMIN.split(' - ')[1]}
+          </Text>
           <View>
-            <TTKICon
-              style={styles.trangThaiThucHien}
-              value={item.TRANGTHAITH}
-            />
+            <TTKICon value={item.TRANGTHAITH} />
           </View>
         </View>
         <View style={styles.listItemDetail}>
-          <TouchableOpacity style={styles.detail}>
-            <View style={{flex: 5}}>
+          <TouchableOpacity
+            style={styles.detail}
+            onPress={() => navigation.navigate('DSDV', {item})}>
+            <View style={{flex: 6}}>
               <Text style={styles.maPhieuKham}>MAPK - {item.MAPK}</Text>
               <Text style={styles.tenDichVu}>{item.TENDV.toUpperCase()}</Text>
             </View>
@@ -165,16 +167,30 @@ function LichSuKhamScreen() {
           Chọn ngày
         </Text>
         <View style={styles.dateRange}>
-          <IFNgay title={'Từ ngày'} onDateChange={value => setStartDate(value)}/>
+          <IFNgay
+            title={'Từ ngày'}
+            onDateChange={value => setStartDate(value)}
+          />
           <FontistoIcon name={'arrow-swap'} style={styles.icon} />
-          <IFNgay title={'Đến ngày'} onDateChange={value => setEndDate(value)}/>
+          <IFNgay
+            title={'Đến ngày'}
+            onDateChange={value => setEndDate(value)}
+          />
         </View>
       </View>
-      <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
-        <View style={styles.body}>
-          <FlatList data={displayLSK} renderItem={phieuKhamRenderItem} />
-        </View>
-      </ScrollView>
+      {displayLSK.length > 0 ? (
+        <>
+          <View style={styles.body}>
+            <FlatList data={displayLSK} renderItem={phieuKhamRenderItem} />
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.body}>
+            <ActivityIndicator size="large" />
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 }
@@ -217,11 +233,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 26,
-    paddingHorizontal: 10,
-    alignSelf: 'flex-end',
-  },
-  icon: {
-    fontSize: 26,
+    color: '#999',
     paddingHorizontal: 10,
     alignSelf: 'flex-end',
   },
@@ -229,7 +241,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
-    marginTop: 10,
+    flex: 1,
+    marginVertical: 10,
   },
   listItem: {
     flex: 1,
@@ -258,18 +271,18 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   bodyRight: {
-    flex: 14,
+    flex: 20,
     paddingVertical: 10,
-    paddingRight: 10,
+    paddingRight: 4,
     flexDirection: 'row',
     alignItems: 'center',
   },
   listItemDateTime: {
-    flex: 3,
-    paddingHorizontal: 10,
+    flex: 4,
+    paddingRight: 4,
   },
   listItemDetail: {
-    flex: 5,
+    flex: 6,
     backgroundColor: '#fff',
     borderRadius: 10,
   },
@@ -280,7 +293,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     borderColor: BCarefulTheme.colors.primary,
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
   listItemText: {
     fontSize: 16,
@@ -300,9 +313,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
   },
-  trangThaiThucHien: {
-    paddingHorizontal: 20,
-  },
   maPhieuKham: {
     fontFamily: Fonts.regular,
     fontSize: 16,
@@ -310,7 +320,7 @@ const styles = StyleSheet.create({
   },
   tenDichVu: {
     fontFamily: Fonts.bold,
-    fontSize: 20,
+    fontSize: 18,
     color: '#000',
   },
   chain: {
