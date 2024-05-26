@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -11,16 +11,16 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Fonts from '../../../assets/fonts/Fonts';
 import {verifyUser} from '../../services/userService';
-import { fetchAllBenhNhanAction } from '../../redux/action/fetchAllBenhNhanAction';
+import {fetchAllBenhNhanAction} from '../../redux/action/fetchAllBenhNhanAction';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { BCarefulTheme, style } from '../../component/Theme';
-import { color } from '@rneui/base';
+import {BCarefulTheme, style} from '../../component/Theme';
+import {color} from '@rneui/base';
 
 //NHAP EMAIL VA GUI XAC THUC
 const verifyEmail = email => {
@@ -69,18 +69,18 @@ const RegisterScreen01 = ({navigation}) => {
     if (displayPatients.length > 0) {
       selectDropdownRef.current?.openDropdown();
     } else {
-      setObjValidInput({ ...defaultObjValidInput, isRegister: false });
+      setObjValidInput({...defaultObjValidInput, isRegister: false});
     }
   };
 
   const handleVerify = async () => {
     setObjValidInput(defaultObjValidInput);
     if (!email) {
-      setObjValidInput({ ...defaultObjValidInput, isValidEmail: false });
+      setObjValidInput({...defaultObjValidInput, isValidEmail: false});
       return;
     }
     if (!verifyEmail(email)) {
-      setObjValidInput({ ...defaultObjValidInput, isEmail: false });
+      setObjValidInput({...defaultObjValidInput, isEmail: false});
       return;
     }
 
@@ -90,7 +90,7 @@ const RegisterScreen01 = ({navigation}) => {
 
     if (response && response.data && response.data.errcode === 0) {
       setIsLoading(false);
-      navigation.navigate('VerificationForm', { ...oldPatient, email });
+      navigation.navigate('VerificationForm', {...oldPatient, email});
     }
     if (response && response.data && response.data.errcode !== 0) {
       Alert.alert('Error', `${response.data.message}`);
@@ -98,7 +98,7 @@ const RegisterScreen01 = ({navigation}) => {
   };
 
   const handlePatientSelect = selectedItem => {
-    setOldPatient({ ...selectedItem });
+    setOldPatient({...selectedItem});
   };
 
   return (
@@ -179,17 +179,27 @@ const RegisterScreen01 = ({navigation}) => {
                       },
                       {
                         backgroundColor:
-                          email && verifyEmail(email) ? BCarefulTheme.colors.secondary : 'grey',
+                          email && verifyEmail(email)
+                            ? BCarefulTheme.colors.secondary
+                            : 'grey',
                       },
                     ]}
                     disabled={!(email && verifyEmail(email))}
                     onPress={openDropdown}>
-                    <Icon name={'account-search'} style={[styles.iconStyle, {color: email && verifyEmail(email) ? 'white' : 'grey'}]} />
+                    <Icon
+                      name={'account-search'}
+                      style={[
+                        styles.iconStyle,
+                        {color: email && verifyEmail(email) ? '#fff' : '#000'},
+                      ]}
+                    />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.error}>
                   {!objValidInput.isValidEmail && (
-                    <Text style={[style.t4, style.danger]}>Chưa nhập email.</Text>
+                    <Text style={[style.t4, style.danger]}>
+                      Chưa nhập email.
+                    </Text>
                   )}
                   {!objValidInput.isEmail && (
                     <Text style={[style.t4, style.danger]}>
@@ -210,7 +220,7 @@ const RegisterScreen01 = ({navigation}) => {
                     <View
                       style={{
                         ...styles.dropdownItemStyle,
-                        ...(isSelected && { backgroundColor: '#D2D9DF' }),
+                        ...(isSelected && {backgroundColor: '#D2D9DF'}),
                       }}>
                       <Text style={styles.dropdownItemTxtStyle}>
                         {item.HOTEN + ' - ' + item.SDT}
@@ -229,16 +239,16 @@ const RegisterScreen01 = ({navigation}) => {
                     <View
                       style={[
                         styles.itemGroup,
-                        { justifyContent: 'center', alignItems: 'center' },
+                        {justifyContent: 'center', alignItems: 'center'},
                       ]}>
                       <Icon
                         name={'information'}
-                        style={[styles.iconStyle, { marginRight: 8 }]}
+                        style={[styles.iconStyle, {marginRight: 8}]}
                       />
                       <TextInput
                         style={[
                           styles.itemText,
-                          { fontFamily: Fonts.regular, flex: 1 },
+                          {fontFamily: Fonts.regular, flex: 1},
                         ]}
                         value={oldPatient.HOTEN}
                         editable={false}
@@ -252,7 +262,8 @@ const RegisterScreen01 = ({navigation}) => {
                       }}>
                       <View
                         style={[
-                          style.spacebtw, style.center,
+                          style.spacebtw,
+                          style.center,
                           {
                             flex: 1, // Thêm flex: 1 để chia đều không gian
                             marginRight: 4, // Thêm khoảng cách giữa các View con nếu cần
@@ -260,12 +271,12 @@ const RegisterScreen01 = ({navigation}) => {
                         ]}>
                         <Icon
                           name={'barcode'}
-                          style={[styles.iconStyle, { marginRight: 8 }]}
+                          style={[styles.iconStyle, {marginRight: 8}]}
                         />
                         <TextInput
                           style={[
                             styles.itemText,
-                            { fontFamily: Fonts.regular, flex: 1 },
+                            {fontFamily: Fonts.regular, flex: 1},
                           ]}
                           value={'BN - ' + oldPatient.MABN}
                           editable={false}
@@ -273,19 +284,20 @@ const RegisterScreen01 = ({navigation}) => {
                       </View>
                       <View
                         style={[
-                          style.spacebtw, style.center,
+                          style.spacebtw,
+                          style.center,
                           {
                             flex: 1, // Thêm flex: 1 để chia đều không gian
                           },
                         ]}>
                         <Icon
                           name={'cellphone'}
-                          style={[styles.iconStyle, { marginRight: 8 }]}
+                          style={[styles.iconStyle, {marginRight: 8}]}
                         />
                         <TextInput
                           style={[
                             styles.itemText,
-                            { fontFamily: Fonts.regular, flex: 1 },
+                            {fontFamily: Fonts.regular, flex: 1},
                           ]}
                           value={oldPatient.SDT}
                           editable={false}
@@ -298,10 +310,9 @@ const RegisterScreen01 = ({navigation}) => {
                 <View style={styles.displayTTBN}></View>
               )}
             </View>
-
           </View>
           <View style={styles.container03}>
-          <View style={styles.container023}>
+            <View style={styles.container023}>
               <TouchableOpacity style={style.btnSub} onPress={handleVerify}>
                 <Text style={[style.h4, style.white]}>Xác thực</Text>
               </TouchableOpacity>
@@ -394,14 +405,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'back',
-    // marginTop: 10,
   },
   container03: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 30,
-    // marginVertical: 20,
   },
   logo: {
     marginLeft: 40,
@@ -443,7 +451,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   displayTTBN: {
-    height: 160,
+    height: 140,
     marginTop: 14,
   },
   errorText: {

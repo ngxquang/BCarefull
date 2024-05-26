@@ -16,7 +16,7 @@ import {login} from '../../redux/slice/authSlice';
 import {useDispatch} from 'react-redux';
 import {loginUser} from '../../services/userService';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { style, BCarefulTheme } from '../../component/Theme';
+import {style, BCarefulTheme} from '../../component/Theme';
 
 const isValidEmail = email => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -131,7 +131,9 @@ const LoginScreen = ({navigation}) => {
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidEmail && (
-                    <Text style={[style.t3, style.danger]}>Chưa nhập email</Text>
+                    <Text style={[style.t3, style.danger]}>
+                      Chưa nhập email
+                    </Text>
                   )}
                   {!objValidInput.isEmail && (
                     <Text style={[style.t3, style.danger]}>
@@ -161,7 +163,9 @@ const LoginScreen = ({navigation}) => {
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidPassword ? (
-                    <Text style={[style.t3, style.danger]}>Chưa nhập password</Text>
+                    <Text style={[style.t3, style.danger]}>
+                      Chưa nhập password
+                    </Text>
                   ) : (
                     <></>
                   )}
@@ -169,33 +173,30 @@ const LoginScreen = ({navigation}) => {
               </View>
               <View style={style.row}>
                 <TouchableOpacity style={styles.saveInfoBtn} />
-                <Text style={[style.t3, style.px3]}>Lưu Thông Tin Đăng Nhập</Text>
+                <Text style={[style.t3, style.px3]}>
+                  Lưu Thông Tin Đăng Nhập
+                </Text>
               </View>
             </View>
-
           </View>
-          <View style={styles.container03}>
           <View style={styles.container023}>
-              <TouchableOpacity
-                style={style.btn}
-                onPress={handleLogin}>
-                <Text style={[style.h4, style.white]}>Đăng Nhập</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ForgotPassword');
-                }}>
-                <Text style={style.t4}>Quên Mật Khẩu?</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={style.btn} onPress={handleLogin}>
+              <Text style={[style.h4, style.white]}>Đăng Nhập</Text>
+            </TouchableOpacity>
             <TouchableOpacity
-              style={style.btnOutlineSub}
               onPress={() => {
-                navigation.navigate('Register01');
+                navigation.navigate('ForgotPassword');
               }}>
-              <Text style={style.h4}>Đăng Kí Tài Khoản Mới</Text>
+              <Text style={style.t4}>Quên Mật Khẩu?</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={style.btnOutlineSub}
+            onPress={() => {
+              navigation.navigate('Register01');
+            }}>
+            <Text style={style.h4}>Đăng Kí Tài Khoản Mới</Text>
+          </TouchableOpacity>
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>
@@ -237,12 +238,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'back',
-  },
-  container03: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginTop: 30,
   },
   logo: {
     marginLeft: 40,
