@@ -28,7 +28,6 @@ const RegisterScreen02 = ({navigation, route}) => {
   const [confirmPassword, setConFirmPassword] = useState('');
   const maBN = route.params.MABN || null;
   const email = route.params.email;
-  console.log(maBN, email)
 
   const defaultObjValidInput = {
     isValidPassword: true,

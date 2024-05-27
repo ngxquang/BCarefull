@@ -24,7 +24,6 @@ function HomeScreen({navigation}) {
     dispatch(logout());
 
     if (response && response.data && response.data.errcode === 0) {
-      console.log('logout');
       navigation.navigate('Login');
     } else {
       toast.error(response.data.message);

@@ -86,7 +86,6 @@ const RegisterScreen01 = ({navigation}) => {
 
     setIsLoading(true);
     const response = await verifyUser(email);
-    console.log('email', email);
 
     if (response && response.data && response.data.errcode === 0) {
       setIsLoading(false);

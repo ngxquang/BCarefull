@@ -9,7 +9,6 @@ import { style } from '../../component/Theme';
 
 // XAC THUC EMAIL 
 const VerificationForm = ({navigation, route}) => {
-  console.log('validation', route.params);
   const [otp, setOtp] = useState('');
   const [countdown, setCountdown] = useState(60);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
@@ -37,14 +36,12 @@ const VerificationForm = ({navigation, route}) => {
   const handleConfirm = async () => {
     const email = route.params.email;
 
-    console.log('email', email, 'otp', otp);
     const response = await confirmUser(email, otp);
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert('', `${response.data.message}`);
       clearInterval(interval);
       navigation.navigate('Register02', {...route.params});
     } else {
-      console.log('response', response);
       Alert.alert('Error', `${response.data.message}`);
       clearInterval(interval);
     }

@@ -26,7 +26,6 @@ import socket from '../../setup/socket';
 // NHAP HO SO DANG KI (PASSWORD, INFO)
 const RegisterScreen03 = ({navigation, route}) => {
   const isDarkMode = useColorScheme() === 'dark';
-  console.log('route3', route.params);
   const dispatch = useDispatch();
   const selectDropdownRef = useRef();
   const patients = useSelector(state => state.benhNhan?.data) || [];
