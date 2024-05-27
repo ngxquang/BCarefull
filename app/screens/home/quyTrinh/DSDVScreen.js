@@ -129,9 +129,7 @@ function DSDVScreen({navigation, route}) {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.paidButton}
-                onPress={() => {
-                  handleThanhToan(item);
-                }}>
+                onPress={() => navigation.navigate('ThanhToan', {item})}>                
                 <TTTTIcon value={item.TTTT} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.routeButton}>
