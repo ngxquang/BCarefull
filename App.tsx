@@ -12,7 +12,7 @@ import NotificationScreen from './app/screens/mainScreen/NotificationScreen';
 import ProfileScreen from './app/screens/mainScreen/ProfileScreen';
 import InformationScreen from './app/screens/mainScreen/InformationScreen';
 import DatLichScreen from './app/screens/home/DatLichSreen';
-import LichThuocScreen from './app/screens/home/LichThuocScreen';
+import LichThuocScreen from './app/screens/home/lichUongThuoc/LichThuocScreen';
 import QuyTrinhScreen from './app/screens/home/quyTrinh/QuyTrinhScreen';
 import TheoDoiScreen from './app/screens/home/TheoDoiScreen';
 import ThongTinScreen from './app/screens/profile/ThongTinScreen';

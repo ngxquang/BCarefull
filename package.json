@@ -16,6 +16,7 @@
     "@rneui/base": "github:react-native-elements/react-native-elements#base",
     "@rneui/themed": "github:react-native-elements/react-native-elements#themed",
     "expo-linear-gradient": "^13.0.2",
+    "moment": "^2.30.1",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-linear-gradient": "^2.8.3",
