@@ -31,7 +31,6 @@ export const style = StyleSheet.create(
       paddingHorizontal: 16,
       paddingVertical: 8,
       fontSize: 16,
-      marginTop: 30,
     },
 
     btnSub: {
@@ -42,7 +41,6 @@ export const style = StyleSheet.create(
       paddingHorizontal: 16,
       paddingVertical: 8,
       fontSize: 16,
-      marginTop: 30,
     },
 
     btnOutline: {
@@ -166,12 +164,30 @@ export const style = StyleSheet.create(
       backgroundColor: BCarefulTheme.colors.light,
       fontFamily: Fonts.regular,
       paddingHorizontal: 12,
+      flexGrow: 1,
+      paddingVertical: 8,
+    },
+
+    input2: {
+      fontSize: 16,
+      borderWidth: 3,
+      borderRadius: 0,
+      borderTopLeftRadius: 10,
+      borderBottomLeftRadius: 10,
+      borderColor: BCarefulTheme.colors.primary,
+      backgroundColor: BCarefulTheme.colors.light,
+      fontFamily: Fonts.regular,
+      paddingHorizontal: 12,
+      flexGrow: 1,
+      paddingVertical: 8,
     },
 
     //regular style
     center: {
       justifyContent: 'center',
       alignItems: 'center',
+      alignContent: 'center',
+      alignSelf: 'center',
     },
     spacebtw: {
       flexDirection: 'row',
@@ -185,6 +201,14 @@ export const style = StyleSheet.create(
     upperCase: {
     textTransform: 'uppercase',
     },
+
+    line: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 8,
+      gap: 12,
+      flexGrow: 1,
+  },
 
     p0: { padding: 0 },
     p1: { padding: 2 },
@@ -300,6 +324,15 @@ export const style = StyleSheet.create(
     container: {
       flex: 1,
       paddingHorizontal: 16,
-    }
+    },
+
+    seperateHorizontal: {
+      justifyContent: 'center',
+      borderTopWidth: 2,
+      borderTopColor: BCarefulTheme.colors.primary,
+      alignItems: 'center',
+      margin: 12,
+      marginHorizontal: 8,
+    },
   }
 )
