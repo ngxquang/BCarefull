@@ -1,10 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchDsClsByIdAction, fetchAllClsAction } from '../action/fetchCLSAction';
+import {createSlice} from '@reduxjs/toolkit';
+import {
+  fetchDsClsByIdAction,
+  fetchAllClsAction,
+} from '../action/fetchCLSAction';
 
 const initialState = {
   dsClsById: [],
-  status: "",
-  loading: false,
+  isLoading: false,
   allCls: [],
 };
 
@@ -14,32 +16,26 @@ const fetchCLSSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchDsClsByIdAction.pending, (state) => {
-        state.status = 'loading';
-        state.loading = true;
+      .addCase(fetchDsClsByIdAction.pending, state => {
+        state.isLoading = true;
       })
       .addCase(fetchDsClsByIdAction.fulfilled, (state, action) => {
-        state.status = 'success';
-        state.loading = false;
+        state.isLoading = false;
         state.dsClsById = action.payload.data;
       })
-      .addCase(fetchDsClsByIdAction.rejected, (state) => {
-        state.status = 'failed';
-        state.loading = false;
+      .addCase(fetchDsClsByIdAction.rejected, state => {
+        state.isLoading = false;
       })
-      .addCase(fetchAllClsAction.pending, (state) => {
-        state.status = 'loading';
-        state.loading = true;
+      .addCase(fetchAllClsAction.pending, state => {
+        state.isLoading = true;
       })
       .addCase(fetchAllClsAction.fulfilled, (state, action) => {
-        state.status = 'success';
-        state.loading = false;
+        state.isLoading = false;
         state.allCls = action.payload.data;
       })
-      .addCase(fetchAllClsAction.rejected, (state) => {
-        state.status = 'failed';
-        state.loading = false;
-      })
+      .addCase(fetchAllClsAction.rejected, state => {
+        state.isLoading = false;
+      });
   },
 });
 

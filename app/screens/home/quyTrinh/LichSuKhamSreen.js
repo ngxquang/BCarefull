@@ -19,7 +19,8 @@ import {compareDates} from '../../../util/appUtil';
 
 function LichSuKhamScreen({navigation}) {
   const dispatch = useDispatch();
-  const lichSuKham = useSelector(state => state.phieuKham.lskByIdBn) || [];
+  const lichSuKham = useSelector(state => state.phieuKham?.lskByIdBn) || [];
+  const isLoading = useSelector(state => state.phieuKham?.isLoading);
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const [displayLSK, setDisplayLSK] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -178,16 +179,16 @@ function LichSuKhamScreen({navigation}) {
           />
         </View>
       </View>
-      {displayLSK.length > 0 ? (
+      {isLoading ? (
         <>
           <View style={styles.body}>
-            <FlatList data={displayLSK} renderItem={phieuKhamRenderItem} />
+            <ActivityIndicator size="large" />
           </View>
         </>
       ) : (
         <>
           <View style={styles.body}>
-            <ActivityIndicator size="large" />
+            <FlatList data={displayLSK} renderItem={phieuKhamRenderItem} />
           </View>
         </>
       )}

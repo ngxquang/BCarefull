@@ -166,6 +166,7 @@ export const style = StyleSheet.create(
       backgroundColor: BCarefulTheme.colors.light,
       fontFamily: Fonts.regular,
       paddingHorizontal: 12,
+      height: 56,
     },
 
     //regular style

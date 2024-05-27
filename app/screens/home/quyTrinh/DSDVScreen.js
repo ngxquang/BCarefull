@@ -28,7 +28,7 @@ import {BCarefulTheme} from '../../../component/Theme';
 import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamByIdAction';
 import {TTKICon} from '../../../component/StatusIcon';
 import {TTTTIcon} from '../../../component/StatusIcon';
-import FontistoIcon from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 function DSDVScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -49,14 +49,23 @@ function DSDVScreen({navigation, route}) {
   const benhById = useSelector(state => state.benhById.data) || [];
   console.log('benhById', benhById);
   const clsById = useSelector(state => state.clsById.dsClsById) || [];
+  const isLoadingCLS = useSelector(state => state.clsById.isLoading);
+  console.log('isLoadingCLS', isLoadingCLS);
+
   console.log('clsById', clsById);
-  const phieuKhamById = useSelector(state => state.phieuKhamById.data) || [];
+  const phieuKhamById = useSelector(state => state.phieuKhamById?.data) || [];
+  const isLoadingPK = useSelector(state => state.isLoading?.data);
+
+  console.log('isLoadingPK', isLoadingPK);
+
   console.log('phieuKhamById', phieuKhamById);
   const phieuKhamArray = Array.isArray(phieuKhamById)
     ? phieuKhamById
     : [phieuKhamById];
   const data = [...phieuKhamArray, ...clsById];
   console.log('data', data);
+  const isLoading = isLoadingCLS && isLoadingPK;
+  console.log('isLoading', isLoading);
 
   const [displayLSK, setDisplayLSK] = useState([]);
 
@@ -149,20 +158,24 @@ function DSDVScreen({navigation, route}) {
   console.log('mapk', maPK);
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.header}>
-        <Text style={styles.title}>Chi tiết phiếu khám MAPK - {maPK}</Text>
-        <Text style={styles.patientName}>{route.params.item.NGAYKHAMMIN}</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name={'arrow-back'} style={styles.icon} />
+        </TouchableOpacity>
+        <View style={styles.title}>
+          <Text style={styles.content}>Chi tiết phiếu khám MAPK - {maPK}</Text>
+          <Text style={styles.dateTime}>{route.params.item.NGAYKHAMMIN}</Text>
+        </View>
       </View>
-      {data.length > 0 ? (
+      {isLoadingCLS ? (
+        <>
+          <ActivityIndicator size="large" />
+        </>
+      ) : (
         <>
           <View style={styles.body}>
             <FlatList data={data} renderItem={phieuKhamRenderItem} />
           </View>
-        </>
-      ) : (
-        <>
-          <ActivityIndicator size="large" />
         </>
       )}
 
@@ -242,24 +255,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#DED9FA',
   },
   header: {
+    flexDirection: 'row',
     paddingVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
   },
   title: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  content: {
     fontSize: 20,
     fontFamily: Fonts.bold,
     color: '#000',
   },
-  patientName: {
+  dateTime: {
     fontSize: 16,
     color: '#000',
   },
   icon: {
     fontSize: 26,
-    paddingHorizontal: 10,
-    alignSelf: 'flex-end',
+    color: '#000',
+    marginLeft: -10,
+    marginRight: 10,
   },
   body: {
     marginTop: 20,

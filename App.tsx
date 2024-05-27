@@ -12,7 +12,7 @@ import store from './app/redux/store';
 import HomeScreen from './app/screens/mainScreen/HomeScreen';
 import NotificationScreen from './app/screens/mainScreen/NotificationScreen';
 import ProfileScreen from './app/screens/mainScreen/ProfileScreen';
-import InformationScreen from './app/screens/mainScreen/InformationScreen';
+import SystemScreen from './app/screens/mainScreen/SystemScreen';
 import DatLichScreen from './app/screens/home/datLich/DatLichSreen';
 import LichThuocScreen from './app/screens/home/LichThuocScreen';
 import QuyTrinhScreen from './app/screens/home/quyTrinh/QuyTrinhScreen';
@@ -31,12 +31,13 @@ import RegisterScreen02 from './app/screens/auth/RegisterScreen02';
 import RegisterScreen03 from './app/screens/auth/RegisterScreen03';
 import VerificationForm from './app/screens/auth/VerificationForm';
 import ChonHoSo from './app/component/ChonHoSo';
-import { Linking, AppState } from 'react-native';
-import { useEffect, useState } from 'react';
+import {Linking, AppState} from 'react-native';
+import {useEffect, useState} from 'react';
 import socket from './app/setup/socket';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 import axios from './app/setup/axios';
 import CarouselScreen from './app/screens/auth/CarouselScreen';
+import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -58,8 +59,8 @@ function HomeTabsScreen() {
             iconName = focused ? 'notifications' : 'notifications-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'Information') {
-            iconName = focused ? 'documents' : 'documents-outline';
+          } else if (route.name === 'System') {
+            iconName = focused ? 'menu' : 'menu-outline';
           }
           return <Icon name={iconName} type="ionicon" color={color} />;
         },
@@ -68,7 +69,7 @@ function HomeTabsScreen() {
       <Home.Screen name="Home" component={HomeScreen} />
       <Home.Screen name="Notification" component={NotificationScreen} />
       <Home.Screen name="Profile" component={ProfileScreen} />
-      <Home.Screen name="Information" component={InformationScreen} />
+      <Home.Screen name="System" component={SystemScreen} />
     </Home.Navigator>
   );
 }
@@ -79,12 +80,12 @@ function App(): React.JSX.Element {
     config: {
       screens: {
         LichSuKham: 'dsdv',
-      }
-    }
+      },
+    },
   };
 
-  const handleDeepLink = async ({ url }: { url: string }) => {
-    console.log(">>>>>>>>>ham handle deeplink dược sọi")
+  const handleDeepLink = async ({url}: {url: string}) => {
+    console.log('>>>>>>>>>ham handle deeplink dược sọi');
     if (url) {
       console.log('Parsed parameters:', url);
       // const response = await axios.post("/hoadon/thanhtoan", {
@@ -100,30 +101,31 @@ function App(): React.JSX.Element {
       //   socket.emit("send-message", {actionName: 'DSHD', maID: 181});
       //   socket.emit("send-message", {actionName: 'DSDK'});
       // }
-    }
-    else {
+    } else {
       console.log('>>>>>>> ko nhan duoc url deeplink');
     }
   };
 
   useEffect(() => {
-    socket.emit("send-message", {message: 'HELLO FROM MOBILE'});
-    socket.on("receive-message", (data: object)=>{
-      Alert.alert("Co nguoi khac dang nhap");
-    })
-    
+    socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
+    socket.on('receive-message', (data: object) => {
+      Alert.alert('Co nguoi khac dang nhap');
+    });
+
     // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
     const linkingListener = Linking.addEventListener('url', handleDeepLink);
 
     return () => {
       linkingListener.remove();
     };
-  })
-  
+  });
+
   return (
     <Provider store={store}>
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
-        <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{headerShown: false}}>
           {/* Home */}
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
           <Stack.Group>
@@ -148,7 +150,11 @@ function App(): React.JSX.Element {
             <Stack.Screen name="Register01" component={RegisterScreen01} />
             <Stack.Screen name="Register02" component={RegisterScreen02} />
             <Stack.Screen name="Register03" component={RegisterScreen03} />
-            <Stack.Screen name="VerificationForm" component={VerificationForm} />
+            <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+            <Stack.Screen
+              name="VerificationForm"
+              component={VerificationForm}
+            />
             <Stack.Screen name="Carousel" component={CarouselScreen} />
           </Stack.Group>
         </Stack.Navigator>

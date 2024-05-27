@@ -17,6 +17,7 @@ import {useDispatch} from 'react-redux';
 import {loginUser} from '../../services/userService';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {style, BCarefulTheme} from '../../component/Theme';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const isValidEmail = email => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,8 +26,9 @@ const isValidEmail = email => {
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('22520357@gm.uit.edu.vn');
+  const [email, setEmail] = useState('1@gmail.com');
   const [password, setPassword] = useState('Abc@1234');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const defaultObjValidInput = {
     isValidEmail: true,
     isEmail: true,
@@ -87,6 +89,10 @@ const LoginScreen = ({navigation}) => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -95,7 +101,7 @@ const LoginScreen = ({navigation}) => {
         style={styles.image}>
         <ScrollView
           style={styles.scrollView}
-          keyboardShouldPersistTaps="hanlde">
+          keyboardShouldPersistTaps="handle">
           <View style={styles.container01}>
             <Image
               source={require('../../../assets/images/Logo.png')}
@@ -108,7 +114,7 @@ const LoginScreen = ({navigation}) => {
               <Text style={style.t1}>Đăng Nhập Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>
-              <View style={styles.itemGroup}>
+              <View>
                 <Text style={style.h4}>Email</Text>
                 <TextInput
                   style={[
@@ -143,24 +149,57 @@ const LoginScreen = ({navigation}) => {
                 </View>
               </View>
               <View>
-                <View style={style.spacebtw}>
-                  <Text style={style.h4}>Mật Khẩu</Text>
+                <Text style={style.h4}>Mật Khẩu</Text>
+                <View style={styles.itemGroup}>
+                  <TextInput
+                    style={[
+                      style.input,
+                      {
+                        borderColor: objValidInput.isValidPassword
+                          ? '#7864EA'
+                          : 'red',
+                      },
+                      {
+                        color: objValidInput.isValidPassword ? 'black' : 'red',
+                      },
+                      {
+                        borderRadius: 0,
+                        borderTopLeftRadius: 10,
+                        borderBottomLeftRadius: 10,
+                        flexGrow: 1,
+                      },
+                    ]}
+                    value={password}
+                    onChangeText={value => setPassword(value)}
+                    autoCapitalize="none"
+                    secureTextEntry={!isPasswordVisible}
+                  />
+                  <TouchableOpacity
+                    style={[
+                      styles.dropdownButtonStyle,
+                      {
+                        borderWidth: 3,
+                        borderRadius: 0,
+                        borderTopRightRadius: 10,
+                        borderBottomRightRadius: 10,
+                      },
+                      {
+                        borderColor: objValidInput.isValidPassword
+                          ? '#7864EA'
+                          : 'red',
+                      },
+                      {
+                        color: objValidInput.isValidPassword ? 'black' : 'red',
+                      },
+                    ]}
+                    onPress={togglePasswordVisibility}>
+                    <Icon
+                      name={isPasswordVisible ? 'eye-off' : 'eye'}
+                      size={20}
+                      style={styles.eyeIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
-                <TextInput
-                  style={[
-                    style.input,
-                    {
-                      borderColor: objValidInput.isValidPassword
-                        ? '#7864EA'
-                        : 'red',
-                    },
-                    {color: objValidInput.isValidPassword ? 'black' : 'red'},
-                  ]}
-                  value={password}
-                  onChangeText={value => setPassword(value)}
-                  autoCapitalize="none"
-                  secureTextEntry={true}
-                />
                 <View style={styles.error}>
                   {!objValidInput.isValidPassword ? (
                     <Text style={[style.t3, style.danger]}>
@@ -243,13 +282,30 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginTop: 80,
   },
+  itemGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  dropdownButtonStyle: {
+    backgroundColor: BCarefulTheme.colors.primary,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderWidth: 3,
+    borderStartWidth: 0,
+    borderColor: BCarefulTheme.colors.primary,
+  },
+  eyeIcon: {
+    color: '#fff',
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   error: {
     height: 24,
-  },
-  forgotPasswordText: {
-    color: '#606060',
-    fontSize: 10,
-    fontFamily: Fonts.regular,
   },
   saveInfoBtn: {
     borderColor: BCarefulTheme.colors.secondary,
@@ -257,10 +313,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 20,
     height: 20,
-  },
-  newText: {
-    color: '#A8A8A8',
-    fontFamily: Fonts.regular,
   },
 });
 

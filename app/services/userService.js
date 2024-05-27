@@ -32,14 +32,14 @@ export const updateUser = formData => {
   return axios.post('/benhnhan/update', formData);
 };
 
-// export const changeUserPassword = (username, oldPassword, newPassword) => {
-//   return axios.post("/account/changePassword", {
-//     username,
-//     oldPassword,
-//     newPassword
-//   });
-// };
+export const changeUserPassword = (username, oldPassword, newPassword) => {
+  return axios.post("/account/changePassword", {
+    username,
+    oldPassword,
+    newPassword
+  });
+};
 
-// export const logoutUser = () => {
-//   return axios.post("/account/logout");
-// };
+export const logoutUser = () => {
+  return axios.post("/account/logout");
+};
