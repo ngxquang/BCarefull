@@ -16,9 +16,11 @@ import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 function ThanhToanScreen({navigation, route}) {
+  const dispatch = useDispatch();
   const itemThanhToan = route.params.item;
   const ctdtById = route.params.ctdtById;
   const clsById = route.params.clsByIdArray;
+  const pkByIdHd = route.params.pkByIdHd;
 
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const [showSpecialities, setShowSpecialities] = useState(false);
@@ -37,7 +39,6 @@ function ThanhToanScreen({navigation, route}) {
     },
   ];
   const [chiTietHD, setChiTietHD] = useState(specialities);
-  const [tongHD, setTongHD] = useState(0);
 
   useEffect(() => {
     if (itemThanhToan.TENLOAIDV === 'Hóa đơn thuốc') {
@@ -64,6 +65,17 @@ function ThanhToanScreen({navigation, route}) {
       });
       setChiTietHD(formatDSCLS);
     }
+    if (!itemThanhToan.TENLOAIDV) {
+      const formatDSPK = pkByIdHd.map(item => {
+        return {
+          name: item.TENDV?.toUpperCase(),
+          quantity: 1,
+          fee: item.GIADVLUCDK?.toLocaleString('vi-VN') + 'đ',
+          total: item.GIADVLUCDK?.toLocaleString('vi-VN') + 'đ',
+        };
+      });
+      setChiTietHD(formatDSPK);
+    }
   }, []);
 
   const openDeepLink = url => {
@@ -79,7 +91,11 @@ function ThanhToanScreen({navigation, route}) {
   };
 
   const handleThanhToan = async () => {
-    const response = await axios.post('hoadon/test-momo');
+    const response = await axios.post('hoadon/test-momo', {
+      MAHD: itemThanhToan.MAHD,
+      TENLOAIDV: itemThanhToan.TENLOAIDV,
+      THANHTIEN: itemThanhToan.THANHTIEN,
+    });
     // const jsonRes = JSON.parse(response.data);
     console.log('DEEPLINK>>>>>', response.data.data.deeplink);
     openDeepLink(response.data.data.deeplink);
@@ -314,7 +330,7 @@ const cthdStyles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 5,
     alignItems: 'flex-start',
   },
   label: {

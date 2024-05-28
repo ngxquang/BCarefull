@@ -15,6 +15,7 @@ import getAllThuocReducer from './slice/getAllThuocSlice'
 import getTTKReducer from './slice/getTTKSlice'
 import getBenhByIdReducer from './slice/getBenhByIdSlice'
 import getPhieuKhamByIdReducer from './slice/getPhieuKhamByIdSlice'
+import selectedItemReducer from './slice/selectedItemSlice'
 
 const store = configureStore({
   reducer: {
@@ -29,7 +30,7 @@ const store = configureStore({
     ctdtById: getCTDTByIdRecuder,
     clsById: getCLSRecuder,
     existedCTDT: getCTDTByIdRecuder,
-    // selectedRow: selectedRowReducer,
+    selectedItem: selectedItemReducer,
     auth: authReducer,
     loaiDichVu: getAllLoaiDichVuReducer,
     benh: getAllBenhReducer,

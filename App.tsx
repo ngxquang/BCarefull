@@ -81,7 +81,7 @@ function App(): React.JSX.Element {
     prefixes: ['bcareful://'],
     config: {
       screens: {
-        LichSuKham: 'dsdv',
+        DSDV: 'dsdv',
       },
     },
   };

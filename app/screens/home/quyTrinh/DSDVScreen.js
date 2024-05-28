@@ -23,21 +23,63 @@ import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamById
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../../../assets/fonts/Fonts';
+import {selectItemThanhToan} from '../../../redux/slice/selectedItemSlice';
+import axios from '../../../setup/axios';
+import socket from '../../../setup/socket';
 
 function DSDVScreen({navigation, route}) {
+  console.log('ROUTE >>>>>>>>>>>>>>>> ', route);
   const dispatch = useDispatch();
-  const maPK = route.params.item.MAPK;
+  const selectedItemThanhToan = useSelector(
+    state => state.selectedItem?.selectedItemThanhToan,
+  );
+  const selectedItem = useSelector(state => state.selectedItem?.selectedItem);
+  const maPK = route.params.item ? route.params?.item.MAPK : selectedItem.MAPK;
+  const maHDofPK = route.params.item
+    ? route.params?.item.MAHD
+    : selectedItem.MAHD;
+  const NGAYKHAMMIN = route.params.item
+    ? route.params?.item.NGAYKHAMMIN
+    : selectedItem.NGAYKHAMMIN;
+
+  // useEffect(async () => {
+  //
+  // }, []);
 
   useEffect(() => {
+    console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
+
+    const updateHoaDon = async (selectedItemThanhToan) => {
+      const response = await axios.post('/hoadon/thanhtoan', {
+        MAHD: selectedItemThanhToan.MAHD,
+        THANHTIEN: selectedItemThanhToan.THANHTIEN,
+        maLT: 102,
+        tttt: 'Đã thanh toán',
+        tdtt: new Date(),
+        pttt: 'Chuyển khoản',
+      });
+      if (response.status === 200) {
+        dispatch(fetchCTDTByIdAction(maPK));
+        dispatch(fetchPhieuKhamByIdAction(maPK));
+        dispatch(fetchDsClsByIdAction(maPK));
+        socket.emit('send-message', {actionName: 'DSHD', maID: maPK});
+        socket.emit('send-message', {actionName: 'DSDK'});
+      }
+    };
+
+    if (route && route.params.resultCode === "0") {
+      updateHoaDon(selectedItemThanhToan);
+    }
+
     dispatch(fetchCTDTByIdAction(maPK));
     dispatch(fetchBenhNhanByIdAction(maPK));
     dispatch(fetchDSHDByIdAction(maPK));
     dispatch(fetchDsClsByIdAction(maPK));
-    dispatch(fetchPkByIdHdAction(maPK));
+    dispatch(fetchPkByIdHdAction(maHDofPK));
     dispatch(fetchTTKAction(maPK));
     dispatch(fetchBenhByIdAction(maPK));
     dispatch(fetchPhieuKhamByIdAction(maPK));
-  }, [maPK]);
+  }, [route]);
 
   const ctdtById = useSelector(state => state.ctdtById.data) || [];
   console.log('ctdtById', ctdtById);
@@ -70,9 +112,8 @@ function DSDVScreen({navigation, route}) {
   const data = [...phieuKhamArray, ...clsByIdArray, donThuoc];
 
   const handleThanhToan = item => {
-    if (item.TTTT !== 'Đã thanh toán') {
-      navigation.navigate('ThanhToan');
-    }
+    dispatch(selectItemThanhToan(item));
+    navigation.navigate('ThanhToan', {item, ctdtById, clsByIdArray, pkByIdHd});
   };
 
   const phieuKhamRenderItem = ({item}) => (
@@ -98,7 +139,9 @@ function DSDVScreen({navigation, route}) {
             </View>
           )}
           <TouchableOpacity
-            onPress={() => navigation.navigate('KetQuaKham', {item, ctdtById, benhById})}>
+            onPress={() =>
+              navigation.navigate('KetQuaKham', {item, ctdtById, benhById})
+            }>
             <View style={styles.detailsContainer}>
               <Text style={styles.tenDichVu}>{item.TENDV}</Text>
               {item.INFOBSCD && item.INFOBSTH ? (
@@ -135,7 +178,7 @@ function DSDVScreen({navigation, route}) {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.paidButton}
-                  onPress={() => navigation.navigate('ThanhToan', {item, ctdtById, clsByIdArray})}>
+                  onPress={() => handleThanhToan(item)}>
                   <TTTTIcon value={item.TTTT} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.routeButton}>
@@ -157,7 +200,7 @@ function DSDVScreen({navigation, route}) {
         </TouchableOpacity>
         <View style={styles.title}>
           <Text style={styles.content}>Chi tiết phiếu khám MAPK - {maPK}</Text>
-          <Text style={styles.dateTime}>{route.params.item.NGAYKHAMMIN}</Text>
+          <Text style={styles.dateTime}>{NGAYKHAMMIN}</Text>
         </View>
       </View>
       {isLoading ? (
