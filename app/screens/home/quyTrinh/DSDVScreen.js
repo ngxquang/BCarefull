@@ -59,9 +59,12 @@ function DSDVScreen({navigation, route}) {
   const donThuoc = {
     TENDV: 'Đơn thuốc',
     NGAYKHAMMIN: ctdtById[0]?.TDTTMIN,
+    TDTTMIN: ctdtById[0]?.TDTTMIN,
     TTTT: ctdtById[0]?.TTTT,
     NGUOIBAN: ctdtById[0]?.HOTEN,
-    TENLOAIDV: 'Đơn thuốc',
+    TENLOAIDV: 'Hóa đơn thuốc',
+    MAHD: ctdtById[0]?.MAHD,
+    THANHTIEN: ctdtById[0]?.THANHTIEN,
   };
 
   const data = [...phieuKhamArray, ...clsByIdArray, donThuoc];
@@ -132,7 +135,7 @@ function DSDVScreen({navigation, route}) {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.paidButton}
-                  onPress={() => handleThanhToan(item)}>
+                  onPress={() => navigation.navigate('ThanhToan', {item, ctdtById, clsByIdArray})}>
                   <TTTTIcon value={item.TTTT} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.routeButton}>

@@ -12,11 +12,59 @@ import {BCarefulTheme} from '../../../component/Theme';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Fonts from '../../../../assets/fonts/Fonts';
 import {useDispatch, useSelector} from 'react-redux';
+import {useState, useEffect} from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 function ThanhToanScreen({navigation, route}) {
-  const item = route.params.item;
-  console.log('ITEM THANH TOAN>>>>>>>>>', item);
+  const itemThanhToan = route.params.item;
+  const ctdtById = route.params.ctdtById;
+  const clsById = route.params.clsByIdArray;
+
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  const [showSpecialities, setShowSpecialities] = useState(false);
+  const specialities = [
+    {
+      name: 'KHÁM DA LIỄU',
+      quantity: '1',
+      fee: '150.000đ',
+      total: '150.000đ',
+    },
+    {
+      name: 'RỬA VẾT THƯƠNG ĐƠN GIẢN',
+      quantity: '1',
+      fee: '300.000đ',
+      total: '300.000đ',
+    },
+  ];
+  const [chiTietHD, setChiTietHD] = useState(specialities);
+  const [tongHD, setTongHD] = useState(0);
+
+  useEffect(() => {
+    if (itemThanhToan.TENLOAIDV === 'Hóa đơn thuốc') {
+      const formatCTDT = ctdtById.map(item => {
+        return {
+          name: item.TENTHUOC?.toUpperCase(),
+          quantity: item.SOLUONGTHUOC,
+          fee: item.GIABANLUCKE?.toLocaleString('vi-VN') + 'đ',
+          total:
+            (item.GIABANLUCKE * item.SOLUONGTHUOC).toLocaleString('vi-VN') +
+            'đ',
+        };
+      });
+      setChiTietHD(formatCTDT);
+    }
+    if (itemThanhToan.TENLOAIDV === 'Cận lâm sàng') {
+      const formatDSCLS = clsById.map(item => {
+        return {
+          name: item.TENDV?.toUpperCase(),
+          quantity: 1,
+          fee: item.GIADVCLSLUCDK?.toLocaleString('vi-VN') + 'đ',
+          total: item.GIADVCLSLUCDK?.toLocaleString('vi-VN') + 'đ',
+        };
+      });
+      setChiTietHD(formatDSCLS);
+    }
+  }, []);
 
   const openDeepLink = url => {
     Linking.openURL(url)
@@ -37,8 +85,31 @@ function ThanhToanScreen({navigation, route}) {
     openDeepLink(response.data.data.deeplink);
   };
 
+  const SpecialityCard = ({speciality}) => {
+    return (
+      <View style={cthdStyles.card}>
+        <View style={cthdStyles.row}>
+          <Text style={cthdStyles.label}>Mặt hàng:</Text>
+          <Text style={cthdStyles.nameValue}>{speciality.name}</Text>
+        </View>
+        <View style={cthdStyles.row}>
+          <Text style={cthdStyles.label}>Số lượng:</Text>
+          <Text style={cthdStyles.value}>{speciality.quantity}</Text>
+        </View>
+        <View style={cthdStyles.row}>
+          <Text style={cthdStyles.label}>Đơn giá:</Text>
+          <Text style={cthdStyles.value}>{speciality.fee}</Text>
+        </View>
+        <View style={cthdStyles.row}>
+          <Text style={cthdStyles.label}>Thành tiền:</Text>
+          <Text style={cthdStyles.value}>{speciality.total}</Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Hóa Đơn</Text>
       </View>
@@ -46,47 +117,76 @@ function ThanhToanScreen({navigation, route}) {
         <View style={styles.separator} />
 
         <View style={styles.row}>
-          <Text style={styles.label}>Thời gian</Text>
-          <Text style={styles.value}>{item.NGAYKHAMMIN}</Text>
-        </View>
-
-        <View style={styles.row}>
           <Text style={styles.label}>Khách hàng</Text>
-          <Text style={styles.value}>
-            {user.HOTEN}
-          </Text>
+          <Text style={styles.value}>{user.HOTEN}</Text>
         </View>
 
         <View style={styles.row}>
           <Text style={styles.label}>Mã hồ sơ</Text>
-          <Text style={styles.value}>
-            BN - {user.MABN}
-          </Text>
+          <Text style={styles.value}>BN - {user.MABN}</Text>
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.label}>Nội dung</Text>
-          <Text style={styles.value}>{item.TENDV}</Text>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>Người lập hóa đơn</Text>
+          <Text style={styles.label}>Tài khoản thụ hưởng</Text>
           <Text style={styles.value}>Bưởi Company</Text>
         </View>
 
         <View style={styles.row}>
           <Text style={styles.label}>Loại hóa đơn</Text>
-          <Text style={styles.value}>Hóa Đơn Khám</Text>
+          <Text style={styles.value}>
+            {itemThanhToan.TENLOAIDV || 'Hóa đơn khám'}
+          </Text>
         </View>
 
         <View style={styles.separator} />
 
         <View style={styles.row}>
+          <Text style={cthdStyles.header}>
+            Chi tiết hóa đơn ({chiTietHD.length})
+          </Text>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => setShowSpecialities(!showSpecialities)}>
+            <Icon
+              name={
+                showSpecialities
+                  ? 'caret-up-circle-outline'
+                  : 'caret-down-circle-outline'
+              }
+              size={30}
+              color="#7864EA"
+            />
+          </TouchableOpacity>
+        </View>
+
+        {showSpecialities && (
+          <ScrollView contentContainerStyle={cthdStyles.container}>
+            {chiTietHD.map((speciality, index) => (
+              <SpecialityCard key={index} speciality={speciality} />
+            ))}
+          </ScrollView>
+        )}
+
+        <View style={styles.separator} />
+
+        <View style={styles.row}>
           <Text style={styles.labelBold}>Tổng hóa đơn</Text>
-          <Text style={styles.valueBold}>200.000 VNĐ</Text>
+          <Text style={styles.valueBold}>
+            {itemThanhToan.THANHTIEN?.toLocaleString('vi-VN') + 'đ'}
+          </Text>
         </View>
 
         <View style={styles.separator} />
+
+        <View style={styles.row}>
+          <Text style={styles.label}>Trạng thái thanh toán</Text>
+          <Text style={styles.value}>{itemThanhToan.TTTT}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>Thời điểm thanh toán</Text>
+          <Text style={styles.value}>{itemThanhToan.TDTTMIN}</Text>
+        </View>
 
         <View style={styles.row}>
           <Text style={styles.label}>Phương thức thanh toán</Text>
@@ -104,6 +204,9 @@ function ThanhToanScreen({navigation, route}) {
 }
 
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#FFFFFF',
@@ -111,7 +214,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#7864EA',
-    width: 361,
+    flexGrow: 1,
     height: 111,
     justifyContent: 'center',
     alignItems: 'center',
@@ -179,6 +282,61 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     color: '#FFFFFF',
     fontSize: 20,
+  },
+  iconButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+});
+
+const cthdStyles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    padding: 1,
+  },
+  header: {
+    fontSize: 18,
+    fontFamily: Fonts.bold,
+    color: '#6A0DAD',
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    alignItems: 'flex-start',
+  },
+  label: {
+    fontFamily: Fonts.regular,
+    fontSize: 16,
+    color: '#333333',
+    flex: 1,
+    textAlign: 'left',
+  },
+  value: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: '#000000',
+    flex: 2,
+    textAlign: 'right',
+  },
+  nameValue: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: '#7864EA',
+    flex: 2,
+    textAlign: 'right',
   },
 });
 
