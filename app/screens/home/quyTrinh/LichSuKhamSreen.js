@@ -26,8 +26,6 @@ function LichSuKhamScreen({navigation}) {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  console.log('user', user);
-  console.log('lickSuKham', lichSuKham);
   const [trangThaiList, setTrangThaiList] = useState([
     {id: 1, title: 'Chưa thực hiện'},
     {id: 2, title: 'Đang thực hiện'},
@@ -64,15 +62,11 @@ function LichSuKhamScreen({navigation}) {
       }
 
       // Lọc theo từ khóa tìm kiếm
-      console.log('searchKeyword', searchKeyword);
       if (searchKeyword) {
         filteredLSK = filteredLSK.filter(
           data => data.TRANGTHAITH === searchKeyword,
         );
       }
-      console.log('filteredLSK', filteredLSK);
-      console.log('startDate', startDate);
-      console.log('endDate', endDate);
 
       setDisplayLSK(filteredLSK);
     }

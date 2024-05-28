@@ -38,6 +38,8 @@ import {Alert} from 'react-native';
 import axios from './app/setup/axios';
 import CarouselScreen from './app/screens/auth/CarouselScreen';
 import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
+import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScreen';
+import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -157,6 +159,10 @@ function App(): React.JSX.Element {
             />
             <Stack.Screen name="Carousel" component={CarouselScreen} />
           </Stack.Group>
+
+          <Stack.Screen name="ChonDichVu" component={DichVuScreen} />
+          <Stack.Screen name="ChonBacSi" component={BacSiScreen} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

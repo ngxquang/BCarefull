@@ -55,7 +55,6 @@ const ProfileScreen = ({navigation, route}) => {
 
   const [formData, setFormData] = useState(formDataDefault);
   const [showMore, setShowMore] = useState(false);
-  console.log('formData', formData);
 
   useEffect(() => {
     if (userInfo) {

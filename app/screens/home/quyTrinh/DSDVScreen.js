@@ -1,13 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Button} from '@rneui/themed';
 import {
   View,
   Text,
-  Image,
-  ImageBackground,
   TouchableOpacity,
-  StatusBar,
-  useColorScheme,
   TextInput,
   Alert,
   FlatList,
@@ -15,7 +10,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Fonts from '../../../../assets/fonts/Fonts';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchCTDTByIdAction} from '../../../redux/action/fetchCTDTById';
 import {fetchBenhNhanByIdAction} from '../../../redux/action/fetchAllBenhNhanAction';
@@ -26,52 +20,53 @@ import {fetchBenhByIdAction} from '../../../redux/action/fetchBenhByIdAction';
 import {fetchPkByIdHdAction} from '../../../redux/action/fetchPhieuKhamAction';
 import {BCarefulTheme} from '../../../component/Theme';
 import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamByIdAction';
-import {TTKICon} from '../../../component/StatusIcon';
-import {TTTTIcon} from '../../../component/StatusIcon';
+import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Fonts from '../../../../assets/fonts/Fonts';
 
 function DSDVScreen({navigation, route}) {
   const dispatch = useDispatch();
   const maPK = route.params.item.MAPK;
-  console.log('route.params.item', route.params.item);
+
+  useEffect(() => {
+    dispatch(fetchCTDTByIdAction(maPK));
+    dispatch(fetchBenhNhanByIdAction(maPK));
+    dispatch(fetchDSHDByIdAction(maPK));
+    dispatch(fetchDsClsByIdAction(maPK));
+    dispatch(fetchPkByIdHdAction(maPK));
+    dispatch(fetchTTKAction(maPK));
+    dispatch(fetchBenhByIdAction(maPK));
+    dispatch(fetchPhieuKhamByIdAction(maPK));
+  }, [maPK]);
+
   const ctdtById = useSelector(state => state.ctdtById.data) || [];
   console.log('ctdtById', ctdtById);
-  const benhNhan = useSelector(state => state.benhNhan.data) || [];
-  console.log('benhNhan', benhNhan);
   const hoaDon = useSelector(state => state.hoaDon.dshd) || [];
-  console.log('hoaDon', hoaDon);
-  const lskByIdBn = useSelector(state => state.dsdk.lskByIdBn) || [];
   const pkByIdHd = useSelector(state => state.dsdk.pkByIdHd) || [];
-  console.log('lskByIdBn', lskByIdBn);
-  console.log('pkByIdHd', pkByIdHd);
   const ttk = useSelector(state => state.ttk.data) || [];
-  console.log('ttk', ttk);
   const benhById = useSelector(state => state.benhById.data) || [];
-  console.log('benhById', benhById);
   const clsById = useSelector(state => state.clsById.dsClsById) || [];
   const isLoadingCLS = useSelector(state => state.clsById.isLoading);
-  console.log('isLoadingCLS', isLoadingCLS);
-
-  console.log('clsById', clsById);
   const phieuKhamById = useSelector(state => state.phieuKhamById?.data) || [];
   const isLoadingPK = useSelector(state => state.isLoading?.data);
+  const isLoading = isLoadingCLS && isLoadingPK;
 
-  console.log('isLoadingPK', isLoadingPK);
-
-  console.log('phieuKhamById', phieuKhamById);
   const phieuKhamArray = Array.isArray(phieuKhamById)
     ? phieuKhamById
     : [phieuKhamById];
-  const data = [...phieuKhamArray, ...clsById];
-  console.log('data', data);
-  const isLoading = isLoadingCLS && isLoadingPK;
-  console.log('isLoading', isLoading);
+  const clsByIdArray = Array.isArray(clsById) ? clsById : [clsById];
 
-  const [displayLSK, setDisplayLSK] = useState([]);
+  const donThuoc = {
+    TENDV: 'Đơn thuốc',
+    NGAYKHAMMIN: ctdtById[0]?.TDTTMIN,
+    TTTT: ctdtById[0]?.TTTT,
+    NGUOIBAN: ctdtById[0]?.HOTEN,
+    TENLOAIDV: 'Đơn thuốc',
+  };
+
+  const data = [...phieuKhamArray, ...clsByIdArray, donThuoc];
 
   const handleThanhToan = item => {
-    console.log('item.TTTT', item.TTTT);
-
     if (item.TTTT !== 'Đã thanh toán') {
       navigation.navigate('ThanhToan');
     }
@@ -91,69 +86,66 @@ function DSDVScreen({navigation, route}) {
           </Text>
         </View>
         <View style={styles.card}>
-          <View style={styles.statusContainer}>
-            <TTKICon
-              style={styles.trangThaiThucHien}
-              value={item.TRANGTHAITH}
-            />
-          </View>
-          <View style={styles.detailsContainer}>
-            <Text style={styles.tenDichVu}>{item.TENDV}</Text>
-            {item.INFOBSCD && item.INFOBSTH ? (
-              <>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
-                    BSCD:{' '}
-                  </Text>
-                  <Text style={styles.doctor}>{item.INFOBSCD}</Text>
-                </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
-                    BSTH:{' '}
-                  </Text>
-                  <Text style={styles.doctor}>{item.INFOBSTH}</Text>
-                </View>
-              </>
-            ) : (
-              <>
+          {item.TRANGTHAITH && (
+            <View style={styles.statusContainer}>
+              <TTKICon
+                style={styles.trangThaiThucHien}
+                value={item.TRANGTHAITH}
+              />
+            </View>
+          )}
+          <TouchableOpacity
+            onPress={() => navigation.navigate('KetQuaKham', {item, ctdtById, benhById})}>
+            <View style={styles.detailsContainer}>
+              <Text style={styles.tenDichVu}>{item.TENDV}</Text>
+              {item.INFOBSCD && item.INFOBSTH ? (
+                <>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
+                      BSCD:{' '}
+                    </Text>
+                    <Text style={styles.doctor}>{item.INFOBSCD}</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
+                      BSTH:{' '}
+                    </Text>
+                    <Text style={styles.doctor}>{item.INFOBSTH}</Text>
+                  </View>
+                </>
+              ) : item.INFOBS ? (
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
                     Bác sĩ:{' '}
                   </Text>
                   <Text style={styles.doctor}>{item.INFOBS}</Text>
                 </View>
-              </>
-            )}
-
-            <Text style={styles.stt}>STT: 07</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.paidButton}
-                onPress={() => navigation.navigate('ThanhToan', {item})}>                
-                <TTTTIcon value={item.TTTT} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.routeButton}>
-                <Text style={styles.routeText}>Chỉ đường</Text>
-              </TouchableOpacity>
+              ) : item.NGUOIBAN ? (
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
+                    Người bán:{' '}
+                  </Text>
+                  <Text style={styles.doctor}>{item.NGUOIBAN}</Text>
+                </View>
+              ) : null}
+              {/* <Text style={styles.stt}>STT: 07</Text> */}
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.paidButton}
+                  onPress={() => handleThanhToan(item)}>
+                  <TTTTIcon value={item.TTTT} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.routeButton}>
+                  <Text style={styles.routeText}>Chỉ đường</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 
-  useEffect(() => {
-    dispatch(fetchCTDTByIdAction(maPK));
-    dispatch(fetchBenhNhanByIdAction(maPK));
-    dispatch(fetchDSHDByIdAction(maPK));
-    dispatch(fetchDsClsByIdAction(maPK));
-    dispatch(fetchPkByIdHdAction(maPK));
-    dispatch(fetchTTKAction(maPK));
-    dispatch(fetchBenhByIdAction(maPK));
-    dispatch(fetchPhieuKhamByIdAction(maPK));
-  }, [maPK]);
-
-  console.log('mapk', maPK);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -165,18 +157,13 @@ function DSDVScreen({navigation, route}) {
           <Text style={styles.dateTime}>{route.params.item.NGAYKHAMMIN}</Text>
         </View>
       </View>
-      {isLoadingCLS ? (
-        <>
-          <ActivityIndicator size="large" />
-        </>
+      {isLoading ? (
+        <ActivityIndicator size="large" />
       ) : (
-        <>
-          <View style={styles.body}>
-            <FlatList data={data} renderItem={phieuKhamRenderItem} />
-          </View>
-        </>
+        <View style={styles.body}>
+          <FlatList data={data} renderItem={phieuKhamRenderItem} />
+        </View>
       )}
-
       <View style={styles.footer}>
         <TouchableOpacity style={styles.cancelButton}>
           <Text style={styles.routeText}>Hủy phiếu khám</Text>
@@ -345,4 +332,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
 export default DSDVScreen;

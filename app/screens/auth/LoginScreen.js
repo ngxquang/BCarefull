@@ -50,12 +50,10 @@ const LoginScreen = ({navigation}) => {
       setObjValidInput({...defaultObjValidInput, isValidPassword: false});
       return;
     }
-    console.log(JSON.stringify({email, password}));
 
     const response = await loginUser(email, password);
 
     if (response && response.data && response.data.errcode === 0) {
-      console.log('response', response);
       const roles = response.data.data.roles;
       const username = response.data.data.username;
       const groupName = response.data.data.groupName;
@@ -74,7 +72,6 @@ const LoginScreen = ({navigation}) => {
           userInfo,
         },
       };
-      console.log('data', data);
 
       dispatch(login(data));
       Alert.alert('', `${response.data.message}`);
@@ -83,7 +80,6 @@ const LoginScreen = ({navigation}) => {
       setPassword('');
     }
     if (response && response.data && response.data.errcode !== 0) {
-      console.log('response', response);
 
       Alert.alert('Error', `${response.data.message}`);
     }
