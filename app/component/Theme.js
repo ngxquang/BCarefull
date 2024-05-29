@@ -67,6 +67,16 @@ export const style = StyleSheet.create(
       backgroundColor: 'white',
     },
 
+    btnDisable: {
+      backgroundColor: '#D3D3D3',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      fontSize: 16,
+    },
+
     // Text
     h1: {
       fontFamily: Fonts.bold,
