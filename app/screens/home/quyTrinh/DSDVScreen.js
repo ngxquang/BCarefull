@@ -17,7 +17,7 @@ import {fetchDSHDByIdAction} from '../../../redux/action/fetchHoaDonAction';
 import {fetchDsClsByIdAction} from '../../../redux/action/fetchCLSAction';
 import {fetchTTKAction} from '../../../redux/action/fetchTTKAction';
 import {fetchBenhByIdAction} from '../../../redux/action/fetchBenhByIdAction';
-import {fetchPkByIdHdAction} from '../../../redux/action/fetchPhieuKhamAction';
+import {fetchLSKByIdBnAction, fetchPkByIdHdAction} from '../../../redux/action/fetchPhieuKhamAction';
 import {BCarefulTheme} from '../../../component/Theme';
 import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamByIdAction';
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
@@ -30,6 +30,7 @@ import socket from '../../../setup/socket';
 function DSDVScreen({navigation, route}) {
   console.log('ROUTE >>>>>>>>>>>>>>>> ', route);
   const dispatch = useDispatch();
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const selectedItemThanhToan = useSelector(
     state => state.selectedItem?.selectedItemThanhToan,
   );
@@ -62,8 +63,10 @@ function DSDVScreen({navigation, route}) {
         dispatch(fetchCTDTByIdAction(maPK));
         dispatch(fetchPhieuKhamByIdAction(maPK));
         dispatch(fetchDsClsByIdAction(maPK));
+        dispatch(fetchLSKByIdBnAction(user.MABN));
         socket.emit('send-message', {actionName: 'DSHD', maID: maPK});
         socket.emit('send-message', {actionName: 'DSDK'});
+        // socket.emit('send-message', {actionName: 'LSKBYIDBN', maID: user.MABN});
       }
     };
 

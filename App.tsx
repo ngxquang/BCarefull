@@ -40,6 +40,8 @@ import CarouselScreen from './app/screens/auth/CarouselScreen';
 import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
 import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScreen';
 import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
+import { useDispatch, useSelector } from "react-redux";
+import { selectAction } from './app/util/selectAction';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -90,28 +92,31 @@ function App(): React.JSX.Element {
     console.log('>>>>>>>>>ham handle deeplink dược sọi');
     if (url) {
       console.log('Parsed parameters:', url);
-      // const response = await axios.post("/hoadon/thanhtoan", {
-      //   MAHD: 204,
-      //   MALOAIHD: 1,
-      //   THANHTIEN: 300000,
-      //   maLT: 102,
-      //   tttt: "Đã thanh toán",
-      //   tdtt: new Date(),
-      //   pttt: 'Chuyển khoản',
-      // });
-      // if (response.status === 200) {
-      //   socket.emit("send-message", {actionName: 'DSHD', maID: 181});
-      //   socket.emit("send-message", {actionName: 'DSDK'});
-      // }
     } else {
       console.log('>>>>>>> ko nhan duoc url deeplink');
     }
   };
 
+  const dispatch = useDispatch();
+
+  type SocketData = {
+    actionName: string;
+    maID: number;
+    message: string;
+  };
+  type SelectActionReturnType = ReturnType<typeof selectAction>;
+
   useEffect(() => {
     socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
-    socket.on('receive-message', (data: object) => {
-      Alert.alert('Co nguoi khac dang nhap');
+    socket.on('receive-message', (data: SocketData) => {
+      // Alert.alert('Co nguoi khac dang nhap');
+      const fetchAction: SelectActionReturnType = selectAction(data?.actionName);
+      if (fetchAction !== null) {
+        data?.maID 
+        ? dispatch(fetchAction(data.maID))
+        : dispatch(fetchAction());
+        // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
+      }
     });
 
     // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
@@ -120,10 +125,9 @@ function App(): React.JSX.Element {
     return () => {
       linkingListener.remove();
     };
-  });
+  }, []);
 
   return (
-    <Provider store={store}>
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
         <Stack.Navigator
           initialRouteName="Login"
@@ -165,7 +169,6 @@ function App(): React.JSX.Element {
 
         </Stack.Navigator>
       </NavigationContainer>
-    </Provider>
   );
 }
 
