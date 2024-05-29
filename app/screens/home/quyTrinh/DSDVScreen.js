@@ -17,7 +17,10 @@ import {fetchDSHDByIdAction} from '../../../redux/action/fetchHoaDonAction';
 import {fetchDsClsByIdAction} from '../../../redux/action/fetchCLSAction';
 import {fetchTTKAction} from '../../../redux/action/fetchTTKAction';
 import {fetchBenhByIdAction} from '../../../redux/action/fetchBenhByIdAction';
-import {fetchLSKByIdBnAction, fetchPkByIdHdAction} from '../../../redux/action/fetchPhieuKhamAction';
+import {
+  fetchLSKByIdBnAction,
+  fetchPkByIdHdAction,
+} from '../../../redux/action/fetchPhieuKhamAction';
 import {BCarefulTheme} from '../../../component/Theme';
 import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamByIdAction';
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
@@ -31,9 +34,7 @@ function DSDVScreen({navigation, route}) {
   console.log('ROUTE >>>>>>>>>>>>>>>> ', route);
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
-  const selectedItemThanhToan = useSelector(
-    state => state.selectedItem?.selectedItemThanhToan,
-  );
+  const selectedItemThanhToan = useSelector(state => state.selectedItem?.selectedItemThanhToan);
   const selectedItem = useSelector(state => state.selectedItem?.selectedItem);
   const maPK = route.params.item ? route.params?.item.MAPK : selectedItem.MAPK;
   const maHDofPK = route.params.item
@@ -50,7 +51,7 @@ function DSDVScreen({navigation, route}) {
   useEffect(() => {
     console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
 
-    const updateHoaDon = async (selectedItemThanhToan) => {
+    const updateHoaDon = async selectedItemThanhToan => {
       const response = await axios.post('/hoadon/thanhtoan', {
         MAHD: selectedItemThanhToan.MAHD,
         THANHTIEN: selectedItemThanhToan.THANHTIEN,
@@ -70,7 +71,7 @@ function DSDVScreen({navigation, route}) {
       }
     };
 
-    if (route && route.params.resultCode === "0") {
+    if (route && route.params.resultCode === '0') {
       updateHoaDon(selectedItemThanhToan);
     }
 
@@ -103,7 +104,7 @@ function DSDVScreen({navigation, route}) {
 
   const donThuoc = {
     TENDV: 'Đơn thuốc',
-    NGAYKHAMMIN: ctdtById[0]?.TDTTMIN,
+    NGAYKHAMMIN: ctdtById[0]?.THOIGIANLAP,
     TDTTMIN: ctdtById[0]?.TDTTMIN,
     TTTT: ctdtById[0]?.TTTT,
     NGUOIBAN: ctdtById[0]?.HOTEN,
@@ -112,7 +113,7 @@ function DSDVScreen({navigation, route}) {
     THANHTIEN: ctdtById[0]?.THANHTIEN,
   };
 
-  const data = [...phieuKhamArray, ...clsByIdArray, donThuoc];
+  const data = donThuoc.MAHD ? [...phieuKhamArray, ...clsByIdArray, donThuoc] : [...phieuKhamArray, ...clsByIdArray];
 
   const handleThanhToan = item => {
     dispatch(selectItemThanhToan(item));

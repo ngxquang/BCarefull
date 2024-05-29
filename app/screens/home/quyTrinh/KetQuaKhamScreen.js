@@ -60,7 +60,7 @@ function KetQuaKhamScreen({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
-                  Ngày bán:{' '}
+                  Thời gian tạo:{' '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
               </View>
@@ -75,7 +75,7 @@ function KetQuaKhamScreen({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
-                  Ngày khám:{' '}
+                  Thời gian khám:{' '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
               </View>
