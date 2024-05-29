@@ -1,3 +1,26 @@
+import notifee from '@notifee/react-native';
+
+export async function onDisplayNotification() {
+  // Create a channel (required for Android)
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  // Display a notification
+  await notifee.displayNotification({
+    title: 'Notification Title',
+    body: 'Main body content of the notification',
+    android: {
+      channelId,
+      // pressAction is needed if you want the notification to open the app when pressed
+      pressAction: {
+        id: 'default',
+      },
+    },
+  });
+}
+
 export function compareDates(date1, date2) {
   // Lấy ra các thành phần ngày, tháng, năm của date1 và date2
   const day1 = date1.getDate();

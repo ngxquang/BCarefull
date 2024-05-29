@@ -42,6 +42,7 @@ import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScre
 import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
 import { useDispatch, useSelector } from "react-redux";
 import { selectAction } from './app/util/selectAction';
+import { onDisplayNotification } from './app/util/appUtil';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -110,6 +111,7 @@ function App(): React.JSX.Element {
     socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
     socket.on('receive-message', (data: SocketData) => {
       // Alert.alert('Co nguoi khac dang nhap');
+      onDisplayNotification();
       const fetchAction: SelectActionReturnType = selectAction(data?.actionName);
       if (fetchAction !== null) {
         data?.maID 

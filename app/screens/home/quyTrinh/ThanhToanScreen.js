@@ -14,6 +14,7 @@ import Fonts from '../../../../assets/fonts/Fonts';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { onDisplayNotification } from '../../../util/appUtil';
 
 function ThanhToanScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -91,14 +92,17 @@ function ThanhToanScreen({navigation, route}) {
   };
 
   const handleThanhToan = async () => {
-    const response = await axios.post('hoadon/test-momo', {
-      MAHD: itemThanhToan.MAHD,
-      TENLOAIDV: itemThanhToan.TENLOAIDV,
-      THANHTIEN: itemThanhToan.THANHTIEN,
-    });
-    // const jsonRes = JSON.parse(response.data);
-    console.log('DEEPLINK>>>>>', response.data.data.deeplink);
-    openDeepLink(response.data.data.deeplink);
+    onDisplayNotification();
+    if (itemThanhToan.TTTT === 'Chưa thanh toán') {
+      const response = await axios.post('hoadon/test-momo', {
+        MAHD: itemThanhToan.MAHD,
+        TENLOAIDV: itemThanhToan.TENLOAIDV,
+        THANHTIEN: itemThanhToan.THANHTIEN,
+      });
+      // const jsonRes = JSON.parse(response.data);
+      console.log('DEEPLINK>>>>>', response.data.data.deeplink);
+      openDeepLink(response.data.data.deeplink);
+    }
   };
 
   const SpecialityCard = ({speciality}) => {
@@ -210,8 +214,18 @@ function ThanhToanScreen({navigation, route}) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleThanhToan}>
-            <Text style={styles.buttonText}>Thanh toán</Text>
+          <TouchableOpacity
+            style={
+              itemThanhToan.TTTT === 'Chưa thanh toán'
+                ? styles.button
+                : styles.buttonGreen
+            }
+            onPress={handleThanhToan}>
+            <Text style={styles.buttonText}>
+              {itemThanhToan.TTTT === 'Chưa thanh toán'
+                ? 'Thanh toán'
+                : 'Đã thanh toán'}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -293,6 +307,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 30,
     width: 180,
+  },
+  buttonGreen: {
+    backgroundColor: '#A1DD70',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    width: 195,
   },
   buttonText: {
     fontFamily: Fonts.bold,

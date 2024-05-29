@@ -1,6 +1,6 @@
 import {fetchDsClsByIdAction} from '../redux/action/fetchCLSAction';
 import {fetchCTDTByIdAction} from '../redux/action/fetchCTDTById';
-import {fetchTTKAction} from '../redux/action/fetchTTKAction';
+import {fetchPhieuKhamByIdAction} from '../redux/action/fetchPhieuKhamByIdAction';
 import {fetchBenhByIdAction} from '../redux/action/fetchBenhByIdAction';
 import {fetchLSKByIdBnAction} from '../redux/action/fetchPhieuKhamAction';
 
@@ -10,8 +10,8 @@ export const selectAction = (actionName: string): any | null => {
       return fetchDsClsByIdAction;
     case "CTDTBYIDPK":
       return fetchCTDTByIdAction;
-    case "TTKBYIDPK":
-      return fetchTTKAction;
+    case "KQKHAMBYIDPK":
+      return fetchPhieuKhamByIdAction;
     case "DSBENHBYIDPK":
       return fetchBenhByIdAction;
     case "LSKBYIDBN":

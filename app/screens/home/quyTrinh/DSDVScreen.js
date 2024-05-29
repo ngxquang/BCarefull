@@ -77,19 +77,19 @@ function DSDVScreen({navigation, route}) {
 
     dispatch(fetchCTDTByIdAction(maPK));
     dispatch(fetchBenhNhanByIdAction(maPK));
-    dispatch(fetchDSHDByIdAction(maPK));
+    // dispatch(fetchDSHDByIdAction(maPK));
     dispatch(fetchDsClsByIdAction(maPK));
     dispatch(fetchPkByIdHdAction(maHDofPK));
-    dispatch(fetchTTKAction(maPK));
+    // dispatch(fetchTTKAction(maPK));
     dispatch(fetchBenhByIdAction(maPK));
     dispatch(fetchPhieuKhamByIdAction(maPK));
   }, [route]);
 
   const ctdtById = useSelector(state => state.ctdtById.data) || [];
   console.log('ctdtById', ctdtById);
-  const hoaDon = useSelector(state => state.hoaDon.dshd) || [];
+  // const hoaDon = useSelector(state => state.hoaDon.dshd) || [];
   const pkByIdHd = useSelector(state => state.dsdk.pkByIdHd) || [];
-  const ttk = useSelector(state => state.ttk.data) || [];
+  // const ttk = useSelector(state => state.ttk.data) || [];
   const benhById = useSelector(state => state.benhById.data) || [];
   const clsById = useSelector(state => state.clsById.dsClsById) || [];
   const isLoadingCLS = useSelector(state => state.clsById.isLoading);
