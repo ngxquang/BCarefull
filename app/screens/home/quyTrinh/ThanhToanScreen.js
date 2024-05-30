@@ -14,7 +14,7 @@ import Fonts from '../../../../assets/fonts/Fonts';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { onDisplayNotification } from '../../../util/appUtil';
+import {onDisplayNotification} from '../../../util/appUtil';
 
 function ThanhToanScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -92,7 +92,7 @@ function ThanhToanScreen({navigation, route}) {
   };
 
   const handleThanhToan = async () => {
-    onDisplayNotification();
+    // onDisplayNotification();
     if (itemThanhToan.TTTT === 'Chưa thanh toán') {
       const response = await axios.post('hoadon/test-momo', {
         MAHD: itemThanhToan.MAHD,
