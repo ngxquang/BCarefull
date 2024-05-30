@@ -4,10 +4,10 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { BCarefulTheme } from "./Theme";
 import { StyleSheet, View } from "react-native";
 import Fonts from "../../assets/fonts/Fonts";
-import { BackToHomeBtn } from "./ButtonHome";
+import { BackToHomeBtn, GoBackBtn } from "./ButtonHome";
 import Progress from "./datLich/Progress";
 
-export function DatLich({ title }) {
+export function CustomHeader({ title, leftIcon = GoBackBtn, rightIcon = null }) {
     return (
         <View>
             <Header
@@ -19,11 +19,13 @@ export function DatLich({ title }) {
                     style: styles.header
                 }}
                 centerContainerStyle={{ alignContent: 'flex-start' }}
-                leftComponent={BackToHomeBtn}
-                leftContainerStyle={{ top: -5 }}
+                leftComponent={leftIcon}
+                leftContainerStyle={{ left: 10}}
                 linearGradientProps={{}}
                 placement="center"
                 statusBarProps={{}}
+                rightComponent={rightIcon}
+                rightContainerStyle={{ right: 10 }}
             />
         </View>
     );
@@ -32,7 +34,7 @@ export function DatLich({ title }) {
 export function DatLichHeader({ title, values }) {
     return (
         <>
-            <DatLich title={title} />
+            <CustomHeader title={title} />
             <View style={{padding: 30, paddingBottom: 0}}>
                 <Progress values={values ? values : 0} />
             </View>

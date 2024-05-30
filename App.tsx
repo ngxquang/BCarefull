@@ -40,6 +40,8 @@ import CarouselScreen from './app/screens/auth/CarouselScreen';
 import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
 import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScreen';
 import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
+import QuanLyThuocScreen from './app/screens/home/lichUongThuoc/QuanLyThuocScreen';
+import ThemThuocScreen from './app/screens/home/lichUongThuoc/ThemThuocScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -162,6 +164,8 @@ function App(): React.JSX.Element {
 
           <Stack.Screen name="ChonDichVu" component={DichVuScreen} />
           <Stack.Screen name="ChonBacSi" component={BacSiScreen} />
+          <Stack.Screen name="QuanLyThuoc" component={QuanLyThuocScreen} />
+          <Stack.Screen name="ThemThuoc" component={ThemThuocScreen} />
 
         </Stack.Navigator>
       </NavigationContainer>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Icon, Text } from "@rneui/themed";
-import { View, Image } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { BCarefulTheme } from "./Theme";
 import Fonts from "../../assets/fonts/Fonts";
 import LinearGradient from "react-native-linear-gradient";
@@ -62,10 +62,18 @@ export function ButtonHome({ title, name, navigation }) {
 export function BackToHomeBtn() {
   const navigation = useNavigation();
   return (
-    <Button
-      type="clear"
+    <TouchableOpacity
       onPress={() => navigation.navigate('Home')}>
       <Icon name="home" type="ionicon" color={BCarefulTheme.colors.primary} />
-    </Button>
+    </TouchableOpacity>
+  )
+}
+export function GoBackBtn() {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}>
+      <Icon name="arrow-back-outline" type="ionicon" color={BCarefulTheme.colors.primary} size={24} />
+    </TouchableOpacity>
   )
 }

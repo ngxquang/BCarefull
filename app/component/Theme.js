@@ -13,6 +13,9 @@ export const BCarefulTheme = {
     secondary: 'rgb(234,121,58)',
     background: 'rgb(250,250,255)',
     light: 'rgb(230, 226, 254)',
+    dark: 'rgb(67,46,156)',
+    green: 'rgb(14,170,114)',
+    red: 'rgb(234,69,58)',
   },
 
 
@@ -77,6 +80,42 @@ export const style = StyleSheet.create(
       fontSize: 16,
     },
 
+    card: {
+      // backgroundColor: 'red',
+      margin: 10,
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 2,
+      borderColor: BCarefulTheme.colors.primary,
+    },
+    cardLeft: {
+      margin: 10,
+      width: '90%',
+      marginStart: 0,
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 2,
+      borderLeftWidth: 0,
+      borderTopStartRadius: 0,
+      borderBottomStartRadius: 0,
+      borderColor: BCarefulTheme.colors.primary,
+    },
+    cardRight: {
+      alignItems: 'flex-end',
+      alignContent: 'flex-end',
+      alignSelf: 'flex-end',
+      margin: 10,
+      width: '90%',
+      marginEnd: 0,
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 2,
+      borderRightWidth: 0,
+      borderTopEndRadius: 0,
+      borderBottomEndRadius: 0,
+      borderColor: BCarefulTheme.colors.primary,
+    },
+
     // Text
     h1: {
       fontFamily: Fonts.bold,
@@ -109,8 +148,13 @@ export const style = StyleSheet.create(
       color: '#000000',
     },
     h7: {
-      fontFamily: Fonts.medium,
+      fontFamily: Fonts.bold,
       fontSize: 16,
+      color: '#000000',
+    },
+    h8: {
+      fontFamily: Fonts.bold,
+      fontSize: 14,
       color: '#000000',
     },
     t1: {
@@ -163,6 +207,15 @@ export const style = StyleSheet.create(
     },
     grey: {
       color: 'grey',
+    },
+    dark: {
+      color: BCarefulTheme.colors.dark,
+    },
+    green: {
+      color: BCarefulTheme.colors.green,
+    },
+    red: {
+      color: BCarefulTheme.colors.red,
     },
 
     //Input box
@@ -344,5 +397,11 @@ export const style = StyleSheet.create(
       margin: 12,
       marginHorizontal: 8,
     },
+
+    end: {
+      // justifyContent: 'flex-end',
+      textAlign: 'right',
+
+    }
   }
 )
