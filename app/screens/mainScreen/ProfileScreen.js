@@ -57,6 +57,7 @@ const ProfileScreen = ({navigation, route}) => {
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
+    console.log("USER IN PROFILE >>>>>>>>>>>>", user)
     if (userInfo) {
       setFormData({
         maBN: userInfo.MABN || '',

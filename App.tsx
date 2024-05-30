@@ -43,6 +43,7 @@ import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen
 import { useDispatch, useSelector } from "react-redux";
 import { selectAction } from './app/util/selectAction';
 import { onDisplayNotification } from './app/util/appUtil';
+import { getUser } from './app/util/appUtil';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -99,28 +100,38 @@ function App(): React.JSX.Element {
   };
 
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.auth?.user?.account?.userInfo[0]);
 
   type SocketData = {
     actionName: string;
     maID: number;
+    maBN: number;
+    title: string;
     message: string;
   };
   type SelectActionReturnType = ReturnType<typeof selectAction>;
 
   useEffect(() => {
-    socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
-    socket.on('receive-message', (data: SocketData) => {
-      // Alert.alert('Co nguoi khac dang nhap');
-      const fetchAction: SelectActionReturnType = selectAction(data?.actionName);
-      if (fetchAction !== null) {
-        data?.maID 
-        ? dispatch(fetchAction(data.maID))
-        : dispatch(fetchAction());
-        console.log("MESSAGE FROM SERVER >>>>>>>>>> ", data);
-        onDisplayNotification();
-        // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
-      }
-    });
+    console.log("USER IN 1ST USEEFFECT >>>>>>>>>>>>>> ", user)
+  }, [dispatch])
+
+  useEffect(() => {
+    // console.log("USER >>>>>>>>>>>>>> ", user)
+    // socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
+    // socket.on('receive-message', (data: SocketData) => {
+    //   // Alert.alert('Co nguoi khac dang nhap');
+    //   const fetchAction: SelectActionReturnType = selectAction(data?.actionName);
+    //   if (fetchAction !== null) {
+    //     data?.maID 
+    //     ? dispatch(fetchAction(data.maID))
+    //     : dispatch(fetchAction());
+    //     console.log("MESSAGE FROM SERVER >>>>>>>>>> ", data);
+    //     if (data.maBN && data.maBN === user.MABN) {
+    //       onDisplayNotification(data.title, data.message);
+    //     } 
+    //     // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
+    //   }
+    // });
 
     // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
     const linkingListener = Linking.addEventListener('url', handleDeepLink);
