@@ -1,5 +1,5 @@
-import {Button} from '@rneui/themed';
-import React, {useState} from 'react';
+import { Button } from '@rneui/themed';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,9 @@ import {
   Modal,
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
+import { Icon } from '@rneui/themed';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { BCarefulTheme, style } from '../../component/Theme';
 
 function NotificationScreen() {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -83,7 +86,7 @@ function NotificationScreen() {
   };
 
   // Hien thi danh sach thong bao
-  const renderNotification = ({item}) => {
+  const renderNotification = ({ item }) => {
     const isUnread = unreadNotifications.some(
       notification => notification.id === item.id,
     );
@@ -109,27 +112,29 @@ function NotificationScreen() {
           }
         }}>
         {isUnread && <View style={styles.unreadDot} />}
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.date}>{item.date}</Text>
-        <Text style={styles.content}>{item.content}</Text>
+        <Text style={[style.h3, style.primary, style.upperCase]}>{item.title}</Text>
+        <Text style={[style.t4, style.italic]}>{item.date}</Text>
+        <Text style={style.h4}>{item.content}</Text>
       </TouchableOpacity>
     );
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={style.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Thông Báo</Text>
         <TouchableOpacity
-          style={styles.markAllAsReadButton}
+          // style={styles.markAllAsReadButton}
           onPress={markAllAsRead}>
-          <Text style={styles.markAllAsReadButtonText}>Đọc hết</Text>
+          {/* <Text style={styles.markAllAsReadButtonText}>Đọc hết</Text> */}
+          {/* <FontistoIcon name={'arrow-swap'} style={styles.icon} /> */}
+          <Icon name="checkmark-done" type="ionicon" color={'#000'} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.tabContainer}>
         <TouchableOpacity
-          style={[styles.tab, selectedTab === 'all' && styles.selectedTab]}
+          style={[selectedTab === 'all' ? styles.selectedTab : styles.tab]}
           onPress={() => setSelectedTab('all')}>
           <Text
             style={
@@ -139,7 +144,7 @@ function NotificationScreen() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tab, selectedTab === 'unread' && styles.selectedTab]}
+          style={[ selectedTab === 'unread' ? styles.selectedTab : styles.tab,]}
           onPress={() => setSelectedTab('unread')}>
           <Text
             style={
@@ -154,9 +159,9 @@ function NotificationScreen() {
         data={
           selectedTab === 'all'
             ? sortedNotifications([
-                ...unreadNotifications,
-                ...readNotifications,
-              ])
+              ...unreadNotifications,
+              ...readNotifications,
+            ])
             : sortedNotifications(unreadNotifications)
         } // Hiển thị thông báo theo tab đã chọn
         renderItem={renderNotification}
@@ -185,14 +190,11 @@ function NotificationScreen() {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingTop: 10,
   },
   tab: {
     flex: 1,
@@ -215,10 +217,21 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
   },
   selectedTab: {
-    borderBottomWidth: 4,
-    borderBottomColor: '#7864EA',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderBottomWidth: 2,
+    // borderColor: '#ddd',
+    borderBottomWidth: 5,
+    borderRightColor: '#ddd',
+    borderLeftColor: '#ddd',
+    borderTopColor: '#ddd',
+    borderBottomColor: BCarefulTheme.colors.primary,
   },
   header: {
+    color: '#000',
     fontFamily: Fonts.bold,
     fontSize: 30,
     justifyContent: 'center',
@@ -226,9 +239,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   markAllAsReadButton: {
-    backgroundColor: '#7864EA',
+    backgroundColor: BCarefulTheme.colors.primary,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   markAllAsReadButtonText: {
     color: 'white',
@@ -242,7 +255,8 @@ const styles = StyleSheet.create({
   selectedTabText: {
     fontFamily: Fonts.bold,
     fontSize: 18,
-    color: '#7864EA',
+    color: BCarefulTheme.colors.primary,
+    bottom: -2,
   },
   notificationContainer: {
     padding: 15,
@@ -256,15 +270,9 @@ const styles = StyleSheet.create({
   unreadDot: {
     width: 7,
     height: 7,
-    borderRadius: 5,
-    backgroundColor: '#7864EA',
+    borderRadius: 10,
+    backgroundColor: BCarefulTheme.colors.primary,
     marginRight: 10,
-  },
-  title: {
-    fontFamily: Fonts.bold,
-    fontSize: 18,
-    textTransform: 'uppercase',
-    color: '#7864EA',
   },
   date: {
     fontFamily: Fonts.bold,
@@ -303,7 +311,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     marginBottom: 10,
     textTransform: 'uppercase',
-    color: '#7864EA',
+    color: BCarefulTheme.colors.primary,
   },
   modalContent: {
     fontFamily: Fonts.bold,
@@ -312,9 +320,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   closeButton: {
-    backgroundColor: '#7864EA',
+    backgroundColor: BCarefulTheme.colors.primary,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   closeButtonText: {
     color: 'white',
