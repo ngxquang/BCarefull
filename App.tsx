@@ -111,12 +111,13 @@ function App(): React.JSX.Element {
     socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
     socket.on('receive-message', (data: SocketData) => {
       // Alert.alert('Co nguoi khac dang nhap');
-      onDisplayNotification();
       const fetchAction: SelectActionReturnType = selectAction(data?.actionName);
       if (fetchAction !== null) {
         data?.maID 
         ? dispatch(fetchAction(data.maID))
         : dispatch(fetchAction());
+        console.log("MESSAGE FROM SERVER >>>>>>>>>> ", data);
+        onDisplayNotification();
         // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
       }
     });
