@@ -82,7 +82,7 @@ function DSDVScreen({navigation, route}) {
       <View style={styles.bodyRight}>
         <View style={styles.timeContainer}>
           <Text style={styles.timeText}>
-            {item.NGAYKHAMMIN ? item.NGAYKHAMMIN.split(' - ')[1] : ''}
+            {item.NGAYKHAMMIN ? item.NGAYKHAMMIN.split(' - ')[1] : '-- : --'}
           </Text>
         </View>
         <View style={styles.card}>
@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
   },
   timeContainer: {
     marginRight: 2,
+    width: 44,
   },
   timeText: {
     fontSize: 16,

@@ -40,6 +40,8 @@ import CarouselScreen from './app/screens/auth/CarouselScreen';
 import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
 import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScreen';
 import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
+import NgayKhamScreen from './app/screens/home/datLich/ChonThongTinKham/NgayKhamScreen';
+import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -127,7 +129,10 @@ function App(): React.JSX.Element {
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
         <Stack.Navigator
           initialRouteName="Login"
-          screenOptions={{headerShown: false}}>
+          screenOptions={{
+            headerShown: false,
+            animation: 'slide_from_right',
+          }}>
           {/* Home */}
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
           <Stack.Group>
@@ -152,7 +157,10 @@ function App(): React.JSX.Element {
             <Stack.Screen name="Register01" component={RegisterScreen01} />
             <Stack.Screen name="Register02" component={RegisterScreen02} />
             <Stack.Screen name="Register03" component={RegisterScreen03} />
-            <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
+            />
             <Stack.Screen
               name="VerificationForm"
               component={VerificationForm}
@@ -161,25 +169,13 @@ function App(): React.JSX.Element {
           </Stack.Group>
 
           <Stack.Screen name="ChonDichVu" component={DichVuScreen} />
+          <Stack.Screen name="NgayKham" component={NgayKhamScreen} />
           <Stack.Screen name="ChonBacSi" component={BacSiScreen} />
-
+          <Stack.Screen name="XacNhan" component={XacNhanScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
-
-// function App() {
-//   return (
-//     <Provider store={store}>
-//       <NavigationContainer>
-//         <Stack.Navigator screenOptions={{ headerShown: false }}>
-//           <Stack.Screen name="Login" component={LoginScreen} />
-//           <PrivateRoute name="HomeTabs" component={HomeTabsScreen} />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </Provider>
-//   );
-// }
 
 export default App;
