@@ -15,8 +15,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {onDisplayNotification} from '../../../util/appUtil';
+import { setNewPKHD } from '../../../redux/slice/selectedItemSlice';
 
-function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
+function ThanhToanScreen({navigation, route}) {
   const dispatch = useDispatch();
   const itemThanhToan = route?.params?.item;
   const ctdtById = route?.params?.ctdtById;
@@ -42,7 +43,7 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
   const [chiTietHD, setChiTietHD] = useState(specialities);
 
   useEffect(() => {
-    if (itemThanhToan.TENLOAIDV === 'Hóa đơn thuốc') {
+    if (itemThanhToan?.TENLOAIDV === 'Hóa đơn thuốc') {
       const formatCTDT = ctdtById.map(item => {
         return {
           name: item.TENTHUOC?.toUpperCase(),
@@ -55,7 +56,7 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
       });
       setChiTietHD(formatCTDT);
     }
-    if (itemThanhToan.TENLOAIDV === 'Cận lâm sàng') {
+    if (itemThanhToan?.TENLOAIDV === 'Cận lâm sàng') {
       const formatDSCLS = clsById.map(item => {
         return {
           name: item.TENDV?.toUpperCase(),
@@ -66,13 +67,15 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
       });
       setChiTietHD(formatDSCLS);
     }
-    if (!itemThanhToan.TENLOAIDV) {
+    if (!itemThanhToan || !itemThanhToan.TENLOAIDV) {
       const formatDSPK = pkByIdHd.map(item => {
+        const tenDV = item?.TENDV || item?.tenDichVu;
+        const giaDV = item?.GIADVLUCDK || item?.giaDichVu;
         return {
-          name: item.TENDV?.toUpperCase(),
+          name: tenDV.toUpperCase(),
           quantity: 1,
-          fee: item.GIADVLUCDK?.toLocaleString('vi-VN') + 'đ',
-          total: item.GIADVLUCDK?.toLocaleString('vi-VN') + 'đ',
+          fee: giaDV.toLocaleString('vi-VN') + 'đ',
+          total: giaDV.toLocaleString('vi-VN') + 'đ',
         };
       });
       setChiTietHD(formatDSPK);
@@ -92,10 +95,13 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
   };
 
   const handleThanhToan = async () => {
-    // onDisplayNotification();
+    if (itemThanhToan.isNew && itemThanhToan.isNew === true) {
+      console.log('>>>>>>>> THÊM HÓA ĐƠN, PHIẾU KHÁM');
+      dispatch(setNewPKHD({newPKArray: pkByIdHd, newHD: itemThanhToan}));
+    }
     if (itemThanhToan.TTTT === 'Chưa thanh toán') {
       const response = await axios.post('hoadon/test-momo', {
-        MAHD: itemThanhToan.MAHD,
+        MAHD: itemThanhToan.MAHD || "",
         TENLOAIDV: itemThanhToan.TENLOAIDV,
         THANHTIEN: itemThanhToan.THANHTIEN,
       });
@@ -154,7 +160,7 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
         <View style={styles.row}>
           <Text style={styles.label}>Loại hóa đơn</Text>
           <Text style={styles.value}>
-            {itemThanhToan.TENLOAIDV || 'Hóa đơn khám'}
+            {itemThanhToan?.TENLOAIDV || 'Hóa đơn khám'}
           </Text>
         </View>
 
@@ -192,7 +198,7 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
         <View style={styles.row}>
           <Text style={styles.labelBold}>Tổng hóa đơn</Text>
           <Text style={styles.valueBold}>
-            {itemThanhToan.THANHTIEN?.toLocaleString('vi-VN') + 'đ'}
+            {itemThanhToan?.THANHTIEN?.toLocaleString('vi-VN') + 'đ'}
           </Text>
         </View>
 
@@ -200,12 +206,12 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
 
         <View style={styles.row}>
           <Text style={styles.label}>Trạng thái thanh toán</Text>
-          <Text style={styles.value}>{itemThanhToan.TTTT}</Text>
+          <Text style={styles.value}>{itemThanhToan?.TTTT}</Text>
         </View>
 
         <View style={styles.row}>
           <Text style={styles.label}>Thời điểm thanh toán</Text>
-          <Text style={styles.value}>{itemThanhToan.TDTTMIN}</Text>
+          <Text style={styles.value}>{itemThanhToan?.TDTTMIN}</Text>
         </View>
 
         <View style={styles.row}>
@@ -216,13 +222,13 @@ function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={
-              itemThanhToan.TTTT === 'Chưa thanh toán'
+              itemThanhToan?.TTTT === 'Chưa thanh toán'
                 ? styles.button
                 : styles.buttonGreen
             }
             onPress={handleThanhToan}>
             <Text style={styles.buttonText}>
-              {itemThanhToan.TTTT === 'Chưa thanh toán'
+              {itemThanhToan?.TTTT === 'Chưa thanh toán'
                 ? 'Thanh toán'
                 : 'Đã thanh toán'}
             </Text>

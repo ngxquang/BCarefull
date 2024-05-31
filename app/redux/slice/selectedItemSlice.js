@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   selectedItem: {}, // Đối tượng lưu trữ thông tin hàng được chọn
   selectedItemThanhToan: {},
+  newPKArray: null,
+  newHD: null,
 };
 
 const selectedItemSlice = createSlice({
@@ -21,9 +23,17 @@ const selectedItemSlice = createSlice({
     clearSelectedItemThanhToan: (state) => {
       state.selectedItemThanhToan = {}; // Xóa thông tin hàng được chọn
     },
+    setNewPKHD: (state, action) => {
+      state.newPKArray = action.payload.newPKArray;
+      state.newHD = action.payload.newHD;
+    },
+    clearNewPKHD: (state) => {
+      state.newPKArray = null;
+      state.newHD = null;
+    }
   },
 });
 
-export const { selectItem, clearSelectedItem, selectItemThanhToan, clearSelectedItemThanhToan } = selectedItemSlice.actions;
+export const { selectItem, clearSelectedItem, selectItemThanhToan, clearSelectedItemThanhToan, setNewPKHD, clearNewPKHD } = selectedItemSlice.actions;
 
 export default selectedItemSlice.reducer;

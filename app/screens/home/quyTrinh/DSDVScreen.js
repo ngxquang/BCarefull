@@ -34,7 +34,9 @@ function DSDVScreen({navigation, route}) {
   console.log('ROUTE >>>>>>>>>>>>>>>> ', route);
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
-  const selectedItemThanhToan = useSelector(state => state.selectedItem?.selectedItemThanhToan);
+  const selectedItemThanhToan = useSelector(
+    state => state.selectedItem?.selectedItemThanhToan,
+  );
   const selectedItem = useSelector(state => state.selectedItem?.selectedItem);
   const maPK = route.params.item ? route.params?.item.MAPK : selectedItem.MAPK;
   const maHDofPK = route.params.item
@@ -43,35 +45,94 @@ function DSDVScreen({navigation, route}) {
   const NGAYKHAMMIN = route.params.item
     ? route.params?.item.NGAYKHAMMIN
     : selectedItem.NGAYKHAMMIN;
+  const newPKArray = useSelector(state => state.selectedItem?.newPKArray);
+  const newHD = useSelector(state => state.selectedItem?.newHD);
 
-  // useEffect(async () => {
-  //
-  // }, []);
+  const updateHoaDon = async selectedItemThanhToan => {
+    const response = await axios.post('/hoadon/thanhtoan', {
+      MAHD: selectedItemThanhToan.MAHD,
+      THANHTIEN: selectedItemThanhToan.THANHTIEN,
+      maLT: 102,
+      tttt: 'Đã thanh toán',
+      tdtt: new Date(),
+      pttt: 'Chuyển khoản',
+    });
+    if (response.status === 200) {
+      dispatch(fetchCTDTByIdAction(maPK));
+      dispatch(fetchPhieuKhamByIdAction(maPK));
+      dispatch(fetchDsClsByIdAction(maPK));
+      dispatch(fetchLSKByIdBnAction(user.MABN));
+      socket.emit('send-message', {actionName: 'DSHD', maID: maPK});
+      socket.emit('send-message', {actionName: 'DSDK'});
+      // socket.emit('send-message', {actionName: 'LSKBYIDBN', maID: user.MABN});
+    }
+  };
+
+  const insertPK = async (newPKArray, maHD) => {
+    newPKArray.forEach(async phieuKham => {
+      let ngayKham = phieuKham.ngayKham.slice(-10);
+      let [day, month, year] = ngayKham.split('/').map(Number);
+      let time = new Date(year, month - 1, day)
+      let bodyReq = {
+        maBN: user.MABN,
+        maBS: phieuKham.maBS,
+        maHD: maHD,
+        dichVu: phieuKham.MADV,
+        ngayKham: time,
+        lyDoKham: '',
+        ngayDatLich: new Date(),
+        gioDatLich: phieuKham.gioDatLich,
+      };
+      try {
+        const response2 = await axios.post(
+          '/phieukham/insert-just-pk',
+          bodyReq,
+        );
+        if (response2.status === 200) {
+          // toast.success("Thêm phiếu khám thành công!!!");
+          dispatch(fetchLSKByIdBnAction(user.MABN));
+          socket.emit('send-message', {actionName: 'DSDK'});
+        }
+      } catch (error) {
+        console.log(error);
+        // toast.error("Thêm phiếu khám không thành công");
+      }
+    });
+  };
+
+  const insertHDPK = async (newPKArray, newHD) => {
+    try {
+      const response1 = await axios.post('/hoadon/insert', {
+        maLT: 102,
+        maLHD: 1,
+        tttt: 'Đã thanh toán',
+        tdtt: new Date(),
+        pttt: 'Chuyển khoản',
+        thanhTien: newHD.THANHTIEN,
+      });
+      if (response1.status === 200) {
+        let maHDinserted = response1.data.MAHD;
+        await insertPK(newPKArray, maHDinserted);
+        navigation.navigate('LichSuKham');
+        // toast.success("Thêm hóa đơn thành công!!!");
+      }
+    } catch (error) {
+      console.log(error);
+      // toast.error("Thêm hóa đơn không thành công");
+    }
+  };
 
   useEffect(() => {
     console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
 
-    const updateHoaDon = async selectedItemThanhToan => {
-      const response = await axios.post('/hoadon/thanhtoan', {
-        MAHD: selectedItemThanhToan.MAHD,
-        THANHTIEN: selectedItemThanhToan.THANHTIEN,
-        maLT: 102,
-        tttt: 'Đã thanh toán',
-        tdtt: new Date(),
-        pttt: 'Chuyển khoản',
-      });
-      if (response.status === 200) {
-        dispatch(fetchCTDTByIdAction(maPK));
-        dispatch(fetchPhieuKhamByIdAction(maPK));
-        dispatch(fetchDsClsByIdAction(maPK));
-        dispatch(fetchLSKByIdBnAction(user.MABN));
-        socket.emit('send-message', {actionName: 'DSHD', maID: maPK});
-        socket.emit('send-message', {actionName: 'DSDK'});
-        // socket.emit('send-message', {actionName: 'LSKBYIDBN', maID: user.MABN});
-      }
-    };
-
-    if (route && route.params.resultCode === '0') {
+    if (route && route.params.resultCode === '0' && newPKArray && newHD) {
+      insertHDPK(newPKArray, newHD);
+      console.log(
+        'THANH TOAN MOMO XONG, INSERT HOA DON, PHIEU KHAM >>>',
+        newPKArray,
+        newHD,
+      );
+    } else if (route && route.params.resultCode === '0') {
       updateHoaDon(selectedItemThanhToan);
     }
 
@@ -113,7 +174,9 @@ function DSDVScreen({navigation, route}) {
     THANHTIEN: ctdtById[0]?.THANHTIEN,
   };
 
-  const data = donThuoc.MAHD ? [...phieuKhamArray, ...clsByIdArray, donThuoc] : [...phieuKhamArray, ...clsByIdArray];
+  const data = donThuoc.MAHD
+    ? [...phieuKhamArray, ...clsByIdArray, donThuoc]
+    : [...phieuKhamArray, ...clsByIdArray];
 
   const handleThanhToan = item => {
     dispatch(selectItemThanhToan(item));
