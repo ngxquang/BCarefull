@@ -80,7 +80,6 @@ const LoginScreen = ({navigation}) => {
       setPassword('');
     }
     if (response && response.data && response.data.errcode !== 0) {
-
       Alert.alert('Error', `${response.data.message}`);
     }
   };

@@ -41,7 +41,7 @@ function DatLichScreen() {
           formDisplay={formDisplay}
         />
       )}
-      {values == 1 && <ThanhToanScreen />}
+      {values == 1 && <ThanhToanScreen formDisplay={formDisplay} formSubmit={formSubmit}/>}
     </SafeAreaView>
   );
 }

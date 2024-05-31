@@ -50,7 +50,7 @@ function KetQuaKhamScreen({navigation, route}) {
           <Icon name={'arrow-back'} style={styles.icon} />
         </TouchableOpacity>
         <View style={styles.title}>
-          {data?.TENLOAIDV === 'Đơn thuốc' ? (
+          {data?.TENLOAIDV === 'Hóa đơn thuốc' ? (
             <>
               <Text style={styles.content}>Chi tiết đơn thuốc</Text>
               <View
@@ -60,7 +60,7 @@ function KetQuaKhamScreen({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
-                  Ngày bán:{' '}
+                  Thời gian tạo:{' '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
               </View>
@@ -75,7 +75,7 @@ function KetQuaKhamScreen({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
-                  Ngày khám:{' '}
+                  Thời gian khám:{' '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
               </View>
@@ -97,7 +97,7 @@ function KetQuaKhamScreen({navigation, route}) {
           </View>
         </View>
       </View>
-      {data.TENLOAIDV === 'Đơn thuốc' ? (
+      {data.TENLOAIDV === 'Hóa đơn thuốc' ? (
         <>
           <ScrollView style={styles.body}>
             <View style={styles.itemContainer}>
@@ -140,7 +140,7 @@ function KetQuaKhamScreen({navigation, route}) {
             </View>
           </ScrollView>
         </>
-      ) : data.TENLOAIDV === 'Cận lâm sàn' ? (
+      ) : data.TENLOAIDV === 'Cận lâm sàng' ? (
         <>
           <>
             <ScrollView style={styles.body}>

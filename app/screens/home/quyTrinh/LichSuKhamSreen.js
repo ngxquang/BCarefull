@@ -16,6 +16,7 @@ import Fonts from '../../../../assets/fonts/Fonts';
 import {BCarefulTheme} from '../../../component/Theme';
 import {TTKICon} from '../../../component/StatusIcon';
 import {compareDates} from '../../../util/appUtil';
+import { selectItem, clearSelectedItem } from '../../../redux/slice/selectedItemSlice';
 
 function LichSuKhamScreen({navigation}) {
   const dispatch = useDispatch();
@@ -32,6 +33,11 @@ function LichSuKhamScreen({navigation}) {
     {id: 3, title: 'Đã hoàn thành'},
     {id: 4, title: 'Đã hủy'},
   ]);
+
+  const handleChuyenTrangDSDV = (item) => {
+    dispatch(selectItem(item));
+    navigation.navigate('DSDV', {item});
+  }
 
   useEffect(() => {
     if (lichSuKham) {
@@ -117,7 +123,7 @@ function LichSuKhamScreen({navigation}) {
         <View style={styles.listItemDetail}>
           <TouchableOpacity
             style={styles.detail}
-            onPress={() => navigation.navigate('DSDV', {item})}>
+            onPress={() => handleChuyenTrangDSDV(item)}>
             <View style={{flex: 6}}>
               <Text style={styles.maPhieuKham}>MAPK - {item.MAPK}</Text>
               <Text style={styles.tenDichVu}>{item.TENDV.toUpperCase()}</Text>

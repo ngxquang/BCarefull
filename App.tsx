@@ -42,6 +42,10 @@ import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScre
 import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
 import NgayKhamScreen from './app/screens/home/datLich/ChonThongTinKham/NgayKhamScreen';
 import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
+import { useDispatch, useSelector } from "react-redux";
+import { selectAction } from './app/util/selectAction';
+import { onDisplayNotification } from './app/util/appUtil';
+import { getUser } from './app/util/appUtil';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -83,7 +87,7 @@ function App(): React.JSX.Element {
     prefixes: ['bcareful://'],
     config: {
       screens: {
-        LichSuKham: 'dsdv',
+        DSDV: 'dsdv',
       },
     },
   };
@@ -92,29 +96,44 @@ function App(): React.JSX.Element {
     console.log('>>>>>>>>>ham handle deeplink dược sọi');
     if (url) {
       console.log('Parsed parameters:', url);
-      // const response = await axios.post("/hoadon/thanhtoan", {
-      //   MAHD: 204,
-      //   MALOAIHD: 1,
-      //   THANHTIEN: 300000,
-      //   maLT: 102,
-      //   tttt: "Đã thanh toán",
-      //   tdtt: new Date(),
-      //   pttt: 'Chuyển khoản',
-      // });
-      // if (response.status === 200) {
-      //   socket.emit("send-message", {actionName: 'DSHD', maID: 181});
-      //   socket.emit("send-message", {actionName: 'DSDK'});
-      // }
     } else {
       console.log('>>>>>>> ko nhan duoc url deeplink');
     }
   };
 
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.auth?.user?.account?.userInfo[0]);
+
+  type SocketData = {
+    actionName: string;
+    maID: number;
+    maBN: number;
+    title: string;
+    message: string;
+  };
+  type SelectActionReturnType = ReturnType<typeof selectAction>;
+
   useEffect(() => {
-    socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
-    socket.on('receive-message', (data: object) => {
-      Alert.alert('Co nguoi khac dang nhap');
-    });
+    console.log("USER IN 1ST USEEFFECT >>>>>>>>>>>>>> ", user)
+  }, [dispatch])
+
+  useEffect(() => {
+    // console.log("USER >>>>>>>>>>>>>> ", user)
+    // socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
+    // socket.on('receive-message', (data: SocketData) => {
+    //   // Alert.alert('Co nguoi khac dang nhap');
+    //   const fetchAction: SelectActionReturnType = selectAction(data?.actionName);
+    //   if (fetchAction !== null) {
+    //     data?.maID 
+    //     ? dispatch(fetchAction(data.maID))
+    //     : dispatch(fetchAction());
+    //     console.log("MESSAGE FROM SERVER >>>>>>>>>> ", data);
+    //     if (data.maBN && data.maBN === user.MABN) {
+    //       onDisplayNotification(data.title, data.message);
+    //     } 
+    //     // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
+    //   }
+    // });
 
     // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
     const linkingListener = Linking.addEventListener('url', handleDeepLink);
@@ -122,10 +141,9 @@ function App(): React.JSX.Element {
     return () => {
       linkingListener.remove();
     };
-  });
+  }, []);
 
   return (
-    <Provider store={store}>
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
         <Stack.Navigator
           initialRouteName="Login"
@@ -174,7 +192,6 @@ function App(): React.JSX.Element {
           <Stack.Screen name="XacNhan" component={XacNhanScreen} />
         </Stack.Navigator>
       </NavigationContainer>
-    </Provider>
   );
 }
 

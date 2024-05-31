@@ -17,33 +17,79 @@ import {fetchDSHDByIdAction} from '../../../redux/action/fetchHoaDonAction';
 import {fetchDsClsByIdAction} from '../../../redux/action/fetchCLSAction';
 import {fetchTTKAction} from '../../../redux/action/fetchTTKAction';
 import {fetchBenhByIdAction} from '../../../redux/action/fetchBenhByIdAction';
-import {fetchPkByIdHdAction} from '../../../redux/action/fetchPhieuKhamAction';
+import {
+  fetchLSKByIdBnAction,
+  fetchPkByIdHdAction,
+} from '../../../redux/action/fetchPhieuKhamAction';
 import {BCarefulTheme} from '../../../component/Theme';
 import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamByIdAction';
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../../../assets/fonts/Fonts';
+import {selectItemThanhToan} from '../../../redux/slice/selectedItemSlice';
+import axios from '../../../setup/axios';
+import socket from '../../../setup/socket';
 
 function DSDVScreen({navigation, route}) {
+  console.log('ROUTE >>>>>>>>>>>>>>>> ', route);
   const dispatch = useDispatch();
-  const maPK = route.params.item.MAPK;
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  const selectedItemThanhToan = useSelector(state => state.selectedItem?.selectedItemThanhToan);
+  const selectedItem = useSelector(state => state.selectedItem?.selectedItem);
+  const maPK = route.params.item ? route.params?.item.MAPK : selectedItem.MAPK;
+  const maHDofPK = route.params.item
+    ? route.params?.item.MAHD
+    : selectedItem.MAHD;
+  const NGAYKHAMMIN = route.params.item
+    ? route.params?.item.NGAYKHAMMIN
+    : selectedItem.NGAYKHAMMIN;
+
+  // useEffect(async () => {
+  //
+  // }, []);
 
   useEffect(() => {
+    console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
+
+    const updateHoaDon = async selectedItemThanhToan => {
+      const response = await axios.post('/hoadon/thanhtoan', {
+        MAHD: selectedItemThanhToan.MAHD,
+        THANHTIEN: selectedItemThanhToan.THANHTIEN,
+        maLT: 102,
+        tttt: 'Đã thanh toán',
+        tdtt: new Date(),
+        pttt: 'Chuyển khoản',
+      });
+      if (response.status === 200) {
+        dispatch(fetchCTDTByIdAction(maPK));
+        dispatch(fetchPhieuKhamByIdAction(maPK));
+        dispatch(fetchDsClsByIdAction(maPK));
+        dispatch(fetchLSKByIdBnAction(user.MABN));
+        socket.emit('send-message', {actionName: 'DSHD', maID: maPK});
+        socket.emit('send-message', {actionName: 'DSDK'});
+        // socket.emit('send-message', {actionName: 'LSKBYIDBN', maID: user.MABN});
+      }
+    };
+
+    if (route && route.params.resultCode === '0') {
+      updateHoaDon(selectedItemThanhToan);
+    }
+
     dispatch(fetchCTDTByIdAction(maPK));
     dispatch(fetchBenhNhanByIdAction(maPK));
-    dispatch(fetchDSHDByIdAction(maPK));
+    // dispatch(fetchDSHDByIdAction(maPK));
     dispatch(fetchDsClsByIdAction(maPK));
-    dispatch(fetchPkByIdHdAction(maPK));
-    dispatch(fetchTTKAction(maPK));
+    dispatch(fetchPkByIdHdAction(maHDofPK));
+    // dispatch(fetchTTKAction(maPK));
     dispatch(fetchBenhByIdAction(maPK));
     dispatch(fetchPhieuKhamByIdAction(maPK));
-  }, [maPK]);
+  }, [route]);
 
   const ctdtById = useSelector(state => state.ctdtById.data) || [];
   console.log('ctdtById', ctdtById);
-  const hoaDon = useSelector(state => state.hoaDon.dshd) || [];
+  // const hoaDon = useSelector(state => state.hoaDon.dshd) || [];
   const pkByIdHd = useSelector(state => state.dsdk.pkByIdHd) || [];
-  const ttk = useSelector(state => state.ttk.data) || [];
+  // const ttk = useSelector(state => state.ttk.data) || [];
   const benhById = useSelector(state => state.benhById.data) || [];
   const clsById = useSelector(state => state.clsById.dsClsById) || [];
   const isLoadingCLS = useSelector(state => state.clsById.isLoading);
@@ -58,18 +104,20 @@ function DSDVScreen({navigation, route}) {
 
   const donThuoc = {
     TENDV: 'Đơn thuốc',
-    NGAYKHAMMIN: ctdtById[0]?.TDTTMIN,
+    NGAYKHAMMIN: ctdtById[0]?.THOIGIANLAP,
+    TDTTMIN: ctdtById[0]?.TDTTMIN,
     TTTT: ctdtById[0]?.TTTT,
     NGUOIBAN: ctdtById[0]?.HOTEN,
-    TENLOAIDV: 'Đơn thuốc',
+    TENLOAIDV: 'Hóa đơn thuốc',
+    MAHD: ctdtById[0]?.MAHD,
+    THANHTIEN: ctdtById[0]?.THANHTIEN,
   };
 
-  const data = [...phieuKhamArray, ...clsByIdArray, donThuoc];
+  const data = donThuoc.MAHD ? [...phieuKhamArray, ...clsByIdArray, donThuoc] : [...phieuKhamArray, ...clsByIdArray];
 
   const handleThanhToan = item => {
-    if (item.TTTT !== 'Đã thanh toán') {
-      navigation.navigate('ThanhToan');
-    }
+    dispatch(selectItemThanhToan(item));
+    navigation.navigate('ThanhToan', {item, ctdtById, clsByIdArray, pkByIdHd});
   };
 
   const phieuKhamRenderItem = ({item}) => (
@@ -95,7 +143,9 @@ function DSDVScreen({navigation, route}) {
             </View>
           )}
           <TouchableOpacity
-            onPress={() => navigation.navigate('KetQuaKham', {item, ctdtById, benhById})}>
+            onPress={() =>
+              navigation.navigate('KetQuaKham', {item, ctdtById, benhById})
+            }>
             <View style={styles.detailsContainer}>
               <Text style={styles.tenDichVu}>{item.TENDV}</Text>
               {item.INFOBSCD && item.INFOBSTH ? (
@@ -154,7 +204,7 @@ function DSDVScreen({navigation, route}) {
         </TouchableOpacity>
         <View style={styles.title}>
           <Text style={styles.content}>Chi tiết phiếu khám MAPK - {maPK}</Text>
-          <Text style={styles.dateTime}>{route.params.item.NGAYKHAMMIN}</Text>
+          <Text style={styles.dateTime}>{NGAYKHAMMIN}</Text>
         </View>
       </View>
       {isLoading ? (
