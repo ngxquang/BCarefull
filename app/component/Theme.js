@@ -52,17 +52,27 @@ export const style = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  btnOutlineSub: {
-    borderColor: BCarefulTheme.colors.secondary,
-    borderWidth: 3,
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 'auto',
-    backgroundColor: 'white',
-  },
+    btnOutlineSub: {
+      borderColor: BCarefulTheme.colors.secondary,
+      borderWidth: 3,
+      borderRadius: 10,
+      paddingHorizontal: 14,
+      paddingVertical: 6,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 'auto',
+      backgroundColor: 'white',
+    },
+
+    btnDisable: {
+      backgroundColor: '#D3D3D3',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      fontSize: 16,
+    },
 
   btnDisable: {
     backgroundColor: '#D3D3D3',
