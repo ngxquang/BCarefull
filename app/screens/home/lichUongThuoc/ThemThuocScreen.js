@@ -8,6 +8,9 @@ import { useState } from "react";
 import { Icon } from "@rneui/themed";
 import InputSpinner from "react-native-input-spinner";
 import Fonts from "../../../../assets/fonts/Fonts";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Button, fonts } from "@rneui/base";
+//import DateTimePicker from "react-native-modal-datetime-picker";
 
 function ThemThuocScreen() {
     const navigation = useNavigation();
@@ -83,6 +86,20 @@ function ThemThuocScreen() {
         setSelectedCard(null);
     };
 
+    const [date, setDate] = useState(new Date());
+    const [show, setShow] = useState(false);
+    
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
+
+    const showTimepicker = () => {
+        setShow(true);
+    };
+
+
     return (
         <View style={{ flex: 1 }}>
             <CustomHeader title={'Thêm thuốc'} />
@@ -129,12 +146,19 @@ function ThemThuocScreen() {
                                 <Text style={style.h2}>Đặt liều thuốc</Text>
 
                                 {/* Phần chỉnh giờ */}
-                                <TextInput
-                                    style={style.h5}
-                                    placeholder="Thời gian"
-                                    value={selectedCard.time}
-                                    onChangeText={(text) => setSelectedCard({ ...selectedCard, time: text })}
-                                />
+                                <TouchableOpacity onPress={showTimepicker}>
+                                    <Text style={styles.timeText}>{date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
+                                </TouchableOpacity>
+                                {show && (
+                                    <DateTimePicker
+                                    testID="dateTimePicker"
+                                    value={date}
+                                    mode="time"
+                                    is24Hour={true}
+                                    display="default"
+                                    onChange={onChange}
+                                    />
+                                )}
 
                                 {/* Phần chỉnh số lượng */}
                                 <InputSpinner
@@ -247,5 +271,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#f7d0cd',
         padding: 4,
         borderRadius: 120,
-    }
+    },
+    timeText: {
+        fontSize: 50, // Tăng kích thước font
+        margin: 10,
+        fontFamily: fonts.bold
+    },
 });

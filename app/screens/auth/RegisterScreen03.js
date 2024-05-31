@@ -32,9 +32,9 @@ const RegisterScreen03 = ({navigation, route}) => {
   const gioiTinh = [{gioiTinh: 'Nam'}, {gioiTinh: 'Nữ'}, {gioiTinh: 'Khác'}];
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  useEffect(() => {
-    dispatch(fetchAllBenhNhanAction());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchAllBenhNhanAction());
+  // }, [dispatch]);
 
   const formDataDefault = {
     // email: route.params.email ? route.params.email : '',
