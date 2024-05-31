@@ -295,7 +295,7 @@ function LichThuocScreen() {
       </View>
 
       <ScrollView style={styles.scrollContainer}>
-        <Text style={styles.patientName}>LÊ DUY NGUYÊN (N23-0253996)</Text>
+        <Text style={[style.h4, style.mx3]}>LÊ DUY NGUYÊN (N23-0253996)</Text>
         {renderCards()}
         {noMedications && (
           <Text style={styles.noMedicationText}>Bạn chưa có lịch nào</Text>
@@ -315,8 +315,8 @@ function LichThuocScreen() {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalView}>
+          <View style={style.modalContainer}>
+            <View style={style.modalView}>
               <Text style={style.h2}>Xác nhận uống thuốc</Text>
               <Text style={style.t1}>
                 LÊ DUY NGUYÊN (N23-0253996)
@@ -328,7 +328,7 @@ function LichThuocScreen() {
                 {selectedMedication.time} - {selectedMedication.dosage}
               </Text>
 
-              <View style={styles.modalActions}>
+              <View style={style.spaceard}>
                 <TouchableOpacity
                   style={style.btnDisable}
                   onPress={() => handleMedicationAction('skipped')}>
@@ -399,11 +399,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    marginTop: 210, // Adjust this value based on the height of the fixed header
-  },
-  patientName: {
-    fontSize: 16,
-    fontFamily: Fonts.bold,
+    marginTop: 240, // Adjust this value based on the height of the fixed header
   },
   medicationItem: {
     flexDirection: 'column',
@@ -413,32 +409,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#888',
     marginVertical: 20,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalView: {
-    width: '95%',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
   },
   closeButton: {
     position: 'absolute',

@@ -81,7 +81,7 @@ export const style = StyleSheet.create(
     },
 
     card: {
-      // backgroundColor: 'red',
+      backgroundColor: 'white',
       margin: 10,
       padding: 10,
       borderRadius: 10,
@@ -157,6 +157,11 @@ export const style = StyleSheet.create(
       fontSize: 14,
       color: '#000000',
     },
+    t0: {
+      fontFamily: Fonts.regular,
+      fontSize: 22,
+      color: '#000000',
+    },
     t1: {
       fontFamily: Fonts.regular,
       fontSize: 16,
@@ -183,6 +188,11 @@ export const style = StyleSheet.create(
     t5: {
       fontFamily: Fonts.light,
       fontSize: 12,
+      color: '#000000',
+    },
+    t6: {
+      fontFamily: Fonts.regular,
+      fontSize: 18,
       color: '#000000',
     },
 
@@ -255,6 +265,11 @@ export const style = StyleSheet.create(
     spacebtw: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+    },
+    spaceard: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
     },
     row: {
       flexDirection: 'row',
@@ -402,6 +417,28 @@ export const style = StyleSheet.create(
       // justifyContent: 'flex-end',
       textAlign: 'right',
 
-    }
+    },
+
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalView: {
+      width: '95%',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 20,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
   }
 )
