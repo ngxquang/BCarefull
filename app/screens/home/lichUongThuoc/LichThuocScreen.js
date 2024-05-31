@@ -164,7 +164,7 @@ function LichThuocScreen() {
     const cardStyle = index % 2 === 0 ? style.cardLeft : style.cardRight;
 
     return (
-      <View style={[cardStyle, currentTimePeriod === timePeriod ? { borderColor: BCarefulTheme.colors.secondary, borderBottomWidth: 7, elevation: 4 , backgroundColor: 'white' } : {}]}>
+      <View style={[cardStyle, currentTimePeriod === timePeriod ? { borderColor: BCarefulTheme.colors.secondary, borderBottomWidth: 7, elevation: 4, backgroundColor: 'white' } : {}]}>
         <Text style={style.h7}>{title}</Text>
         {source && (
           <Image
@@ -304,7 +304,7 @@ function LichThuocScreen() {
         <Button
           title="Quản lý toa thuốc"
           buttonStyle={[style.btn, style.m3]}
-          onPress={() => {navigation.navigate('QuanLyThuoc')}}
+          onPress={() => { navigation.navigate('QuanLyThuoc') }}
         />
       </ScrollView>
 
@@ -350,8 +350,9 @@ function LichThuocScreen() {
 
               <TouchableOpacity
                 style={styles.closeButton}
-                onPress={() => setModalVisible(false)}>
-                <Text style={styles.closeButtonText}>X</Text>
+                onPress={() => setModalVisible(false)}
+              >
+                <Icon name="close" type="ionicon" color={BCarefulTheme.colors.red} size={30} />
               </TouchableOpacity>
             </View>
           </View>
@@ -414,10 +415,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-  },
-  closeButtonText: {
-    fontSize: 18,
-    color: '#999',
   },
   iconRight: {
     width: 70,

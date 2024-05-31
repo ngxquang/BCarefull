@@ -26,6 +26,7 @@ function ThemThuocScreen() {
 
     const handleDeleteDosageCard = (index) => {
         setCards(cards.filter((_, i) => i !== index));
+        setModalVisible(false); // close modal after deletion
     };
 
     const handleSelectCard = (index) => {
@@ -129,7 +130,7 @@ function ThemThuocScreen() {
 
                                 {/* Phần chỉnh giờ */}
                                 <TextInput
-                                    style={styles.input}
+                                    style={style.h5}
                                     placeholder="Thời gian"
                                     value={selectedCard.time}
                                     onChangeText={(text) => setSelectedCard({ ...selectedCard, time: text })}
@@ -154,7 +155,7 @@ function ThemThuocScreen() {
 
                                 {/* Phần chỉnh đơn vị */}
                                 <TextInput
-                                    style={styles.input}
+                                    style={[styles.input, style.t1]}
                                     placeholder="Đơn vị"
                                     value={selectedCard.unit}
                                     onChangeText={(text) => setSelectedCard({ ...selectedCard, unit: text })}
@@ -162,7 +163,7 @@ function ThemThuocScreen() {
 
                                 {/* Phần note */}
                                 <TextInput
-                                    style={styles.input}
+                                    style={[styles.input, style.t1]}
                                     placeholder="Ghi chú"
                                     value={selectedCard.note}
                                     onChangeText={(text) => setSelectedCard({ ...selectedCard, note: text })}
@@ -181,8 +182,21 @@ function ThemThuocScreen() {
                                     style={styles.closeButton}
                                     onPress={() => setModalVisible(false)}
                                 >
-                                    <Text style={style.h2}>x</Text>
+                                    <Icon name="close" type="ionicon" color={BCarefulTheme.colors.red} size={30} />
                                 </TouchableOpacity>
+
+                                {selectedCard.index !== undefined && (
+                                    <TouchableOpacity
+                                        style={[styles.trash, {
+                                            position: 'absolute',
+                                            top: 10,
+                                            left: 20,
+                                        }]}
+                                        onPress={() => handleDeleteDosageCard(selectedCard.index)}
+                                    >
+                                        <Icon name="trash-outline" type="ionicon" color={BCarefulTheme.colors.red} size={24} />
+                                    </TouchableOpacity>
+                                )}
                             </View>
                         </View>
                     </Modal>
@@ -198,8 +212,8 @@ const styles = StyleSheet.create({
     seperate: { borderLeftWidth: 2, borderColor: BCarefulTheme.colors.border, borderStyle: 'dashed', padding: 12 },
     closeButton: {
         position: 'absolute',
-        top: 0,
-        right: 20,
+        top: 10,
+        right: 10,
     },
     modalContainer: {
         flex: 1,
@@ -226,7 +240,12 @@ const styles = StyleSheet.create({
         width: '100%',
         borderBottomWidth: 1,
         borderColor: BCarefulTheme.colors.border,
-        marginVertical: 10,
-        padding: 8,
+        marginVertical: 8,
+        padding: 4,
     },
+    trash: {
+        backgroundColor: '#f7d0cd',
+        padding: 4,
+        borderRadius: 120,
+    }
 });
