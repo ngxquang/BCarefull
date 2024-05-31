@@ -44,6 +44,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAction } from './app/util/selectAction';
 import { onDisplayNotification } from './app/util/appUtil';
 import { getUser } from './app/util/appUtil';
+import notifee, { EventType } from '@notifee/react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -99,21 +100,10 @@ function App(): React.JSX.Element {
     }
   };
 
-  const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.auth?.user?.account?.userInfo[0]);
+  const handleClickNotifee = async () => {
+    const initialNotification = await notifee.getInitialNotification();
 
-  type SocketData = {
-    actionName: string;
-    maID: number;
-    maBN: number;
-    title: string;
-    message: string;
-  };
-  type SelectActionReturnType = ReturnType<typeof selectAction>;
-
-  useEffect(() => {
-    console.log("USER IN 1ST USEEFFECT >>>>>>>>>>>>>> ", user)
-  }, [dispatch])
+  }
 
   useEffect(() => {
     // console.log("USER >>>>>>>>>>>>>> ", user)

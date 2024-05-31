@@ -14,12 +14,12 @@ import socket from '../../setup/socket';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import {selectAction} from '../../util/selectAction';
-import { onDisplayNotification } from '../../util/appUtil';
+import {onDisplayNotification} from '../../util/appUtil';
 
 function HomeScreen({navigation}) {
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     console.log('USER >>>>>>>>>>>>>> ', user);
     socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
@@ -27,9 +27,7 @@ function HomeScreen({navigation}) {
       // Alert.alert('Co nguoi khac dang nhap');
       const fetchAction = selectAction(data?.actionName);
       if (fetchAction !== null) {
-        data?.maID 
-        ? dispatch(fetchAction(data.maID)) 
-        : dispatch(fetchAction());
+        data?.maID ? dispatch(fetchAction(data.maID)) : dispatch(fetchAction());
         console.log('MESSAGE FROM SERVER >>>>>>>>>> ', data);
         if (data.maBN && data.maBN === user.MABN) {
           onDisplayNotification(data.title, data.message);

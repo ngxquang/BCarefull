@@ -22,7 +22,7 @@ export async function onDisplayNotification(title, message) {
       channelId,
       // pressAction is needed if you want the notification to open the app when pressed
       pressAction: {
-        id: 'default',
+        id: 'dsdv',
       },
     },
   });
