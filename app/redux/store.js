@@ -15,6 +15,7 @@ import getAllThuocReducer from './slice/getAllThuocSlice'
 import getTTKReducer from './slice/getTTKSlice'
 import getBenhByIdReducer from './slice/getBenhByIdSlice'
 import getPhieuKhamByIdReducer from './slice/getPhieuKhamByIdSlice'
+import getBacSiByDateReducer from './slice/getBacSiByDateSlice'
 import selectedItemReducer from './slice/selectedItemSlice'
 
 const store = configureStore({
@@ -23,6 +24,7 @@ const store = configureStore({
     benhNhan: getAllBenhNhanReducer,
     phieuKham: phieuKhamReducer,
     bacSi: getAllBacSiReducer,
+    bacSiByDate: getBacSiByDateReducer,
     dichVu: getAllDichVuReducer,
     hoaDon: getHoaDonReducer,
     thuoc: getAllThuocReducer,

@@ -1,0 +1,235 @@
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {ListItem, Icon} from '@rneui/themed';
+import {BCarefulTheme, style} from '../../../../component/Theme';
+import {LogBox} from 'react-native';
+import Fonts from '../../../../../assets/fonts/Fonts';
+import {useSelector} from 'react-redux';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+
+function XacNhanScreen({setValues, formSubmit, formDisplay}) {
+  const navigation = useNavigation();
+  const user = useSelector(state => state.auth?.user); // user chứa token, isAuthenticated, account
+  let userInfo = {};
+  if (user && user.account) {
+    if (user.account.userInfo) {
+      userInfo = user.account.userInfo[0];
+    }
+  }
+  const [expanded, setExpanded] = useState({});
+
+  const toggleExpand = doctorId => {
+    setExpanded(prev => ({...prev, [doctorId]: !prev[doctorId]}));
+  };
+
+  const tongPhi = () => {
+    const total = formDisplay.reduce((accumulator, currentValue) => {
+      return accumulator + parseFloat(currentValue.giaDichVu);
+    }, 0);
+
+    return total;
+  };
+
+  const renderItem = ({item}) => (
+    <View style={[styles.listItemContainer, {padding: 20}]}>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t1, {flex: 1}]}>Chuyên khoa</Text>
+        <Text
+          style={[style.h6, {flex: 2, color: BCarefulTheme.colors.primary}]}>
+          {item.tenDichVu.toUpperCase()}
+        </Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t1, {flex: 1}]}>Ngày khám</Text>
+        <Text style={[style.t1, {flex: 2}]}>{item.ngayKham}</Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t1, {flex: 1}]}>Giờ khám</Text>
+        <Text style={[style.t1, {flex: 2}]}>{item.gioDatLich}</Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t1, {flex: 1}]}>Phòng khám</Text>
+        <Text style={[style.t1, {flex: 2}]}>Phòng B8.08, tầng 8, khu B</Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t1, {flex: 1}]}>Phí khám</Text>
+        <Text style={[style.t1, {flex: 2}]}>{item.giaDichVu} VND</Text>
+      </View>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setValues(0)}>
+          <Icon name={'arrow-back'} style={styles.icon} />
+        </TouchableOpacity>
+        <View style={styles.title}>
+          <Text style={style.h5}>Thông tin đặt khám</Text>
+        </View>
+      </View>
+      <View style={styles.body}>
+        <Text style={[style.t1, {paddingHorizontal: 10}]}>
+          Vui lòng kiểm tra thông tin đặt khám bên dưới.
+        </Text>
+        <View style={styles.listItemContainer}>
+          <ListItem.Accordion
+            content={
+              <View style={[styles.header, {paddingVertical: 0, flex: 1}]}>
+                <IoniconsIcon
+                  name="person-add-outline"
+                  style={[styles.icon, {marginLeft: 0, fontSize: 18}]}
+                />
+                <Text style={style.t1}>Hồ sơ đăng ký khám bệnh</Text>
+              </View>
+            }
+            isExpanded={expanded[userInfo.MABN]}
+            onPress={() => toggleExpand(userInfo.MABN)}>
+            <View style={styles.breakline}></View>
+            <View style={styles.input}>
+              <View style={[styles.header, {paddingVertical: 6}]}>
+                <Text style={[style.t1, {flex: 1}]}>Họ tên</Text>
+                <Text
+                  style={[
+                    style.h6,
+                    {color: BCarefulTheme.colors.primary, flex: 2},
+                  ]}>
+                  {userInfo.HOTEN.toUpperCase()}
+                </Text>
+              </View>
+              <View style={[styles.header, {paddingVertical: 6}]}>
+                <Text style={[style.t1, {flex: 1}]}>Giới tính</Text>
+                <Text style={[style.t1, {flex: 2}]}>{userInfo.GIOITINH}</Text>
+              </View>
+              <View style={[styles.header, {paddingVertical: 6}]}>
+                <Text style={[style.t1, {flex: 1}]}>Điện thoại</Text>
+                <Text style={[style.t1, {flex: 2}]}>{userInfo.SDT}</Text>
+              </View>
+              <View style={[styles.header, {paddingVertical: 6}]}>
+                <Text style={[style.t1, {flex: 1}]}>Địa chỉ</Text>
+                <Text style={[style.t1, {flex: 2}]}>{userInfo.DIACHI}</Text>
+              </View>
+            </View>
+          </ListItem.Accordion>
+        </View>
+
+        <View style={[styles.itemGroup, {paddingHorizontal: 10}]}>
+          <Text style={[style.t1, {fontSize: 20}]}>Dịch vụ đã đặt</Text>
+          <Text style={[style.t1, {fontSize: 20, marginLeft: 6}]}>
+            ({formDisplay.length})
+          </Text>
+        </View>
+        <View style={styles.listDVContainer}>
+          <FlatList
+            data={formDisplay}
+            keyExtractor={item => item.MADV.toString()}
+            renderItem={renderItem}
+          />
+        </View>
+        <View styl={{flex: 1, marginBottom: 100}}></View>
+        <View
+          style={[
+            {
+              backgroundColor: '#fff',
+              paddingBottom: 20,
+              paddingTop: 10,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              borderTopWidth: 1,
+              borderStartWidth: 1,
+              borderEndWidth: 1,
+              borderColor: BCarefulTheme.colors.border,
+              overflow: 'hidden',
+            },
+          ]}>
+          <View style={[styles.itemGroup, {marginVertical: 4}]}>
+            <Text style={[style.t1, {marginLeft: 30, fontSize: 18}]}>
+              Thanh toán tạm tính:
+            </Text>
+            <Text style={[style.h6, {marginLeft: 10, fontSize: 18}]}>
+              {tongPhi()} VND
+            </Text>
+          </View>
+          <View style={style.spacebtw}>
+            <TouchableOpacity
+              style={[style.btnSub, {paddingHorizontal: 22, marginLeft: 30}]}
+              onPress={() => setValues(0)}>
+              <Text style={[style.h4, style.white]}>Trở lại</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[style.btnSub, {paddingHorizontal: 36, marginRight: 30}]}
+              onPress={() => setValues(1)}>
+              <Text style={[style.h4, style.white]}>Tiếp tục</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  listDVContainer: {
+    marginBottom: 270,
+    overflow: 'hidden',
+  },
+  listItemContainer: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: BCarefulTheme.colors.border,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    margin: 8,
+    elevation: 2,
+  },
+  input: {
+    fontSize: 16,
+    borderRadius: 10,
+    fontFamily: Fonts.regular,
+    paddingHorizontal: 12,
+    flexGrow: 1,
+  },
+  itemGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: BCarefulTheme.colors.background,
+  },
+  header: {
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    color: BCarefulTheme.colors.primary,
+    fontSize: 16,
+    marginHorizontal: 10,
+  },
+  title: {
+    marginLeft: 20,
+  },
+  body: {
+    flex: 1,
+  },
+  breakline: {
+    borderTopWidth: 2,
+    borderColor: BCarefulTheme.colors.border,
+    borderStyle: 'dashed',
+    marginBottom: 10,
+    marginHorizontal: 20,
+  },
+});
+
+export default XacNhanScreen;

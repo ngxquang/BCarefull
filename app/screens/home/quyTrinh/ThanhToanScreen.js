@@ -16,12 +16,12 @@ import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {onDisplayNotification} from '../../../util/appUtil';
 
-function ThanhToanScreen({navigation, route}) {
+function ThanhToanScreen({navigation, route, formSubmit, formDisplay}) {
   const dispatch = useDispatch();
-  const itemThanhToan = route.params.item;
-  const ctdtById = route.params.ctdtById;
-  const clsById = route.params.clsByIdArray;
-  const pkByIdHd = route.params.pkByIdHd;
+  const itemThanhToan = route?.params?.item;
+  const ctdtById = route?.params?.ctdtById;
+  const clsById = route?.params?.clsByIdArray;
+  const pkByIdHd = route?.params?.pkByIdHd;
 
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const [showSpecialities, setShowSpecialities] = useState(false);
