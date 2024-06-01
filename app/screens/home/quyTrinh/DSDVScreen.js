@@ -26,7 +26,7 @@ import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamById
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../../../assets/fonts/Fonts';
-import {selectItemThanhToan} from '../../../redux/slice/selectedItemSlice';
+import {clearNewPKHD, selectItemThanhToan} from '../../../redux/slice/selectedItemSlice';
 import axios from '../../../setup/axios';
 import socket from '../../../setup/socket';
 
@@ -34,10 +34,12 @@ function DSDVScreen({navigation, route}) {
   console.log('ROUTE >>>>>>>>>>>>>>>> ', route);
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+
   const selectedItemThanhToan = useSelector(
     state => state.selectedItem?.selectedItemThanhToan,
   );
   const selectedItem = useSelector(state => state.selectedItem?.selectedItem);
+
   const maPK = route.params.item ? route.params?.item.MAPK : selectedItem.MAPK;
   const maHDofPK = route.params.item
     ? route.params?.item.MAHD
@@ -45,6 +47,7 @@ function DSDVScreen({navigation, route}) {
   const NGAYKHAMMIN = route.params.item
     ? route.params?.item.NGAYKHAMMIN
     : selectedItem.NGAYKHAMMIN;
+
   const newPKArray = useSelector(state => state.selectedItem?.newPKArray);
 
   const updateHoaDon = async selectedItemThanhToan => {
@@ -68,10 +71,10 @@ function DSDVScreen({navigation, route}) {
   };
 
   const insertPK = async (newPKArray, maHD) => {
-    newPKArray.forEach(async phieuKham => {
+    const flag = await newPKArray.map(async phieuKham => {
       let ngayKham = phieuKham.ngayKham.slice(-10);
       let [day, month, year] = ngayKham.split('/').map(Number);
-      let time = new Date(year, month - 1, day)
+      let time = new Date(year, month - 1, day);
       let bodyReq = {
         maBN: user.MABN,
         maBS: phieuKham.maBS,
@@ -89,17 +92,25 @@ function DSDVScreen({navigation, route}) {
         );
         if (response2.status === 200) {
           // toast.success("Thêm phiếu khám thành công!!!");
-          dispatch(fetchLSKByIdBnAction(user.MABN));
-          socket.emit('send-message', {actionName: 'DSDK'});
+          return true;
         }
       } catch (error) {
         console.log(error);
         // toast.error("Thêm phiếu khám không thành công");
       }
     });
+
+    if (flag && flag.length !== 0) {
+      for (const isComplete of flag) {
+        if (isComplete === false) {
+          return false;
+        }
+      }
+      return true;
+    }
   };
 
-  const insertHDPK = async (newPKArray) => {
+  const insertHDPK = async newPKArray => {
     try {
       const response1 = await axios.post('/hoadon/insert', {
         maLT: 102,
@@ -110,8 +121,13 @@ function DSDVScreen({navigation, route}) {
       });
       if (response1.status === 200) {
         let maHDinserted = response1.data.MAHD;
-        await insertPK(newPKArray, maHDinserted);
-        navigation.navigate('LichSuKham');
+        const isComplete = await insertPK(newPKArray, maHDinserted);
+        if (isComplete) {
+          navigation.navigate('LichSuKham');
+          dispatch(fetchLSKByIdBnAction(user.MABN));
+          dispatch(clearNewPKHD());
+          socket.emit('send-message', {actionName: 'DSDK'});
+        }
         // toast.success("Thêm hóa đơn thành công!!!");
       }
     } catch (error) {
@@ -124,11 +140,8 @@ function DSDVScreen({navigation, route}) {
     console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
 
     if (route && route.params.resultCode === '0' && newPKArray) {
+      console.log('INSERT HDPK IS CALLED >>>>>>> ');
       insertHDPK(newPKArray);
-      console.log(
-        'THANH TOAN MOMO XONG, INSERT HOA DON, PHIEU KHAM >>>',
-        newPKArray,
-      );
     } else if (route && route.params.resultCode === '0') {
       updateHoaDon(selectedItemThanhToan);
     }

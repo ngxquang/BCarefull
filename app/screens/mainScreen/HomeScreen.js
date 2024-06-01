@@ -14,47 +14,59 @@ import socket from '../../setup/socket';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import {selectAction} from '../../util/selectAction';
-import { onDisplayNotification } from '../../util/appUtil';
-import Carousel from "../../component/Carousel";
-import { patchWebProps } from "@rneui/base";
+import {onDisplayNotification} from '../../util/appUtil';
+import Carousel from '../../component/Carousel';
+import {patchWebProps} from '@rneui/base';
+import notifee, {EventType} from '@notifee/react-native';
+import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
+import axios from '../../setup/axios';
 
 const data = [
   {
-      title: 'WHO cảnh báo gánh nặng viêm gan siêu vi toàn cầu',
-      img: 'https://i1-suckhoe.vnecdn.net/2024/05/17/hepatitisb-share-jpeg-17159116-6627-3432-1715911762.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=NBTMn3vPpr46JuzMAvj4mQ',
-      path: 'https://vnexpress.net/who-canh-bao-ganh-nang-viem-gan-sieu-vi-toan-cau-4747161.html'
+    title: 'WHO cảnh báo gánh nặng viêm gan siêu vi toàn cầu',
+    img: 'https://i1-suckhoe.vnecdn.net/2024/05/17/hepatitisb-share-jpeg-17159116-6627-3432-1715911762.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=NBTMn3vPpr46JuzMAvj4mQ',
+    path: 'https://vnexpress.net/who-canh-bao-ganh-nang-viem-gan-sieu-vi-toan-cau-4747161.html',
   },
   {
-      title: 'Mỹ phê duyệt thuốc ung thư phổi giá 780.000 USD',
-      img: 'https://i1-suckhoe.vnecdn.net/2024/05/17/20190428-074106-675940-cancer-8919-9826-1715931515.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=YMDaroHilya8YGScL2GsZw',
-      path: 'https://vnexpress.net/my-phe-duyet-thuoc-ung-thu-phoi-gia-780-000-usd-4747359.html'
+    title: 'Mỹ phê duyệt thuốc ung thư phổi giá 780.000 USD',
+    img: 'https://i1-suckhoe.vnecdn.net/2024/05/17/20190428-074106-675940-cancer-8919-9826-1715931515.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=YMDaroHilya8YGScL2GsZw',
+    path: 'https://vnexpress.net/my-phe-duyet-thuoc-ung-thu-phoi-gia-780-000-usd-4747359.html',
   },
   {
-      title: 'Lợi ích của nước ion kiềm hydrogen với sức khỏe',
-      img: 'https://i1-suckhoe.vnecdn.net/2024/05/16/1-8376-1715827420.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=fh2hOqMWHWquOCOd_PpHag',
-      path: 'https://vnexpress.net/loi-ich-cua-nuoc-ion-kiem-hydrogen-voi-suc-khoe-4746383.html'
+    title: 'Lợi ích của nước ion kiềm hydrogen với sức khỏe',
+    img: 'https://i1-suckhoe.vnecdn.net/2024/05/16/1-8376-1715827420.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=fh2hOqMWHWquOCOd_PpHag',
+    path: 'https://vnexpress.net/loi-ich-cua-nuoc-ion-kiem-hydrogen-voi-suc-khoe-4746383.html',
   },
-];  
-
+];
 
 function HomeScreen({navigation}) {
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('USER >>>>>>>>>>>>>> ', user);
     socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
     socket.on('receive-message', data => {
       // Alert.alert('Co nguoi khac dang nhap');
       const fetchAction = selectAction(data?.actionName);
-      if (fetchAction !== null) {
+      if (fetchAction !== null && data.maBN && data.maBN === user.MABN) {
         data?.maID ? dispatch(fetchAction(data.maID)) : dispatch(fetchAction());
         console.log('MESSAGE FROM SERVER >>>>>>>>>> ', data);
-        if (data.maBN && data.maBN === user.MABN) {
-          onDisplayNotification(data.title, data.message);
+        if (data.title && data.title !== '') {
+          onDisplayNotification(data.title, data.message, {maPK: data.maID});
+          // chỉ có maID là maPK thì mới tới đc bước này, nếu maID là maBN thì ko có title, message
         }
         // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
       }
+    });
+
+    notifee.onBackgroundEvent(async ({type, detail}) => {
+      const {notification, pressAction} = detail;
+      const maPK = notification.data?.maPK;
+      console.log('MAPK >>>>>>>>>>>>', maPK);
+      const response = await axios.get(`/phieukham/chitiet-pk/getById/${maPK}`);
+      const item = response.data.data;
+      console.log('DESTINATION PHIEUIKHAM >>>>>>>>>> ', item);
+      navigation.navigate('DSDV', {item});
     });
   }, []);
 
@@ -94,10 +106,10 @@ function HomeScreen({navigation}) {
             />
           </View>
         </View>
-        <View style={{ flex: 1, backgroundColor: 'green' }} />
-                <View style={styles.carousel}>
-                <Carousel data={data} />
-                </View>
+        <View style={{flex: 1, backgroundColor: 'green'}} />
+        <View style={styles.carousel}>
+          <Carousel data={data} />
+        </View>
       </SafeAreaView>
     </ThemeProvider>
   );
@@ -108,35 +120,33 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
 
-    container: {
-        flex: 1,
-        padding: 20,
-    },
-    column: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    menu: {
-        flex: 1,
-        flexDirection: 'row',
-        alignContent: 'space-between',
-        paddingTop: 10,
-
-    },
-    title: {
-        fontFamily: Fonts.bold,
-        color: 'black',
-        fontSize: 28,
-    },
-    carousel: {
-        flex: 1,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: 'gainsboro',
-        borderRadius: 5,
-        padding: 12,
-
-    }
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  column: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  menu: {
+    flex: 1,
+    flexDirection: 'row',
+    alignContent: 'space-between',
+    paddingTop: 10,
+  },
+  title: {
+    fontFamily: Fonts.bold,
+    color: 'black',
+    fontSize: 28,
+  },
+  carousel: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'gainsboro',
+    borderRadius: 5,
+    padding: 12,
+  },
 });
 
 export default HomeScreen;
