@@ -25,6 +25,7 @@ const DichVuScreen = () => {
   const {setService} = route.params;
   const services = useSelector(state => state.dichVu?.data) || [];
   const [servicesKham, setServicesKham] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   const isLoading = useSelector(state => state.dichVu?.isLoading);
 
   const handleSelectService = selectedService => {
@@ -37,10 +38,26 @@ const DichVuScreen = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const filteredServices = services.filter(service => +service.MALOAIDV !== 101);
+    const filteredServices = services.filter(
+      service => +service.MALOAIDV !== 101,
+    );
     setServicesKham(filteredServices);
     console.log('servicesKham', filteredServices);
   }, [services]);
+
+  useEffect(() => {
+    if (searchKeyword) {
+      const filteredServices = services.filter(service =>
+        service.TENDV.toLowerCase().includes(searchKeyword.toLowerCase()),
+      );
+      setServicesKham(filteredServices);
+    } else {
+      const filteredServices = services.filter(
+        service => +service.MALOAIDV !== 101,
+      );
+      setServicesKham(filteredServices);
+    }
+  }, [searchKeyword, services]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,11 +66,17 @@ const DichVuScreen = () => {
           <Icon name={'arrow-back'} style={styles.icon} />
         </TouchableOpacity>
         <View style={styles.title}>
-          <Text style={styles.content}>Chọn dịch vụ khám</Text>
-          <Text style={styles.dateTime}></Text>
+          <Text style={style.h3}>Chọn dịch vụ khám</Text>
         </View>
+        <View style={styles.icon} />
       </View>
-      <TextInput style={styles.search} placeholder="Tìm nhanh dịch vụ" />
+      <TextInput
+        style={styles.search}
+        placeholder="Tìm nhanh dịch vụ"
+        value={searchKeyword}
+        onChangeText={setSearchKeyword}
+        placeholderTextColor={'#999'}
+      />
       <View style={styles.breakLine} />
       {isLoading ? (
         <ActivityIndicator size="large" />
@@ -66,22 +89,28 @@ const DichVuScreen = () => {
               style={[
                 style.input,
                 {
-                  marginVertical: 12,
+                  marginVertical: 10,
                   marginHorizontal: 12,
                   backgroundColor: '#fff',
                 },
               ]}
               onPress={() => handleSelectService(item)}>
-              <View style={[style.line, style.spacebtw]}>
-                <View>
+              <View style={styles.itemGroup}>
+                <View style={styles.itemDetails}>
                   <Text style={[style.h6, {fontFamily: Fonts.bold}]}>
                     {item.TENDV.toUpperCase()}
                   </Text>
-                  <Text style={style.t1}>{item.TENLOAIDV}</Text>
+                  <Text style={style.t3}>
+                    Loaị dịch vụ: {item.TENLOAIDV}
+                  </Text>
                 </View>
-                <Text style={[style.t1, style.primary]}>
-                  {item.GIADV} VNĐ
+                <Text style={[style.t1, style.primary, styles.price]}>
+                  {item.GIADV}đ
                 </Text>
+                <Icon
+                  name={'chevron-forward-outline'}
+                  style={styles.icon}
+                />
               </View>
             </TouchableOpacity>
           )}
@@ -103,6 +132,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  itemGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  itemDetails: {
+    flex: 1,
   },
   title: {
     justifyContent: 'center',
@@ -130,12 +167,17 @@ const styles = StyleSheet.create({
   breakLine: {
     borderBottomColor: '#999',
     borderBottomWidth: 2,
-    marginHorizontal: 12,
+    marginHorizontal: 20,
     marginVertical: 10,
+    borderStyle: 'dashed',
   },
   icon: {
     fontSize: 26,
     color: '#000',
+    marginLeft: 10,
+  },
+  price: {
+    marginLeft: 'auto',
   },
 });
 

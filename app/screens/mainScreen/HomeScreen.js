@@ -76,14 +76,14 @@ function HomeScreen({navigation}) {
     <View style={[styles.listItemContainer, {width: screenWidth - 46}]}>
       <View style={styles.itemGroup}>
         <Icon name={'clock'} style={styles.icon} />
-        <Text style={[style.t1, {marginRight: 10}]}>
+        <Text style={[style.t2, {marginRight: 10}]}>
           {item?.GIODATLICH || '11:11'}
         </Text>
-        <Text style={[style.t1]}>{item.NGAYKHAMMIN.split(' - ')[0]}</Text>
+        <Text style={[style.t2]}>{item.NGAYKHAMMIN.split(' - ')[0]}</Text>
       </View>
       <View style={styles.itemGroup}>
-        <Text style={[style.t1, {marginRight: 10}]}>Nội dung:</Text>
-        <Text style={[style.t1, {fontFamily: Fonts.semiBold}]}>
+        <Text style={[style.t2, {marginRight: 10}]}>Nội dung:</Text>
+        <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
           {item.TENDV}
         </Text>
       </View>
@@ -129,43 +129,38 @@ function HomeScreen({navigation}) {
         </View>
 
         <View style={{flex: 1, marginTop: -20, marginBottom: 10}}>
-          <Text style={[style.h3, {marginVertical: 2, marginLeft: 6}]}>
-            Nhắc nhở
-          </Text>
+          <Text style={[style.h4, {marginLeft: 6}]}>Nhắc nhở</Text>
           <View style={styles.remindContainer}>
-            <View>
-              <Text style={[style.h4, {marginTop: 2, marginLeft: 20}]}>
-                Lịch khám
-              </Text>
-              <FlatList
-                data={ctpkFutureById}
-                renderItem={renderItem}
-                horizontal={true}
-                snapToAlignment={'center'}
-                snapToInterval={screenWidth - 46}
-                decelerationRate={'fast'}
-              />
-            </View>
+            <Text style={[style.h6, {marginTop: 2, marginLeft: 20}]}>
+              Lịch khám
+            </Text>
+            <FlatList
+              data={ctpkFutureById}
+              renderItem={renderItem}
+              horizontal={true}
+              snapToAlignment={'center'}
+              showsHorizontalScrollIndicator={false}
+              snapToInterval={screenWidth - 46}
+              decelerationRate={'fast'}
+            />
             <View style={styles.breakline}></View>
-            <View>
-              <Text style={[style.h4, {marginTop: 2, marginLeft: 20}]}>
-                Thuốc
-              </Text>
-              <FlatList
-                data={ctpkFutureById}
-                renderItem={renderItem}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                snapToAlignment={'center'}
-                snapToInterval={screenWidth - 46}
-                decelerationRate={'fast'}
-              />
-            </View>
+            <Text style={[style.h6, {marginTop: 2, marginLeft: 20}]}>
+              Thuốc
+            </Text>
+            <FlatList
+              data={ctpkFutureById}
+              renderItem={renderItem}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              snapToAlignment={'center'}
+              snapToInterval={screenWidth - 46}
+              decelerationRate={'fast'}
+            />
           </View>
         </View>
 
         <View style={styles.carousel}>
-          <Text style={style.h3}>Tin nổi bật</Text>
+          <Text style={style.h4}>Tin nổi bật</Text>
           <Carousel data={data} />
         </View>
       </SafeAreaView>
@@ -174,9 +169,6 @@ function HomeScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  test: {
-    backgroundColor: 'red',
-  },
   container: {
     flex: 1,
     paddingHorizontal: 20,
@@ -191,6 +183,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'space-between',
     paddingTop: 10,
+    paddingBottom: 0,
   },
   title: {
     fontFamily: Fonts.bold,

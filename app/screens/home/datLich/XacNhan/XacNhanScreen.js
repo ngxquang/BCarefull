@@ -38,27 +38,27 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
   const renderItem = ({item}) => (
     <View style={[styles.listItemContainer, {padding: 20}]}>
       <View style={styles.itemGroup}>
-        <Text style={[style.t1, {flex: 1}]}>Chuyên khoa</Text>
+        <Text style={[style.t2, {flex: 1}]}>Chuyên khoa</Text>
         <Text
           style={[style.h6, {flex: 2, color: BCarefulTheme.colors.primary}]}>
           {item.tenDichVu.toUpperCase()}
         </Text>
       </View>
       <View style={styles.itemGroup}>
-        <Text style={[style.t1, {flex: 1}]}>Ngày khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>{item.ngayKham}</Text>
+        <Text style={[style.t2, {flex: 1}]}>Ngày khám</Text>
+        <Text style={[style.t2, {flex: 2}]}>{item.ngayKham}</Text>
       </View>
       <View style={styles.itemGroup}>
-        <Text style={[style.t1, {flex: 1}]}>Giờ khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>{item.gioDatLich}</Text>
+        <Text style={[style.t2, {flex: 1}]}>Giờ khám</Text>
+        <Text style={[style.t2, {flex: 2}]}>{item.gioDatLich}</Text>
       </View>
       <View style={styles.itemGroup}>
-        <Text style={[style.t1, {flex: 1}]}>Phòng khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>Phòng B8.08, tầng 8, khu B</Text>
+        <Text style={[style.t2, {flex: 1}]}>Phòng khám</Text>
+        <Text style={[style.t2, {flex: 2}]}>Phòng B8.08, tầng 8, khu B</Text>
       </View>
       <View style={styles.itemGroup}>
-        <Text style={[style.t1, {flex: 1}]}>Phí khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>{item.giaDichVu} VND</Text>
+        <Text style={[style.t2, {flex: 1}]}>Phí khám</Text>
+        <Text style={[style.t2, {flex: 2}]}>{item.giaDichVu} đ</Text>
       </View>
     </View>
   );
@@ -70,11 +70,11 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
           <Icon name={'arrow-back'} style={styles.icon} />
         </TouchableOpacity>
         <View style={styles.title}>
-          <Text style={style.h5}>Thông tin đặt khám</Text>
+          <Text style={style.h6}>Thông tin đặt khám</Text>
         </View>
       </View>
       <View style={styles.body}>
-        <Text style={[style.t1, {paddingHorizontal: 10}]}>
+        <Text style={[style.t2, {paddingHorizontal: 10}]}>
           Vui lòng kiểm tra thông tin đặt khám bên dưới.
         </Text>
         <View style={styles.listItemContainer}>
@@ -85,7 +85,7 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
                   name="person-add-outline"
                   style={[styles.icon, {marginLeft: 0, fontSize: 18}]}
                 />
-                <Text style={style.t1}>Hồ sơ đăng ký khám bệnh</Text>
+                <Text style={style.t2}>Hồ sơ đăng ký khám bệnh</Text>
               </View>
             }
             isExpanded={expanded[userInfo.MABN]}
@@ -93,7 +93,7 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
             <View style={styles.breakline}></View>
             <View style={styles.input}>
               <View style={[styles.header, {paddingVertical: 6}]}>
-                <Text style={[style.t1, {flex: 1}]}>Họ tên</Text>
+                <Text style={[style.t2, {flex: 1}]}>Họ tên</Text>
                 <Text
                   style={[
                     style.h6,
@@ -103,24 +103,24 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
                 </Text>
               </View>
               <View style={[styles.header, {paddingVertical: 6}]}>
-                <Text style={[style.t1, {flex: 1}]}>Giới tính</Text>
-                <Text style={[style.t1, {flex: 2}]}>{userInfo.GIOITINH}</Text>
+                <Text style={[style.t2, {flex: 1}]}>Giới tính</Text>
+                <Text style={[style.t2, {flex: 2}]}>{userInfo.GIOITINH}</Text>
               </View>
               <View style={[styles.header, {paddingVertical: 6}]}>
-                <Text style={[style.t1, {flex: 1}]}>Điện thoại</Text>
-                <Text style={[style.t1, {flex: 2}]}>{userInfo.SDT}</Text>
+                <Text style={[style.t2, {flex: 1}]}>Điện thoại</Text>
+                <Text style={[style.t2, {flex: 2}]}>{userInfo.SDT}</Text>
               </View>
               <View style={[styles.header, {paddingVertical: 6}]}>
-                <Text style={[style.t1, {flex: 1}]}>Địa chỉ</Text>
-                <Text style={[style.t1, {flex: 2}]}>{userInfo.DIACHI}</Text>
+                <Text style={[style.t2, {flex: 1}]}>Địa chỉ</Text>
+                <Text style={[style.t2, {flex: 2}]}>{userInfo.DIACHI}</Text>
               </View>
             </View>
           </ListItem.Accordion>
         </View>
 
-        <View style={[styles.itemGroup, {paddingHorizontal: 10}]}>
-          <Text style={[style.t1, {fontSize: 20}]}>Dịch vụ đã đặt</Text>
-          <Text style={[style.t1, {fontSize: 20, marginLeft: 6}]}>
+        <View style={[styles.itemGroup, {paddingHorizontal: 14}]}>
+          <Text style={[style.h7]}>Dịch vụ đã đặt</Text>
+          <Text style={[style.h6, {marginLeft: 6}]}>
             ({formDisplay.length})
           </Text>
         </View>
@@ -156,20 +156,31 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
               Thanh toán tạm tính:
             </Text>
             <Text style={[style.h6, {marginLeft: 10, fontSize: 18}]}>
-              {tongPhi()} VND
+              {tongPhi()}đ
             </Text>
           </View>
           <View style={style.spacebtw}>
             <TouchableOpacity
-              style={[style.btnSub, {paddingHorizontal: 22, marginLeft: 30}]}
+              style={[
+                style.btnSub,
+                {paddingHorizontal: 22, marginLeft: 30, minWidth: '40%'},
+              ]}
               onPress={() => setValues(0)}>
               <Text style={[style.h4, style.white]}>Trở lại</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[style.btnSub, {paddingHorizontal: 36, marginRight: 30}]}
+              style={[
+                style.btnSub,
+                {paddingHorizontal: 36, marginRight: 30, minWidth: '40%'},
+              ]}
               onPress={() =>
                 navigation.navigate('ThanhToan', {
-                  item: {TDTTMIN: 'Chưa thanh toán', TTTT: 'Chưa thanh toán', THANHTIEN: tongPhi(), isNew: true},
+                  item: {
+                    TDTTMIN: 'Chưa thanh toán',
+                    TTTT: 'Chưa thanh toán',
+                    THANHTIEN: tongPhi(),
+                    isNew: true,
+                  },
                   pkByIdHd: formDisplay,
                 })
               }>
@@ -200,7 +211,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 10,
     fontFamily: Fonts.regular,
-    paddingHorizontal: 12,
+    paddingHorizontal: 20,
+    paddingBottom: 16,
     flexGrow: 1,
   },
   itemGroup: {
@@ -223,7 +235,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   title: {
-    marginLeft: 20,
+    marginLeft: 10,
   },
   body: {
     flex: 1,

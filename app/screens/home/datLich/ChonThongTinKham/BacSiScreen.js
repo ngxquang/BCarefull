@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     margin: 5,
-    minWidth: '40%',
+    minWidth: '42%',
   },
   buttonText: {
     color: '#fff',

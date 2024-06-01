@@ -211,19 +211,19 @@ function ChonThongTinKham({
       </View>
       <View style={styles.itemGroup}>
         <Text style={[style.t2, {flex: 1}]}>Ngày khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>{item.ngayKham}</Text>
+        <Text style={[style.t2, {flex: 2}]}>{item.ngayKham}</Text>
       </View>
       <View style={styles.itemGroup}>
         <Text style={[style.t2, {flex: 1}]}>Giờ khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>{item.gioDatLich}</Text>
+        <Text style={[style.t2, {flex: 2}]}>{item.gioDatLich}</Text>
       </View>
       <View style={styles.itemGroup}>
         <Text style={[style.t2, {flex: 1}]}>Phòng khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>Phòng B8.08, tầng 8, khu B</Text>
+        <Text style={[style.t2, {flex: 2}]}>Phòng B8.08, tầng 8, khu B</Text>
       </View>
       <View style={styles.itemGroup}>
         <Text style={[style.t2, {flex: 1}]}>Phí khám</Text>
-        <Text style={[style.t1, {flex: 2}]}>{item.giaDichVu}</Text>
+        <Text style={[style.t2, {flex: 2}]}>{item.giaDichVu} đ</Text>
       </View>
     </View>
   );
@@ -525,7 +525,7 @@ function ChonThongTinKham({
                 Thanh toán tạm tính:
               </Text>
               <Text style={[style.h6, {marginLeft: 10, fontSize: 18}]}>
-                {tongPhi()} VND
+                {tongPhi()}đ
               </Text>
             </View>
 
@@ -551,7 +551,7 @@ function ChonThongTinKham({
 const styles = StyleSheet.create({
   listDVContainer: {
     marginTop: 20,
-    marginBottom: 170,
+    marginBottom: 180,
     backgroundColor: '#fff',
     borderRadius: 10,
     borderWidth: 1,

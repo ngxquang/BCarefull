@@ -187,7 +187,7 @@ const NgayKhamScreen = () => {
           <Icon name={'arrow-back'} style={styles.icon} />
         </TouchableOpacity>
         <View style={styles.title}>
-          <Text style={styles.content}>Chọn ngày khám</Text>
+          <Text style={style.h3}>Chọn ngày khám</Text>
         </View>
       </View>
       <View style={styles.body}>
