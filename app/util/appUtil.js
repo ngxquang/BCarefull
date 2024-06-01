@@ -1,13 +1,22 @@
 import notifee from '@notifee/react-native';
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 
 export const getUser = () => {
-  const user = useSelector((state) => state.auth?.user?.account?.userInfo[0]);
-  console.log("USER >>>>>>>>>>>>>> ", user)
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  console.log('USER >>>>>>>>>>>>>> ', user);
   return user;
-}
+};
 
-export async function onDisplayNotification(title, message) {
+export const linking = {
+  prefixes: ['bcareful://'],
+  config: {
+    screens: {
+      DSDV: 'dsdv',
+    },
+  },
+};
+
+export async function onDisplayNotification(title, message, data) {
   // Create a channel (required for Android)
   const channelId = await notifee.createChannel({
     id: 'default',
@@ -18,11 +27,12 @@ export async function onDisplayNotification(title, message) {
   await notifee.displayNotification({
     title: title,
     body: message,
+    data: data,
     android: {
       channelId,
       // pressAction is needed if you want the notification to open the app when pressed
       pressAction: {
-        id: 'dsdv',
+        id: 'default',
       },
     },
   });

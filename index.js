@@ -10,7 +10,7 @@ import store from './app/redux/store';
 
 const ReduxProviderWrapper = () => (
   <Provider store={store}>
-    <App />
+      <App />
   </Provider>
 );
 

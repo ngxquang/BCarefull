@@ -23,7 +23,9 @@ import Carousel from '../../component/Carousel';
 import {patchWebProps} from '@rneui/base';
 import {fetchCTPKFutureByIdAction} from '../../redux/action/fetchCTPKFutureByIdAction';
 import Icon from 'react-native-vector-icons/Octicons';
-
+import notifee, {EventType} from '@notifee/react-native';
+import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
+import axios from '../../setup/axios';
 const {width: screenWidth} = Dimensions.get('window');
 
 const data = [
@@ -52,19 +54,29 @@ function HomeScreen({navigation}) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('USER >>>>>>>>>>>>>> ', user);
     socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
     socket.on('receive-message', data => {
       // Alert.alert('Co nguoi khac dang nhap');
       const fetchAction = selectAction(data?.actionName);
-      if (fetchAction !== null) {
+      if (fetchAction !== null && data.maBN && data.maBN === user.MABN) {
         data?.maID ? dispatch(fetchAction(data.maID)) : dispatch(fetchAction());
         console.log('MESSAGE FROM SERVER >>>>>>>>>> ', data);
-        if (data.maBN && data.maBN === user.MABN) {
-          onDisplayNotification(data.title, data.message);
+        if (data.title && data.title !== '') {
+          onDisplayNotification(data.title, data.message, {maPK: data.maID});
+          // chỉ có maID là maPK thì mới tới đc bước này, nếu maID là maBN thì ko có title, message
         }
         // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
       }
+    });
+
+    notifee.onBackgroundEvent(async ({type, detail}) => {
+      const {notification, pressAction} = detail;
+      const maPK = notification.data?.maPK;
+      console.log('MAPK >>>>>>>>>>>>', maPK);
+      const response = await axios.get(`/phieukham/chitiet-pk/getById/${maPK}`);
+      const item = response.data.data;
+      console.log('DESTINATION PHIEUIKHAM >>>>>>>>>> ', item);
+      navigation.navigate('DSDV', {item});
     });
   }, []);
 

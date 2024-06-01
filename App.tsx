@@ -33,9 +33,7 @@ import VerificationForm from './app/screens/auth/VerificationForm';
 import ChonHoSo from './app/component/ChonHoSo';
 import {Linking, AppState} from 'react-native';
 import {useEffect, useState} from 'react';
-import socket from './app/setup/socket';
 import {Alert} from 'react-native';
-import axios from './app/setup/axios';
 import CarouselScreen from './app/screens/auth/CarouselScreen';
 import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
 import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScreen';
@@ -43,10 +41,9 @@ import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen
 import NgayKhamScreen from './app/screens/home/datLich/ChonThongTinKham/NgayKhamScreen';
 import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
 import { useDispatch, useSelector } from "react-redux";
-import { selectAction } from './app/util/selectAction';
 import { onDisplayNotification } from './app/util/appUtil';
-import { getUser } from './app/util/appUtil';
-import notifee, { EventType } from '@notifee/react-native';
+import { linking } from './app/util/appUtil';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -83,15 +80,7 @@ function HomeTabsScreen() {
   );
 }
 
-function App(): React.JSX.Element {
-  const linking = {
-    prefixes: ['bcareful://'],
-    config: {
-      screens: {
-        DSDV: 'dsdv',
-      },
-    },
-  };
+function App({navigation} : any): React.JSX.Element {
 
   const handleDeepLink = async ({url}: {url: string}) => {
     console.log('>>>>>>>>>ham handle deeplink dược sọi');
@@ -102,29 +91,7 @@ function App(): React.JSX.Element {
     }
   };
 
-  const handleClickNotifee = async () => {
-    const initialNotification = await notifee.getInitialNotification();
-
-  }
-
   useEffect(() => {
-    // console.log("USER >>>>>>>>>>>>>> ", user)
-    // socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
-    // socket.on('receive-message', (data: SocketData) => {
-    //   // Alert.alert('Co nguoi khac dang nhap');
-    //   const fetchAction: SelectActionReturnType = selectAction(data?.actionName);
-    //   if (fetchAction !== null) {
-    //     data?.maID 
-    //     ? dispatch(fetchAction(data.maID))
-    //     : dispatch(fetchAction());
-    //     console.log("MESSAGE FROM SERVER >>>>>>>>>> ", data);
-    //     if (data.maBN && data.maBN === user.MABN) {
-    //       onDisplayNotification(data.title, data.message);
-    //     } 
-    //     // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
-    //   }
-    // });
-
     // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
     const linkingListener = Linking.addEventListener('url', handleDeepLink);
 
