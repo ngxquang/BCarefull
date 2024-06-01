@@ -46,7 +46,6 @@ function DSDVScreen({navigation, route}) {
     ? route.params?.item.NGAYKHAMMIN
     : selectedItem.NGAYKHAMMIN;
   const newPKArray = useSelector(state => state.selectedItem?.newPKArray);
-  const newHD = useSelector(state => state.selectedItem?.newHD);
 
   const updateHoaDon = async selectedItemThanhToan => {
     const response = await axios.post('/hoadon/thanhtoan', {
@@ -100,7 +99,7 @@ function DSDVScreen({navigation, route}) {
     });
   };
 
-  const insertHDPK = async (newPKArray, newHD) => {
+  const insertHDPK = async (newPKArray) => {
     try {
       const response1 = await axios.post('/hoadon/insert', {
         maLT: 102,
@@ -108,7 +107,6 @@ function DSDVScreen({navigation, route}) {
         tttt: 'Đã thanh toán',
         tdtt: new Date(),
         pttt: 'Chuyển khoản',
-        thanhTien: newHD.THANHTIEN,
       });
       if (response1.status === 200) {
         let maHDinserted = response1.data.MAHD;
@@ -125,12 +123,11 @@ function DSDVScreen({navigation, route}) {
   useEffect(() => {
     console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
 
-    if (route && route.params.resultCode === '0' && newPKArray && newHD) {
-      insertHDPK(newPKArray, newHD);
+    if (route && route.params.resultCode === '0' && newPKArray) {
+      insertHDPK(newPKArray);
       console.log(
         'THANH TOAN MOMO XONG, INSERT HOA DON, PHIEU KHAM >>>',
         newPKArray,
-        newHD,
       );
     } else if (route && route.params.resultCode === '0') {
       updateHoaDon(selectedItemThanhToan);

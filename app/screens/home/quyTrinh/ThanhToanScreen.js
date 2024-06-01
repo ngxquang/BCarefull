@@ -97,7 +97,7 @@ function ThanhToanScreen({navigation, route}) {
   const handleThanhToan = async () => {
     if (itemThanhToan.isNew && itemThanhToan.isNew === true) {
       console.log('>>>>>>>> THÊM HÓA ĐƠN, PHIẾU KHÁM');
-      dispatch(setNewPKHD({newPKArray: pkByIdHd, newHD: itemThanhToan}));
+      dispatch(setNewPKHD({newPKArray: pkByIdHd}));
     }
     if (itemThanhToan.TTTT === 'Chưa thanh toán') {
       const response = await axios.post('hoadon/test-momo', {
