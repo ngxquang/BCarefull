@@ -167,7 +167,12 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
             </TouchableOpacity>
             <TouchableOpacity
               style={[style.btnSub, {paddingHorizontal: 36, marginRight: 30}]}
-              onPress={() => setValues(1)}>
+              onPress={() =>
+                navigation.navigate('ThanhToan', {
+                  item: {TDTTMIN: 'Chưa thanh toán', TTTT: 'Chưa thanh toán', THANHTIEN: tongPhi(), isNew: true},
+                  pkByIdHd: formDisplay,
+                })
+              }>
               <Text style={[style.h4, style.white]}>Tiếp tục</Text>
             </TouchableOpacity>
           </View>

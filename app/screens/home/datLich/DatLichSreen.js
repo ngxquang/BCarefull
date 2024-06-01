@@ -20,6 +20,13 @@ function DatLichScreen() {
   console.log('formSubmit', formSubmit);
   console.log('formDisplay', formDisplay);
 
+  const tongPhi = () => {
+    const total = formDisplay.reduce((accumulator, currentValue) => {
+      return accumulator + parseFloat(currentValue.giaDichVu);
+    }, 0);
+
+    return total;
+  };
   useEffect(() => {}, [values]);
 
   return (
@@ -41,7 +48,12 @@ function DatLichScreen() {
           formDisplay={formDisplay}
         />
       )}
-      {values == 1 && <ThanhToanScreen formDisplay={formDisplay} formSubmit={formSubmit}/>}
+      {/* {values == 1 && (
+        <ThanhToanScreen
+          formDisplay={formDisplay}
+          infoHD={{TDTTMIN: 'Chưa thanh toán', TTTT: 'Chưa thanh toán', THANHTIEN: tongPhi()}}
+        />
+      )} */}
     </SafeAreaView>
   );
 }
