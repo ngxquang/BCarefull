@@ -26,7 +26,7 @@ const isValidEmail = email => {
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('hattvd@gmail.com');
+  const [email, setEmail] = useState('1@gmail.com');
   const [password, setPassword] = useState('Abc@1234');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const defaultObjValidInput = {
