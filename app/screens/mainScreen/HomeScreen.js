@@ -146,28 +146,51 @@ function HomeScreen({navigation}) {
             <Text style={[style.h6, {marginTop: 2, marginLeft: 20}]}>
               Lịch khám
             </Text>
-            <FlatList
-              data={ctpkFutureById}
-              renderItem={renderItem}
-              horizontal={true}
-              snapToAlignment={'center'}
-              showsHorizontalScrollIndicator={false}
-              snapToInterval={screenWidth - 46}
-              decelerationRate={'fast'}
-            />
+            {ctpkFutureById.length > 0 ? (
+              <>
+                <FlatList
+                  data={ctpkFutureById}
+                  renderItem={renderItem}
+                  horizontal={true}
+                  snapToAlignment={'center'}
+                  showsHorizontalScrollIndicator={false}
+                  snapToInterval={screenWidth - 46}
+                  decelerationRate={'fast'}
+                />
+              </>
+            ) : (
+              <>
+                <View
+                  style={[styles.listItemContainer, {width: screenWidth - 46}]}>
+                  <Text>Không có lịch khám</Text>
+                </View>
+              </>
+            )}
+
             <View style={styles.breakline}></View>
             <Text style={[style.h6, {marginTop: 2, marginLeft: 20}]}>
               Thuốc
             </Text>
-            <FlatList
-              data={ctpkFutureById}
-              renderItem={renderItem}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              snapToAlignment={'center'}
-              snapToInterval={screenWidth - 46}
-              decelerationRate={'fast'}
-            />
+            {ctpkFutureById.length > 0 ? (
+              <>
+                <FlatList
+                  data={ctpkFutureById}
+                  renderItem={renderItem}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  snapToAlignment={'center'}
+                  snapToInterval={screenWidth - 46}
+                  decelerationRate={'fast'}
+                />
+              </>
+            ) : (
+              <>
+                <View
+                  style={[styles.listItemContainer, {width: screenWidth - 46}]}>
+                  <Text>Không có lịch uống thuốc</Text>
+                </View>
+              </>
+            )}
           </View>
         </View>
 

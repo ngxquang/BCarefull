@@ -114,8 +114,8 @@ function LichSuKhamScreen({navigation}) {
       </View>
       <View style={styles.bodyRight}>
         <View style={styles.listItemDateTime}>
-          <Text style={style.t1}>{item.NGAYKHAMMIN.split(' - ')[0]}</Text>
-          <Text style={style.t1}>{item.NGAYKHAMMIN.split(' - ')[1]}</Text>
+          <Text style={style.t2}>{item.NGAYKHAMMIN.split(' - ')[0]}</Text>
+          <Text style={style.t2}>{item.NGAYKHAMMIN.split(' - ')[1]}</Text>
           <View>
             <TTKICon value={item.TRANGTHAITH} />
           </View>
@@ -125,8 +125,8 @@ function LichSuKhamScreen({navigation}) {
             style={styles.detail}
             onPress={() => handleChuyenTrangDSDV(item)}>
             <View style={{flex: 6}}>
-              <Text style={style.h6}>MAPK - {item.MAPK}</Text>
-              <Text style={style.h5}>{item.TENDV.toUpperCase()}</Text>
+              <Text style={style.t2}>MAPK - {item.MAPK}</Text>
+              <Text style={style.h6}>{item.TENDV.toUpperCase()}</Text>
             </View>
             <FontistoIcon
               name={'angle-right'}
@@ -284,13 +284,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listItemDateTime: {
-    flex: 1,
+    flex: 2,
     paddingRight: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
   listItemDetail: {
-    flex: 2,
+    flex: 3,
     backgroundColor: '#fff',
     borderRadius: 10,
   },
