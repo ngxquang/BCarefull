@@ -13,6 +13,9 @@ export const BCarefulTheme = {
     secondary: 'rgb(234,121,58)',
     background: 'rgb(250,250,255)',
     light: 'rgb(230, 226, 254)',
+    dark: 'rgb(67,46,156)',
+    green: 'rgb(14,170,114)',
+    red: 'rgb(234,69,58)',
   },
 
 
