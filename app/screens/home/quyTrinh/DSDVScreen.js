@@ -12,38 +12,151 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchCTDTByIdAction} from '../../../redux/action/fetchCTDTById';
-import {fetchBenhNhanByIdAction} from '../../../redux/action/fetchAllBenhNhanAction';
-import {fetchDSHDByIdAction} from '../../../redux/action/fetchHoaDonAction';
 import {fetchDsClsByIdAction} from '../../../redux/action/fetchCLSAction';
-import {fetchTTKAction} from '../../../redux/action/fetchTTKAction';
 import {fetchBenhByIdAction} from '../../../redux/action/fetchBenhByIdAction';
-import {fetchPkByIdHdAction} from '../../../redux/action/fetchPhieuKhamAction';
+import {
+  fetchLSKByIdBnAction,
+  fetchPkByIdHdAction,
+} from '../../../redux/action/fetchPhieuKhamAction';
 import {BCarefulTheme} from '../../../component/Theme';
 import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamByIdAction';
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../../../assets/fonts/Fonts';
+import {clearNewPKHD, selectItemThanhToan} from '../../../redux/slice/selectedItemSlice';
+import axios from '../../../setup/axios';
+import socket from '../../../setup/socket';
 
 function DSDVScreen({navigation, route}) {
+  console.log('ROUTE >>>>>>>>>>>>>>>> ', route);
   const dispatch = useDispatch();
-  const maPK = route.params.item.MAPK;
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+
+  const selectedItemThanhToan = useSelector(
+    state => state.selectedItem?.selectedItemThanhToan,
+  );
+  const selectedItem = useSelector(state => state.selectedItem?.selectedItem);
+
+  const maPK = route.params.item ? route.params?.item.MAPK : selectedItem.MAPK;
+  const maHDofPK = route.params.item
+    ? route.params?.item.MAHD
+    : selectedItem.MAHD;
+  const NGAYKHAMMIN = route.params.item
+    ? route.params?.item.NGAYKHAMMIN
+    : selectedItem.NGAYKHAMMIN;
+
+  const newPKArray = useSelector(state => state.selectedItem?.newPKArray);
+
+  const updateHoaDon = async selectedItemThanhToan => {
+    const response = await axios.post('/hoadon/thanhtoan', {
+      MAHD: selectedItemThanhToan.MAHD,
+      THANHTIEN: selectedItemThanhToan.THANHTIEN,
+      maLT: 102,
+      tttt: 'Đã thanh toán',
+      tdtt: new Date(),
+      pttt: 'Chuyển khoản',
+    });
+    if (response.status === 200) {
+      dispatch(fetchCTDTByIdAction(maPK));
+      dispatch(fetchPhieuKhamByIdAction(maPK));
+      dispatch(fetchDsClsByIdAction(maPK));
+      dispatch(fetchLSKByIdBnAction(user.MABN));
+      socket.emit('send-message', {actionName: 'DSHD', maID: maPK});
+      socket.emit('send-message', {actionName: 'DSDK'});
+      // socket.emit('send-message', {actionName: 'LSKBYIDBN', maID: user.MABN});
+    }
+  };
+
+  const insertPK = async (newPKArray, maHD) => {
+    const flag = await newPKArray.map(async phieuKham => {
+      let ngayKham = phieuKham.ngayKham.slice(-10);
+      let [day, month, year] = ngayKham.split('/').map(Number);
+      let time = new Date(year, month - 1, day);
+      let bodyReq = {
+        maBN: user.MABN,
+        maBS: phieuKham.maBS,
+        maHD: maHD,
+        dichVu: phieuKham.MADV,
+        ngayKham: time,
+        lyDoKham: '',
+        ngayDatLich: new Date(),
+        gioDatLich: phieuKham.gioDatLich,
+      };
+      try {
+        const response2 = await axios.post(
+          '/phieukham/insert-just-pk',
+          bodyReq,
+        );
+        if (response2.status === 200) {
+          // toast.success("Thêm phiếu khám thành công!!!");
+          return true;
+        }
+      } catch (error) {
+        console.log(error);
+        // toast.error("Thêm phiếu khám không thành công");
+      }
+    });
+
+    if (flag && flag.length !== 0) {
+      for (const isComplete of flag) {
+        if (isComplete === false) {
+          return false;
+        }
+      }
+      return true;
+    }
+  };
+
+  const insertHDPK = async newPKArray => {
+    try {
+      const response1 = await axios.post('/hoadon/insert', {
+        maLT: 102,
+        maLHD: 1,
+        tttt: 'Đã thanh toán',
+        tdtt: new Date(),
+        pttt: 'Chuyển khoản',
+      });
+      if (response1.status === 200) {
+        let maHDinserted = response1.data.MAHD;
+        const isComplete = await insertPK(newPKArray, maHDinserted);
+        if (isComplete) {
+          navigation.navigate('LichSuKham');
+          dispatch(fetchLSKByIdBnAction(user.MABN));
+          dispatch(clearNewPKHD());
+          socket.emit('send-message', {actionName: 'DSDK'});
+        }
+        // toast.success("Thêm hóa đơn thành công!!!");
+      }
+    } catch (error) {
+      console.log(error);
+      // toast.error("Thêm hóa đơn không thành công");
+    }
+  };
 
   useEffect(() => {
+    console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
+
+    if (route && route.params.resultCode === '0' && newPKArray) {
+      console.log('INSERT HDPK IS CALLED >>>>>>> ');
+      insertHDPK(newPKArray);
+    } else if (route && route.params.resultCode === '0') {
+      updateHoaDon(selectedItemThanhToan);
+    }
+
     dispatch(fetchCTDTByIdAction(maPK));
-    dispatch(fetchBenhNhanByIdAction(maPK));
-    dispatch(fetchDSHDByIdAction(maPK));
+    // dispatch(fetchDSHDByIdAction(maPK));
     dispatch(fetchDsClsByIdAction(maPK));
-    dispatch(fetchPkByIdHdAction(maPK));
-    dispatch(fetchTTKAction(maPK));
+    dispatch(fetchPkByIdHdAction(maHDofPK));
+    // dispatch(fetchTTKAction(maPK));
     dispatch(fetchBenhByIdAction(maPK));
     dispatch(fetchPhieuKhamByIdAction(maPK));
-  }, [maPK]);
+  }, [route]);
 
   const ctdtById = useSelector(state => state.ctdtById.data) || [];
   console.log('ctdtById', ctdtById);
-  const hoaDon = useSelector(state => state.hoaDon.dshd) || [];
+  // const hoaDon = useSelector(state => state.hoaDon.dshd) || [];
   const pkByIdHd = useSelector(state => state.dsdk.pkByIdHd) || [];
-  const ttk = useSelector(state => state.ttk.data) || [];
+  // const ttk = useSelector(state => state.ttk.data) || [];
   const benhById = useSelector(state => state.benhById.data) || [];
   const clsById = useSelector(state => state.clsById.dsClsById) || [];
   const isLoadingCLS = useSelector(state => state.clsById.isLoading);
@@ -58,18 +171,22 @@ function DSDVScreen({navigation, route}) {
 
   const donThuoc = {
     TENDV: 'Đơn thuốc',
-    NGAYKHAMMIN: ctdtById[0]?.TDTTMIN,
+    NGAYKHAMMIN: ctdtById[0]?.THOIGIANLAP,
+    TDTTMIN: ctdtById[0]?.TDTTMIN,
     TTTT: ctdtById[0]?.TTTT,
     NGUOIBAN: ctdtById[0]?.HOTEN,
-    TENLOAIDV: 'Đơn thuốc',
+    TENLOAIDV: 'Hóa đơn thuốc',
+    MAHD: ctdtById[0]?.MAHD,
+    THANHTIEN: ctdtById[0]?.THANHTIEN,
   };
 
-  const data = [...phieuKhamArray, ...clsByIdArray, donThuoc];
+  const data = donThuoc.MAHD
+    ? [...phieuKhamArray, ...clsByIdArray, donThuoc]
+    : [...phieuKhamArray, ...clsByIdArray];
 
   const handleThanhToan = item => {
-    if (item.TTTT !== 'Đã thanh toán') {
-      navigation.navigate('ThanhToan');
-    }
+    dispatch(selectItemThanhToan(item));
+    navigation.navigate('ThanhToan', {item, ctdtById, clsByIdArray, pkByIdHd});
   };
 
   const phieuKhamRenderItem = ({item}) => (
@@ -82,7 +199,7 @@ function DSDVScreen({navigation, route}) {
       <View style={styles.bodyRight}>
         <View style={styles.timeContainer}>
           <Text style={styles.timeText}>
-            {item.NGAYKHAMMIN ? item.NGAYKHAMMIN.split(' - ')[1] : ''}
+            {item.NGAYKHAMMIN ? item.NGAYKHAMMIN.split(' - ')[1] : '-- : --'}
           </Text>
         </View>
         <View style={styles.card}>
@@ -95,7 +212,9 @@ function DSDVScreen({navigation, route}) {
             </View>
           )}
           <TouchableOpacity
-            onPress={() => navigation.navigate('KetQuaKham', {item, ctdtById, benhById})}>
+            onPress={() =>
+              navigation.navigate('KetQuaKham', {item, ctdtById, benhById})
+            }>
             <View style={styles.detailsContainer}>
               <Text style={styles.tenDichVu}>{item.TENDV}</Text>
               {item.INFOBSCD && item.INFOBSTH ? (
@@ -154,8 +273,9 @@ function DSDVScreen({navigation, route}) {
         </TouchableOpacity>
         <View style={styles.title}>
           <Text style={styles.content}>Chi tiết phiếu khám MAPK - {maPK}</Text>
-          <Text style={styles.dateTime}>{route.params.item.NGAYKHAMMIN}</Text>
+          <Text style={styles.dateTime}>{NGAYKHAMMIN}</Text>
         </View>
+        <View style={styles.icon} />
       </View>
       {isLoading ? (
         <ActivityIndicator size="large" />
@@ -193,6 +313,7 @@ const styles = StyleSheet.create({
   },
   timeContainer: {
     marginRight: 2,
+    width: 44,
   },
   timeText: {
     fontSize: 16,
@@ -249,6 +370,7 @@ const styles = StyleSheet.create({
   title: {
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 'auto',
   },
   content: {
     fontSize: 20,
@@ -262,8 +384,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 26,
     color: '#000',
-    marginLeft: -10,
-    marginRight: 10,
+    marginLeft: 10,
   },
   body: {
     marginTop: 20,

@@ -1,20 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import authReducer from './slice/authSlice';
 import getAllBenhNhanReducer from './slice/getAllBenhNhanSlice';
 import phieuKhamReducer from './slice/getPhieuKhamSlice';
-import getAllBacSiReducer from './slice/getAllBacSiSlice'
-import getAllDichVuReducer from './slice/getAllDichVuSlice'
-import getHoaDonReducer from './slice/getHoaDonSlice' 
-import getDSDKRecuder from './slice/getDSDKSlice'
-import getCTDTByIdRecuder from './slice/getCTDTByIdSlice'
-import getCLSRecuder from './slice/getCLSSlice'
+import getAllBacSiReducer from './slice/getAllBacSiSlice';
+import getAllDichVuReducer from './slice/getAllDichVuSlice';
+import getHoaDonReducer from './slice/getHoaDonSlice';
+import getDSDKRecuder from './slice/getDSDKSlice';
+import getCTDTByIdRecuder from './slice/getCTDTByIdSlice';
+import getCLSRecuder from './slice/getCLSSlice';
 // import selectedRowReducer from './slice/selectedRowSlice'
-import getAllLoaiDichVuReducer from './slice/getAllLoaiDichVuSlice'
-import getAllBenhReducer from './slice/getAllBenhSlice'
-import getAllThuocReducer from './slice/getAllThuocSlice'
-import getTTKReducer from './slice/getTTKSlice'
-import getBenhByIdReducer from './slice/getBenhByIdSlice'
-import getPhieuKhamByIdReducer from './slice/getPhieuKhamByIdSlice'
+import getAllLoaiDichVuReducer from './slice/getAllLoaiDichVuSlice';
+import getAllBenhReducer from './slice/getAllBenhSlice';
+import getAllThuocReducer from './slice/getAllThuocSlice';
+import getTTKReducer from './slice/getTTKSlice';
+import getBenhByIdReducer from './slice/getBenhByIdSlice';
+import getPhieuKhamByIdReducer from './slice/getPhieuKhamByIdSlice';
+import getBacSiByDateReducer from './slice/getBacSiByDateSlice';
+import selectedItemReducer from './slice/selectedItemSlice';
+import getCTPKFutureByIdReducer from './slice/getCTPKFutureByIdSlice';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +25,7 @@ const store = configureStore({
     benhNhan: getAllBenhNhanReducer,
     phieuKham: phieuKhamReducer,
     bacSi: getAllBacSiReducer,
+    bacSiByDate: getBacSiByDateReducer,
     dichVu: getAllDichVuReducer,
     hoaDon: getHoaDonReducer,
     thuoc: getAllThuocReducer,
@@ -29,13 +33,14 @@ const store = configureStore({
     ctdtById: getCTDTByIdRecuder,
     clsById: getCLSRecuder,
     existedCTDT: getCTDTByIdRecuder,
-    // selectedRow: selectedRowReducer,
+    selectedItem: selectedItemReducer,
     auth: authReducer,
     loaiDichVu: getAllLoaiDichVuReducer,
     benh: getAllBenhReducer,
     ttk: getTTKReducer,
     benhById: getBenhByIdReducer,
     phieuKhamById: getPhieuKhamByIdReducer,
+    ctpkFutureById: getCTPKFutureByIdReducer,
   },
 });
 
