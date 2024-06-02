@@ -33,13 +33,17 @@ import VerificationForm from './app/screens/auth/VerificationForm';
 import ChonHoSo from './app/component/ChonHoSo';
 import {Linking, AppState} from 'react-native';
 import {useEffect, useState} from 'react';
-import socket from './app/setup/socket';
 import {Alert} from 'react-native';
-import axios from './app/setup/axios';
 import CarouselScreen from './app/screens/auth/CarouselScreen';
 import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
 import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScreen';
 import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
+import NgayKhamScreen from './app/screens/home/datLich/ChonThongTinKham/NgayKhamScreen';
+import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
+import { useDispatch, useSelector } from "react-redux";
+import { onDisplayNotification } from './app/util/appUtil';
+import { linking } from './app/util/appUtil';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -76,58 +80,34 @@ function HomeTabsScreen() {
   );
 }
 
-function App(): React.JSX.Element {
-  const linking = {
-    prefixes: ['bcareful://'],
-    config: {
-      screens: {
-        LichSuKham: 'dsdv',
-      },
-    },
-  };
+function App({navigation} : any): React.JSX.Element {
 
   const handleDeepLink = async ({url}: {url: string}) => {
     console.log('>>>>>>>>>ham handle deeplink dược sọi');
     if (url) {
       console.log('Parsed parameters:', url);
-      // const response = await axios.post("/hoadon/thanhtoan", {
-      //   MAHD: 204,
-      //   MALOAIHD: 1,
-      //   THANHTIEN: 300000,
-      //   maLT: 102,
-      //   tttt: "Đã thanh toán",
-      //   tdtt: new Date(),
-      //   pttt: 'Chuyển khoản',
-      // });
-      // if (response.status === 200) {
-      //   socket.emit("send-message", {actionName: 'DSHD', maID: 181});
-      //   socket.emit("send-message", {actionName: 'DSDK'});
-      // }
     } else {
       console.log('>>>>>>> ko nhan duoc url deeplink');
     }
   };
 
   useEffect(() => {
-    socket.emit('send-message', {message: 'HELLO FROM MOBILE'});
-    socket.on('receive-message', (data: object) => {
-      Alert.alert('Co nguoi khac dang nhap');
-    });
-
     // Bộ lắng nghe sự kiện để xử lý các sự kiện deep link
     const linkingListener = Linking.addEventListener('url', handleDeepLink);
 
     return () => {
       linkingListener.remove();
     };
-  });
+  }, []);
 
   return (
-    <Provider store={store}>
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
         <Stack.Navigator
           initialRouteName="Login"
-          screenOptions={{headerShown: false}}>
+          screenOptions={{
+            headerShown: false,
+            animation: 'slide_from_right',
+          }}>
           {/* Home */}
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
           <Stack.Group>
@@ -152,7 +132,10 @@ function App(): React.JSX.Element {
             <Stack.Screen name="Register01" component={RegisterScreen01} />
             <Stack.Screen name="Register02" component={RegisterScreen02} />
             <Stack.Screen name="Register03" component={RegisterScreen03} />
-            <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
+            />
             <Stack.Screen
               name="VerificationForm"
               component={VerificationForm}
@@ -161,25 +144,12 @@ function App(): React.JSX.Element {
           </Stack.Group>
 
           <Stack.Screen name="ChonDichVu" component={DichVuScreen} />
+          <Stack.Screen name="NgayKham" component={NgayKhamScreen} />
           <Stack.Screen name="ChonBacSi" component={BacSiScreen} />
-
+          <Stack.Screen name="XacNhan" component={XacNhanScreen} />
         </Stack.Navigator>
       </NavigationContainer>
-    </Provider>
   );
 }
-
-// function App() {
-//   return (
-//     <Provider store={store}>
-//       <NavigationContainer>
-//         <Stack.Navigator screenOptions={{ headerShown: false }}>
-//           <Stack.Screen name="Login" component={LoginScreen} />
-//           <PrivateRoute name="HomeTabs" component={HomeTabsScreen} />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </Provider>
-//   );
-// }
 
 export default App;

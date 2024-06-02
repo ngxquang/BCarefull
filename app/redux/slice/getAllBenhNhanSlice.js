@@ -1,10 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllBenhNhanAction, fetchBenhNhanByIdAction } from '../action/fetchAllBenhNhanAction';
+import {createSlice} from '@reduxjs/toolkit';
+import {fetchAllBenhNhanAction} from '../action/fetchAllBenhNhanAction';
 
 const initialState = {
   data: [],
   isLoading: false,
-  patientById: {},
 };
 
 const fetchAllBenhNhanSlice = createSlice({
@@ -22,10 +21,6 @@ const fetchAllBenhNhanSlice = createSlice({
       })
       .addCase(fetchAllBenhNhanAction.rejected, (state, action) => {
         state.isLoading = false;
-      })
-      .addCase(fetchBenhNhanByIdAction.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.patientById = action.payload.data;
       });
   },
 });
