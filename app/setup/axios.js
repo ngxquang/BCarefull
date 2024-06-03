@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 
 //Create an instance of axios
 const instance = axios.create({
-  baseURL: 'http://152.69.209.236:3001',
+  baseURL: 'http://localhost:3001',
 });
 
 instance.defaults.withCredentials = true;
