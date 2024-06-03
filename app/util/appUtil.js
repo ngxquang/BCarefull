@@ -1,3 +1,43 @@
+import notifee from '@notifee/react-native';
+import {useDispatch, useSelector} from 'react-redux';
+
+export const getUser = () => {
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  console.log('USER >>>>>>>>>>>>>> ', user);
+  return user;
+};
+
+export const linking = {
+  prefixes: ['bcareful://'],
+  config: {
+    screens: {
+      DSDV: 'dsdv',
+    },
+  },
+};
+
+export async function onDisplayNotification(title, message, data) {
+  // Create a channel (required for Android)
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  // Display a notification
+  await notifee.displayNotification({
+    title: title,
+    body: message,
+    data: data,
+    android: {
+      channelId,
+      // pressAction is needed if you want the notification to open the app when pressed
+      pressAction: {
+        id: 'default',
+      },
+    },
+  });
+}
+
 export function compareDates(date1, date2) {
   // Lấy ra các thành phần ngày, tháng, năm của date1 và date2
   const day1 = date1.getDate();
@@ -31,9 +71,3 @@ export function compareDates(date1, date2) {
     }
   }
 }
-// const {format} = require('date-fns');
-
-// export const formatDate = isoDate => {
-//   const date = new Date(isoDate);
-//   return format(date, 'dd-MM-yyyy');
-// };

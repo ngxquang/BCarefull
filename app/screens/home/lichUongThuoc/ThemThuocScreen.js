@@ -115,7 +115,7 @@ function ThemThuocScreen({route}) {
           style={[style.card, style.spacebtw, style.row]}
           onPress={() => handleSelectCard(index)}>
           <Text style={[style.h1, style.sub, {width: '30%'}]}>{time}</Text>
-          <Text style={[style.t6, styles.seperate, {width: '55%'}]}>
+          <Text style={[style.t1, styles.seperate, {width: '55%'}]}>
             Dùng {dosage} {unit}, {note}
           </Text>
           <Icon
@@ -308,7 +308,7 @@ function ThemThuocScreen({route}) {
 
                 <View style={style.spacebtw}>
                   <TouchableOpacity style={style.btn} onPress={handleSaveCard}>
-                    <Text style={[style.h8, style.white]}>Lưu</Text>
+                    <Text style={[style.h7, style.white]}>Lưu</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -350,6 +350,7 @@ function ThemThuocScreen({route}) {
       <Button
         title="Lưu"
         buttonStyle={[style.btn, style.m3]}
+        titleStyle={[style.h7, style.white]}
         onPress={handleSave}
       />
     </View>

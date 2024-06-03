@@ -1,12 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, ScrollView, Dimensions, StyleSheet, Text, TouchableOpacity, Image, Linking } from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {
+  View,
+  ScrollView,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  Linking,
+} from 'react-native';
 import Fonts from '../../assets/fonts/Fonts';
-import { BCarefulTheme } from './Theme';
+import {BCarefulTheme} from './Theme';
 
-const { width: screenWidth } = Dimensions.get('window');
+const {width: screenWidth} = Dimensions.get('window');
 const pageWidth = screenWidth - 40 - 24; // Chiều rộng của trang trừ đi padding 20px mỗi bên
 
-const Carousel = ({ data }) => {
+const Carousel = ({data}) => {
   const [currentPage, setCurrentPage] = useState(1); // Bắt đầu từ trang giả đầu tiên
   const scrollViewRef = useRef(null);
 
@@ -24,13 +33,13 @@ const Carousel = ({ data }) => {
 
   const scrollToPage = (page, animated = true) => {
     if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ x: page * pageWidth, animated });
+      scrollViewRef.current.scrollTo({x: page * pageWidth, animated});
       setCurrentPage(page);
     }
   };
 
-  const handleScroll = (event) => {
-    const { contentOffset } = event.nativeEvent;
+  const handleScroll = event => {
+    const {contentOffset} = event.nativeEvent;
     const page = Math.round(contentOffset.x / pageWidth);
 
     if (page !== currentPage) {
@@ -51,7 +60,7 @@ const Carousel = ({ data }) => {
     scrollToPage(currentPage, false);
   };
 
-  const openLink = (url) => {
+  const openLink = url => {
     Linking.openURL(url).catch(err => console.error("Couldn't load page", err));
   };
 
@@ -65,22 +74,32 @@ const Carousel = ({ data }) => {
         onMomentumScrollEnd={handleMomentumScrollEnd}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        contentOffset={{ x: pageWidth, y: 0 }} // Bắt đầu từ trang giả đầu tiên
+        contentOffset={{x: pageWidth, y: 0}} // Bắt đầu từ trang giả đầu tiên
       >
         {/* Trang giả */}
-        <TouchableOpacity style={styles.page} onPress={() => openLink(data[data.length - 1].path)}>
-          <Image source={{ uri: data[data.length - 1].img }} style={styles.image} />
+        <TouchableOpacity
+          style={styles.page}
+          onPress={() => openLink(data[data.length - 1].path)}>
+          <Image
+            source={{uri: data[data.length - 1].img}}
+            style={styles.image}
+          />
           <Text style={styles.text}>{data[data.length - 1].title}</Text>
         </TouchableOpacity>
         {data.map((item, index) => (
-          <TouchableOpacity key={index} style={styles.page} onPress={() => openLink(item.path)}>
-            <Image source={{ uri: item.img }} style={styles.image} />
+          <TouchableOpacity
+            key={index}
+            style={styles.page}
+            onPress={() => openLink(item.path)}>
+            <Image source={{uri: item.img}} style={styles.image} />
             <Text style={styles.text}>{item.title}</Text>
           </TouchableOpacity>
         ))}
         {/* Trang giả */}
-        <TouchableOpacity style={styles.page} onPress={() => openLink(data[0].path)}>
-          <Image source={{ uri: data[0].img }} style={styles.image} />
+        <TouchableOpacity
+          style={styles.page}
+          onPress={() => openLink(data[0].path)}>
+          <Image source={{uri: data[0].img}} style={styles.image} />
           <Text style={styles.text}>{data[0].title}</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -88,7 +107,10 @@ const Carousel = ({ data }) => {
         {data.map((_, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.paginationDot, index + 1 === currentPage && styles.paginationDotActive]}
+            style={[
+              styles.paginationDot,
+              index + 1 === currentPage && styles.paginationDotActive,
+            ]}
             onPress={() => scrollToPage(index + 1)}
           />
         ))}
@@ -108,9 +130,10 @@ const styles = StyleSheet.create({
     width: pageWidth,
     height: pageWidth * 0.4,
     resizeMode: 'cover',
+    borderRadius: 10,
   },
   text: {
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.semiBold,
     color: 'black',
     fontSize: 16,
     paddingTop: 5,

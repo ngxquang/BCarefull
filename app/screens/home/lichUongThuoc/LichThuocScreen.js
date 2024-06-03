@@ -1,5 +1,5 @@
-import { Badge, Button } from '@rneui/themed';
-import React, { useState, useRef, useEffect } from 'react';
+import {Badge, Button} from '@rneui/themed';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,10 +13,10 @@ import {
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Fonts from '../../../../assets/fonts/Fonts';
-import { BCarefulTheme, style } from '../../../component/Theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { CustomHeader } from '../../../component/Header';
-import { useNavigation } from '@react-navigation/native';
+import {BCarefulTheme, style} from '../../../component/Theme';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {CustomHeader} from '../../../component/Header';
+import {useNavigation} from '@react-navigation/native';
 
 function LichThuocScreen() {
   const navigation = useNavigation();
@@ -42,7 +42,7 @@ function LichThuocScreen() {
       day.date.isSame(selectedDate, 'day'),
     );
     if (index !== -1) {
-      flatListRef.current.scrollToIndex({ animated: true, index: index - 3 });
+      flatListRef.current.scrollToIndex({animated: true, index: index - 3});
     }
   };
 
@@ -61,14 +61,10 @@ function LichThuocScreen() {
     }
   };
 
-  const renderDay = ({ item }) => {
+  const renderDay = ({item}) => {
     const isSelected = item.date.isSame(selectedDate, 'day');
-    const dayStyle = isSelected
-      ? [style.t1, style.primary]
-      : [style.t2]
-    const dateStyle = isSelected
-      ? [style.h7, style.primary]
-      : [style.t1]
+    const dayStyle = isSelected ? [style.t1, style.primary] : [style.t2];
+    const dateStyle = isSelected ? [style.h7, style.primary] : [style.t1];
     const containerStyle = isSelected
       ? styles.dayContainerSelected
       : styles.dayContainer;
@@ -85,7 +81,7 @@ function LichThuocScreen() {
 
   const generateWeekDays = date => {
     const startOfWeek = moment(date).startOf('isoWeek');
-    return Array.from({ length: 14 }).map((_, index) => {
+    return Array.from({length: 14}).map((_, index) => {
       const day = moment(startOfWeek).add(index - 7, 'days');
       return {
         day: day.format('dd').toUpperCase(),
@@ -109,9 +105,9 @@ function LichThuocScreen() {
       time: '09:00',
       dosage: 'Uống 2 viên sau ăn',
     },
-    { id: 3, name: 'Ibuprofen', time: '11:00', dosage: 'Uống 1 viên sau ăn' },
-    { id: 4, name: 'Paracetamol', time: '14:00', dosage: 'Uống 2 viên sau ăn' },
-    { id: 5, name: 'Amoxicillin', time: '19:00', dosage: 'Uống 1 viên trước ăn' },
+    {id: 3, name: 'Ibuprofen', time: '11:00', dosage: 'Uống 1 viên sau ăn'},
+    {id: 4, name: 'Paracetamol', time: '14:00', dosage: 'Uống 2 viên sau ăn'},
+    {id: 5, name: 'Amoxicillin', time: '19:00', dosage: 'Uống 1 viên trước ăn'},
   ];
 
   const filterMedicationsByTime = (startHour, endHour) => {
@@ -132,9 +128,17 @@ function LichThuocScreen() {
   const renderMedicationStatus = medicationId => {
     const status = medicationStatus[medicationId];
     if (status === 'taken') {
-      return <Icon name="check-circle" size={24} color={BCarefulTheme.colors.green} />;
+      return (
+        <Icon
+          name="check-circle"
+          size={24}
+          color={BCarefulTheme.colors.green}
+        />
+      );
     } else if (status === 'skipped') {
-      return <Icon name="times-circle" size={24} color={BCarefulTheme.colors.red} />;
+      return (
+        <Icon name="times-circle" size={24} color={BCarefulTheme.colors.red} />
+      );
     }
     return <Icon name="circle-o" size={24} color="grey" />;
   };
@@ -164,7 +168,18 @@ function LichThuocScreen() {
     const cardStyle = index % 2 === 0 ? style.cardLeft : style.cardRight;
 
     return (
-      <View style={[cardStyle, currentTimePeriod === timePeriod ? { borderColor: BCarefulTheme.colors.secondary, borderBottomWidth: 7, elevation: 4, backgroundColor: 'white' } : {}]}>
+      <View
+        style={[
+          cardStyle,
+          currentTimePeriod === timePeriod
+            ? {
+                borderColor: BCarefulTheme.colors.secondary,
+                borderBottomWidth: 7,
+                elevation: 4,
+                backgroundColor: 'white',
+              }
+            : {},
+        ]}>
         <Text style={style.h7}>{title}</Text>
         {source && (
           <Image
@@ -184,7 +199,11 @@ function LichThuocScreen() {
                   onPress={() => handleMedication(med)}>
                   <Text style={style.h7}>{med.name}</Text>
                   <Text style={style.t2}>
-                    <Text style={[style.h6, currentTimePeriod === timePeriod ? style.sub : {}]}>
+                    <Text
+                      style={[
+                        style.h6,
+                        currentTimePeriod === timePeriod ? style.sub : {},
+                      ]}>
                       {med.time}
                     </Text>
                     {''} - {med.dosage}
@@ -198,7 +217,11 @@ function LichThuocScreen() {
                   onPress={() => handleMedication(med)}>
                   <Text style={[style.h7, style.end]}>{med.name}</Text>
                   <Text style={[style.t2, style.end]}>
-                    <Text style={[style.h6, currentTimePeriod === timePeriod ? style.sub : {}]}>
+                    <Text
+                      style={[
+                        style.h6,
+                        currentTimePeriod === timePeriod ? style.sub : {},
+                      ]}>
                       {med.time}
                     </Text>
                     {''} - {med.dosage}
@@ -215,7 +238,6 @@ function LichThuocScreen() {
     );
   };
 
-
   const morningMeds = filterMedicationsByTime(0, 11);
   const noonMeds = filterMedicationsByTime(11, 13);
   const afternoonMeds = filterMedicationsByTime(13, 18);
@@ -229,27 +251,31 @@ function LichThuocScreen() {
 
   const renderCards = () => {
     const cards = [
-      { title: 'Buổi sáng', meds: morningMeds, timePeriod: 'morning' },
-      { title: 'Buổi trưa', meds: noonMeds, timePeriod: 'noon' },
-      { title: 'Buổi chiều', meds: afternoonMeds, timePeriod: 'afternoon' },
-      { title: 'Buổi tối', meds: eveningMeds, timePeriod: 'evening' },
+      {title: 'Buổi sáng', meds: morningMeds, timePeriod: 'morning'},
+      {title: 'Buổi trưa', meds: noonMeds, timePeriod: 'noon'},
+      {title: 'Buổi chiều', meds: afternoonMeds, timePeriod: 'afternoon'},
+      {title: 'Buổi tối', meds: eveningMeds, timePeriod: 'evening'},
     ];
 
     const card2 = cards.filter(card => card.meds.length > 0);
 
     return card2.map((card, index) =>
-      renderMedicationCard(card.title, card.meds, card.timePeriod, index)
+      renderMedicationCard(card.title, card.meds, card.timePeriod, index),
     );
   };
 
   const calendarBtn = () => {
     return (
-      <TouchableOpacity
-        onPress={() => { }}>
-        <Icon name="calendar" type="ionicon" color={BCarefulTheme.colors.primary} size={24} />
+      <TouchableOpacity onPress={() => {}}>
+        <Icon
+          name="calendar"
+          type="ionicon"
+          color={BCarefulTheme.colors.primary}
+          size={24}
+        />
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -272,7 +298,14 @@ function LichThuocScreen() {
           })}
         />
 
-        <Text style={[style.h7, { backgroundColor: BCarefulTheme.colors.background, textAlign: 'center' }]}>
+        <Text
+          style={[
+            style.h7,
+            {
+              backgroundColor: BCarefulTheme.colors.background,
+              textAlign: 'center',
+            },
+          ]}>
           {selectedDate.isSame(moment(), 'day') ? 'Hôm nay, ' : ''}
           Ngày {selectedDate.format('DD')} tháng {selectedDate.format('MM')},{' '}
           {selectedDate.format('YYYY')}
@@ -281,15 +314,15 @@ function LichThuocScreen() {
         <View style={styles.actionButtons}>
           <Button
             title="NGỪNG TẤT CẢ"
-            titleStyle={style.h8}
-            buttonStyle={[style.btnOutlineSub, { paddingHorizontal: 0, width: 130 }]}
-            onPress={() => { }}
+            titleStyle={[style.h7, style.white]}
+            buttonStyle={[style.btnSub, {paddingHorizontal: 0, width: 130}]}
+            onPress={() => {}}
           />
           <Button
             title="DÙNG TẤT CẢ"
-            titleStyle={[style.h8, style.white]}
-            buttonStyle={[style.btnSub, { width: 130 }]}
-            onPress={() => { }}
+            titleStyle={[style.h7, style.white]}
+            buttonStyle={[style.btnSub, {width: 130}]}
+            onPress={() => {}}
           />
         </View>
       </View>
@@ -303,8 +336,11 @@ function LichThuocScreen() {
 
         <Button
           title="Quản lý toa thuốc"
-          buttonStyle={[style.btn, style.m3]}
-          onPress={() => { navigation.navigate('QuanLyThuoc') }}
+          titleStyle={[style.h7, style.white]}
+          buttonStyle={[style.btn, style.m3, style.h7]}
+          onPress={() => {
+            navigation.navigate('QuanLyThuoc');
+          }}
         />
       </ScrollView>
 
@@ -318,12 +354,8 @@ function LichThuocScreen() {
           <View style={style.modalContainer}>
             <View style={style.modalView}>
               <Text style={style.h2}>Xác nhận uống thuốc</Text>
-              <Text style={style.t1}>
-                LÊ DUY NGUYÊN (N23-0253996)
-              </Text>
-              <Text style={style.h4}>
-                {selectedMedication.name}
-              </Text>
+              <Text style={style.t1}>LÊ DUY NGUYÊN (N23-0253996)</Text>
+              <Text style={style.h4}>{selectedMedication.name}</Text>
               <Text style={[style.t2, style.grey, style.mb4]}>
                 {selectedMedication.time} - {selectedMedication.dosage}
               </Text>
@@ -350,9 +382,13 @@ function LichThuocScreen() {
 
               <TouchableOpacity
                 style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Icon name="close" type="ionicon" color={BCarefulTheme.colors.red} size={30} />
+                onPress={() => setModalVisible(false)}>
+                <Icon
+                  name="close"
+                  type="ionicon"
+                  color={BCarefulTheme.colors.red}
+                  size={30}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -429,8 +465,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: 10,
-  }
+  },
 });
-
 
 export default LichThuocScreen;

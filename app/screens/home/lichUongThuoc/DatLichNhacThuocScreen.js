@@ -25,12 +25,14 @@ function DatLichNhacThuocScreen({route}) {
 
   const renderMedicineItem = ({ item }) => (
     <View style={styles.medicineCard}>
-      <Text style={styles.medicineName}>{item.TENTHUOC}</Text>
-      <Text>Lần/ngày: {item.SOLANUONG}</Text>
-      <Text>Số lượng / lần: {item.SOLUONGUONG}</Text>
-      <Text>Cách dùng: {item.GHICHU}</Text>
-      <TouchableOpacity style={styles.reminderButton} onPress={() => navigation.navigate('ThemThuoc', { item: item })}>
-        <Text style={styles.reminderButtonText}>Đã đặt lịch nhắc</Text>
+      <Text style={style.h4}>{item.TENTHUOC}</Text>
+      <Text style={style.t4}>Lần/ngày: {item.SOLANUONG}</Text>
+      <Text style={style.t4}>Số lượng / lần: {item.SOLUONGUONG}</Text>
+      <Text style={style.t4}>Cách dùng: {item.GHICHU}</Text>
+      <TouchableOpacity 
+        style={[style.btnSub]} 
+        onPress={() => navigation.navigate('ThemThuoc', { item: item })}>
+        <Text style={[style.h7, style.white]}>Đã đặt lịch nhắc</Text>
       </TouchableOpacity>
     </View>
   );
@@ -42,7 +44,7 @@ function DatLichNhacThuocScreen({route}) {
       <CustomHeader title={'Đặt lịch nhắc thuốc'} />
       <SafeAreaView style={{ flex: 1, padding: 16 }}>
       <View style={styles.header}>
-          <Text style={styles.headerText}>Toa thuốc: {tenDV}</Text>
+          <Text style={style.h4}>Toa thuốc: {tenDV}</Text>
         </View>
         <FlatList
           data={ctdtById}
@@ -67,20 +69,12 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 2,
   },
-  medicineName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   reminderButton: {
     marginTop: 16,
     padding: 12,
     borderRadius: 8,
     backgroundColor: '#4caf50',
     alignItems: 'center',
-  },
-  reminderButtonText: {
-    color: '#fff',
-    fontSize: 16,
   },
 });
 

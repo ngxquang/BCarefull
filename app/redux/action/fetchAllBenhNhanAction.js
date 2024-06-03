@@ -13,14 +13,14 @@ export const fetchAllBenhNhanAction = createAsyncThunk(
   }
 );
 
-export const fetchBenhNhanByIdAction = createAsyncThunk(
-  "fetchBenhNhanById",
-  async (maBN, { meta }) => {
-    try {
-      const response = await axios.get(`/benhnhan/getById/${maBN}`);
-      return response.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
+// export const fetchBenhNhanByIdAction = createAsyncThunk(
+//   "fetchBenhNhanById",
+//   async (maBN, { meta }) => {
+//     try {
+//       const response = await axios.get(`/benhnhan/getById/${maBN}`);
+//       return response.data;
+//     } catch (error) {
+//       return error.message;
+//     }
+//   }
+// );

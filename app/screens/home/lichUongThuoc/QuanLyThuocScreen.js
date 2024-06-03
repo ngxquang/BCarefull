@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {fetchLSKByIdBnAction} from '../../../redux/action/fetchPhieuKhamAction';
 import {useDispatch, useSelector} from 'react-redux';
 import React, {useEffect, useState} from 'react';
+import Fonts from '../../../../assets/fonts/Fonts';
 
 function QuanLyThuocScreen() {
   const navigation = useNavigation();
@@ -27,8 +28,8 @@ function QuanLyThuocScreen() {
     <TouchableOpacity
       style={styles.prescriptionCard}
       onPress={() => handlePress(item)}>
-      <Text style={styles.specialtyText}>Chuyên khoa: {item.TENDV}</Text>
-      <Text style={styles.dateText}>Ngày khám: {item.NGAYKHAMMIN}</Text>
+      <Text style={style.t1}>Chuyên khoa: {item.TENDV}</Text>
+      <Text style={style.t1}>Ngày khám: {item.NGAYKHAMMIN}</Text>
     </TouchableOpacity>
   );
 
@@ -43,9 +44,7 @@ function QuanLyThuocScreen() {
           }}>
           <Text>Thêm thuốc</Text>
         </TouchableOpacity> */}
-        <Text style={styles.listHeader}>
-          Danh sách toa thuốc ({lichSuKham.length})
-        </Text>
+        <Text style={style.h4}>Danh sách toa thuốc ({lichSuKham.length})</Text>
         <FlatList
           data={lichSuKham}
           renderItem={renderPrescriptionItem}
