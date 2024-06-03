@@ -113,7 +113,7 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Group>
             <Stack.Screen name="DatLich" component={DatLichScreen} />
             <Stack.Screen name="LichThuoc" component={LichThuocScreen} />
-            <Stack.Screen name="QuyTrinh" component={QuyTrinhScreen} />
+            <Stack.Screen name="QuyTrinh" component={LichSuKhamScreen} />
             <Stack.Group>
               <Stack.Screen name="HoSo" component={ChonHoSo} />
               <Stack.Screen name="ChiDuong" component={ChiDuongScreen} />
@@ -123,7 +123,7 @@ function App({navigation} : any): React.JSX.Element {
               <Stack.Screen name="ThanhToan" component={ThanhToanScreen} />
               <Stack.Screen name="LichSuKham" component={LichSuKhamScreen} />
             </Stack.Group>
-            <Stack.Screen name="TheoDoi" component={TheoDoiScreen} />
+            <Stack.Screen name="TheoDoi" component={LichSuKhamScreen} />
           </Stack.Group>
 
           <Stack.Group>

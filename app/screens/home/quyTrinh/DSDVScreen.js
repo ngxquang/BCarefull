@@ -74,7 +74,8 @@ function DSDVScreen({navigation, route}) {
     const flag = await newPKArray.map(async phieuKham => {
       let ngayKham = phieuKham.ngayKham.slice(-10);
       let [day, month, year] = ngayKham.split('/').map(Number);
-      let time = new Date(year, month - 1, day);
+      let [hours, minutes] = phieuKham.gioDatLich.split(':').map(Number);
+      let time = new Date(year, month - 1, day, 7 + hours);
       let bodyReq = {
         maBN: user.MABN,
         maBS: phieuKham.maBS,
@@ -85,6 +86,7 @@ function DSDVScreen({navigation, route}) {
         ngayDatLich: new Date(),
         gioDatLich: phieuKham.gioDatLich,
       };
+      console.log('BODY REQUEST >>>>>>>>>>> ', bodyReq);
       try {
         const response2 = await axios.post(
           '/phieukham/insert-just-pk',
