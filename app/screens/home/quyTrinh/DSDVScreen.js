@@ -26,7 +26,10 @@ import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamById
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../../../assets/fonts/Fonts';
-import {clearNewPKHD, selectItemThanhToan} from '../../../redux/slice/selectedItemSlice';
+import {
+  clearNewPKHD,
+  selectItemThanhToan,
+} from '../../../redux/slice/selectedItemSlice';
 import axios from '../../../setup/axios';
 import socket from '../../../setup/socket';
 
@@ -127,6 +130,7 @@ function DSDVScreen({navigation, route}) {
           dispatch(fetchLSKByIdBnAction(user.MABN));
           dispatch(clearNewPKHD());
           socket.emit('send-message', {actionName: 'DSDK'});
+          socket.emit('send-message', {actionName: 'DSLH'});
         }
         // toast.success("Thêm hóa đơn thành công!!!");
       }

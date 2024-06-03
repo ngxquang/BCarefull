@@ -1,12 +1,12 @@
 import axios from 'axios';
 import {Alert} from 'react-native';
 // import { toast } from "react-toastify";
-import store from "../redux/store";
-import { useNavigation } from '@react-navigation/native';
+import store from '../redux/store';
+import {useNavigation} from '@react-navigation/native';
 
 //Create an instance of axios
 const instance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'http://152.69.209.236:3001',
 });
 
 instance.defaults.withCredentials = true;
@@ -24,7 +24,7 @@ instance.interceptors.request.use(
     return {
       ...config,
       headers: {
-        ...(bearerToken !== null && { Authorization: `${bearerToken}` }),
+        ...(bearerToken !== null && {Authorization: `${bearerToken}`}),
         ...config.headers,
       },
     };
@@ -48,7 +48,7 @@ instance.interceptors.response.use(
     switch (status) {
       case 401: {
         Alert.alert('Không xác thực người dùng. Vui lòng đăng nhập...');
-        navigation.navigate('Login')
+        navigation.navigate('Login');
         return error.response.data;
       }
 
