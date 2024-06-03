@@ -15,6 +15,7 @@ import getAllThuocReducer from './slice/getAllThuocSlice'
 import getTTKReducer from './slice/getTTKSlice'
 import getBenhByIdReducer from './slice/getBenhByIdSlice'
 import getPhieuKhamByIdReducer from './slice/getPhieuKhamByIdSlice'
+import getAllDatLichThuocReducer from './slice/getAllDatLichThuocSlice'
 
 const store = configureStore({
   reducer: {
@@ -36,6 +37,7 @@ const store = configureStore({
     ttk: getTTKReducer,
     benhById: getBenhByIdReducer,
     phieuKhamById: getPhieuKhamByIdReducer,
+    gioThuocById: getAllDatLichThuocReducer,
   },
 });
 
