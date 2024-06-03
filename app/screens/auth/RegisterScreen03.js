@@ -18,7 +18,7 @@ import {useColorScheme} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {registerUserTK_BN, registerUserTK} from '../../services/userService';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {fetchAllBenhNhanAction} from '../../redux/slice/getAllBenhNhanSlice';
+import {fetchAllBenhNhanAction} from '../../redux/action/fetchAllBenhNhanAction';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import socket from '../../setup/socket';
@@ -78,7 +78,7 @@ const RegisterScreen03 = ({navigation, route}) => {
 
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert('Thành công', `${response.data.message}`);
-      socket.emit("send-message", {actionName: 'DSBN'});
+      socket.emit('send-message', {actionName: 'DSBN'});
       navigation.navigate('Login');
     } else {
       Alert.alert('Lỗi', `${response.data.message}`);

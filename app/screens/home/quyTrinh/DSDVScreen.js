@@ -75,7 +75,7 @@ function DSDVScreen({navigation, route}) {
       let ngayKham = phieuKham.ngayKham.slice(-10);
       let [day, month, year] = ngayKham.split('/').map(Number);
       let [hours, minutes] = phieuKham.gioDatLich.split(':').map(Number);
-      let time = new Date(year, month - 1, day, 7 + hours);
+      let time = new Date(year, month - 1, day, hours);
       let bodyReq = {
         maBN: user.MABN,
         maBS: phieuKham.maBS,
