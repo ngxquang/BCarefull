@@ -159,7 +159,7 @@ const RegisterScreen02 = ({navigation, route}) => {
                 </View>
               </View>
             </View>
-            <View style={style.row}>
+            <View style={[style.center]}>
               <TouchableOpacity
                 style={style.btnSub}
                 onPress={handlePassword}>

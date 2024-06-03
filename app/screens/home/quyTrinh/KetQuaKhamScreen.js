@@ -18,6 +18,8 @@ function KetQuaKhamScreen({navigation, route}) {
   const benhById = route.params.benhById;
   console.log('route.params', route.params);
   console.log('tableData', ctdtById);
+  console.log('data', data);
+
 
   const tableHeadCTDTById = [
     'Tên thuốc',

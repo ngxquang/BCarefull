@@ -12,10 +12,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchCTDTByIdAction} from '../../../redux/action/fetchCTDTById';
-import {fetchBenhNhanByIdAction} from '../../../redux/action/fetchAllBenhNhanAction';
-import {fetchDSHDByIdAction} from '../../../redux/action/fetchHoaDonAction';
 import {fetchDsClsByIdAction} from '../../../redux/action/fetchCLSAction';
-import {fetchTTKAction} from '../../../redux/action/fetchTTKAction';
 import {fetchBenhByIdAction} from '../../../redux/action/fetchBenhByIdAction';
 import {
   fetchLSKByIdBnAction,
@@ -151,7 +148,6 @@ function DSDVScreen({navigation, route}) {
     }
 
     dispatch(fetchCTDTByIdAction(maPK));
-    dispatch(fetchBenhNhanByIdAction(maPK));
     // dispatch(fetchDSHDByIdAction(maPK));
     dispatch(fetchDsClsByIdAction(maPK));
     dispatch(fetchPkByIdHdAction(maHDofPK));
@@ -283,6 +279,7 @@ function DSDVScreen({navigation, route}) {
           <Text style={styles.content}>Chi tiết phiếu khám MAPK - {maPK}</Text>
           <Text style={styles.dateTime}>{NGAYKHAMMIN}</Text>
         </View>
+        <View style={styles.icon} />
       </View>
       {isLoading ? (
         <ActivityIndicator size="large" />
@@ -377,6 +374,7 @@ const styles = StyleSheet.create({
   title: {
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 'auto',
   },
   content: {
     fontSize: 20,
@@ -390,8 +388,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 26,
     color: '#000',
-    marginLeft: -10,
-    marginRight: 10,
+    marginLeft: 10,
   },
   body: {
     marginTop: 20,
