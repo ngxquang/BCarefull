@@ -16,6 +16,9 @@ export const BCarefulTheme = {
     dark: 'rgb(67,46,156)',
     green: 'rgb(14,170,114)',
     red: 'rgb(234,69,58)',
+    dark: 'rgb(67,46,156)',
+    green: 'rgb(14,170,114)',
+    red: 'rgb(234,69,58)',
   },
 };
 
@@ -113,70 +116,79 @@ export const style = StyleSheet.create({
       borderColor: BCarefulTheme.colors.primary,
     },
 
-    // Text
-    h1: {
-      fontFamily: Fonts.bold,
-      fontSize: 28,
-      color: '#000000',
-    },
-    h2: {
-      fontFamily: Fonts.bold,
-      fontSize: 24,
-      color: '#000000',
-    },
-    h3: {
-      fontFamily: Fonts.bold,
-      fontSize: 20,
-      color: '#000000',
-    },
-    h4: {
-      fontFamily: Fonts.bold,
-      fontSize: 18,
-      color: '#000000',
-    },
-    h5: {
-      fontFamily: Fonts.semiBold,
-      fontSize: 22,
-      color: '#000000',
-    },
-    h6: {
-      fontFamily: Fonts.semiBold,
-      fontSize: 16,
-      color: '#000000',
-    },
-    h7: {
-      fontFamily: Fonts.medium,
-      fontSize: 16,
-      color: '#000000',
-    },
-    t1: {
-      fontFamily: Fonts.regular,
-      fontSize: 16,
-      color: '#000000',
-    },
-    italic: {
-      fontFamily: Fonts.italic,
-    },
-    t2: {
-      fontFamily: Fonts.regular,
-      fontSize: 14,
-      color: '#000000',
-    },
-    t3: {
-      fontFamily: Fonts.regular,
-      fontSize: 12,
-      color: '#000000',
-    },
-    t4: {
-      fontFamily: Fonts.light,
-      fontSize: 14,
-      color: '#000000',
-    },
-    t5: {
-      fontFamily: Fonts.light,
-      fontSize: 12,
-      color: '#000000',
-    },
+  btnDisable: {
+    backgroundColor: '#D3D3D3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    fontSize: 16,
+  },
+  // Text
+  h1: {
+    fontFamily: Fonts.bold,
+    fontSize: 28,
+    color: '#000000',
+  },
+  h2: {
+    fontFamily: Fonts.bold,
+    fontSize: 24,
+    color: '#000000',
+  },
+  h3: {
+    fontFamily: Fonts.bold,
+    fontSize: 20,
+    color: '#000000',
+  },
+  h4: {
+    fontFamily: Fonts.bold,
+    fontSize: 18,
+    color: '#000000',
+  },
+  h5: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 22,
+    color: '#000000',
+  },
+  h6: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: '#000000',
+  },
+  h7: {
+    fontFamily: Fonts.medium,
+    fontSize: 16,
+    color: '#000000',
+  },
+  t1: {
+    fontFamily: Fonts.regular,
+    fontSize: 16,
+    color: '#000000',
+  },
+  italic: {
+    fontFamily: Fonts.italic,
+  },
+  t2: {
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+    color: '#000000',
+  },
+  t3: {
+    fontFamily: Fonts.regular,
+    fontSize: 12,
+    color: '#000000',
+  },
+  t4: {
+    fontFamily: Fonts.light,
+    fontSize: 14,
+    color: '#000000',
+  },
+  t5: {
+    fontFamily: Fonts.light,
+    fontSize: 12,
+    color: '#000000',
+  },
 
     //Text color
     danger: {
@@ -199,6 +211,15 @@ export const style = StyleSheet.create({
     },
     grey: {
       color: 'grey',
+    },
+    dark: {
+      color: BCarefulTheme.colors.dark,
+    },
+    green: {
+      color: BCarefulTheme.colors.green,
+    },
+    red: {
+      color: BCarefulTheme.colors.red,
     },
 
   //Input box
@@ -228,23 +249,28 @@ export const style = StyleSheet.create({
     paddingVertical: 8,
   },
 
-    //regular style
-    center: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      alignContent: 'center',
-      alignSelf: 'center',
-    },
-    spacebtw: {
+  //regular style
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  spacebtw: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+    spaceard: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-around',
+      width: '100%',
     },
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    
-    upperCase: {
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  upperCase: {
     textTransform: 'uppercase',
   },
 
@@ -379,6 +405,34 @@ export const style = StyleSheet.create({
       alignItems: 'center',
       margin: 12,
       marginHorizontal: 8,
+    },
+
+    end: {
+      // justifyContent: 'flex-end',
+      textAlign: 'right',
+
+    },
+
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalView: {
+      width: '95%',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 20,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
     },
   }
 )
