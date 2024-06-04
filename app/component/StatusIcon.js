@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontFamily: Fonts.bold,
-    fontSize: 16,
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
   },
   danger: {
     backgroundColor: 'rgba(255, 0, 0, 0.1)',

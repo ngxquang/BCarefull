@@ -161,18 +161,12 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
           </View>
           <View style={style.spacebtw}>
             <TouchableOpacity
-              style={[
-                style.btnSub,
-                {paddingHorizontal: 22, marginLeft: 30, minWidth: '40%'},
-              ]}
+              style={[style.btnSub, {marginLeft: 10, minWidth: '44%'}]}
               onPress={() => setValues(0)}>
               <Text style={[style.h4, style.white]}>Trở lại</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[
-                style.btnSub,
-                {paddingHorizontal: 36, marginRight: 30, minWidth: '40%'},
-              ]}
+              style={[style.btnSub, {marginRight: 10, minWidth: '44%'}]}
               onPress={() =>
                 navigation.navigate('ThanhToan', {
                   item: {
@@ -195,7 +189,7 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
 
 const styles = StyleSheet.create({
   listDVContainer: {
-    marginBottom: 270,
+    marginBottom: 280,
     overflow: 'hidden',
   },
   listItemContainer: {

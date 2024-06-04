@@ -18,7 +18,7 @@ import {
   fetchLSKByIdBnAction,
   fetchPkByIdHdAction,
 } from '../../../redux/action/fetchPhieuKhamAction';
-import {BCarefulTheme} from '../../../component/Theme';
+import {BCarefulTheme, style} from '../../../component/Theme';
 import {fetchPhieuKhamByIdAction} from '../../../redux/action/fetchPhieuKhamByIdAction';
 import {TTKICon, TTTTIcon} from '../../../component/StatusIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -204,7 +204,7 @@ function DSDVScreen({navigation, route}) {
       </View>
       <View style={styles.bodyRight}>
         <View style={styles.timeContainer}>
-          <Text style={styles.timeText}>
+          <Text style={style.t2}>
             {item.NGAYKHAMMIN ? item.NGAYKHAMMIN.split(' - ')[1] : '-- : --'}
           </Text>
         </View>
@@ -222,28 +222,28 @@ function DSDVScreen({navigation, route}) {
               navigation.navigate('KetQuaKham', {item, ctdtById, benhById})
             }>
             <View style={styles.detailsContainer}>
-              <Text style={styles.tenDichVu}>{item.TENDV}</Text>
+              <Text style={[style.h4]}>{item.TENDV}</Text>
               {item.INFOBSCD && item.INFOBSTH ? (
                 <>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
+                    <Text style={[style.t3, {fontFamily: Fonts.bold}]}>
                       BSCD:{' '}
                     </Text>
-                    <Text style={styles.doctor}>{item.INFOBSCD}</Text>
+                    <Text style={style.t3}>{item.INFOBSCD}</Text>
                   </View>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
+                    <Text style={[style.t3, {fontFamily: Fonts.bold}]}>
                       BSTH:{' '}
                     </Text>
-                    <Text style={styles.doctor}>{item.INFOBSTH}</Text>
+                    <Text style={style.t3}>{item.INFOBSTH}</Text>
                   </View>
                 </>
               ) : item.INFOBS ? (
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
-                    Bác sĩ:{' '}
+                  <Text style={[style.t3, {fontFamily: Fonts.bold}]}>BS: </Text>
+                  <Text style={style.t3}>
+                    {item.TRINHDO} {item.TENBS}
                   </Text>
-                  <Text style={styles.doctor}>{item.INFOBS}</Text>
                 </View>
               ) : item.NGUOIBAN ? (
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -253,7 +253,6 @@ function DSDVScreen({navigation, route}) {
                   <Text style={styles.doctor}>{item.NGUOIBAN}</Text>
                 </View>
               ) : null}
-              {/* <Text style={styles.stt}>STT: 07</Text> */}
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.paidButton}
@@ -261,7 +260,9 @@ function DSDVScreen({navigation, route}) {
                   <TTTTIcon value={item.TTTT} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.routeButton}>
-                  <Text style={styles.routeText}>Chỉ đường</Text>
+                  <Text style={[style.t2, {fontFamily: Fonts.bold}]}>
+                    Chỉ đường
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -278,8 +279,8 @@ function DSDVScreen({navigation, route}) {
           <Icon name={'arrow-back'} style={styles.icon} />
         </TouchableOpacity>
         <View style={styles.title}>
-          <Text style={styles.content}>Chi tiết phiếu khám MAPK - {maPK}</Text>
-          <Text style={styles.dateTime}>{NGAYKHAMMIN}</Text>
+          <Text style={style.h4}>Chi tiết phiếu khám MAPK - {maPK}</Text>
+          <Text style={style.h7}>{NGAYKHAMMIN}</Text>
         </View>
         <View style={styles.icon} />
       </View>
@@ -292,7 +293,9 @@ function DSDVScreen({navigation, route}) {
       )}
       <View style={styles.footer}>
         <TouchableOpacity style={styles.cancelButton}>
-          <Text style={styles.routeText}>Hủy phiếu khám</Text>
+          <Text style={[style.t2, {fontFamily: Fonts.bold}]}>
+            Hủy phiếu khám
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -305,7 +308,8 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#6C4EF1',
     borderRadius: 10,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 2,
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
@@ -339,23 +343,24 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
+    marginHorizontal: 'auto',
     marginTop: 10,
+    marginLeft: 20,
+    minWidth: '78%',
   },
   paidButton: {
     borderRadius: 10,
     justifyContent: 'center',
     alignContent: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 1,
+    marginRight: 10,
   },
   routeButton: {
     borderColor: BCarefulTheme.colors.primary,
-    paddingHorizontal: 22,
-    paddingVertical: 1,
     borderRadius: 10,
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    minWidth: '40%',
   },
   routeText: {
     color: BCarefulTheme.colors.primary,
@@ -393,7 +398,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   body: {
-    marginTop: 20,
     flex: 1,
   },
   listItem: {
@@ -412,7 +416,6 @@ const styles = StyleSheet.create({
   bodyRight: {
     flex: 20,
     paddingVertical: 10,
-    paddingRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -444,14 +447,14 @@ const styles = StyleSheet.create({
     height: 10,
   },
   footer: {
-    marginVertical: 20,
+    marginVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   cancelButton: {
     borderColor: BCarefulTheme.colors.primary,
     backgroundColor: '#fff',
-    paddingHorizontal: 16,
+    minWidth: '44%',
     paddingVertical: 10,
     borderRadius: 10,
     borderWidth: 3,

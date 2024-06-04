@@ -149,8 +149,8 @@ function LichSuKhamScreen({navigation}) {
           <Icon name={'arrow-back'} style={styles.iconGoBack} />
         </TouchableOpacity>
         <View style={styles.title}>
-          <Text style={style.h2}>Lịch sử khám</Text>
-          <Text style={style.h6}>
+          <Text style={style.h4}>Lịch sử khám</Text>
+          <Text style={style.h7}>
             {user.HOTEN} (Mã BN - {user.MABN})
           </Text>
         </View>
@@ -164,7 +164,7 @@ function LichSuKhamScreen({navigation}) {
         />
       </View>
       <View style={styles.date}>
-        <Text style={[style.h4, {marginLeft: 16}]}>Chọn ngày</Text>
+        <Text style={[style.h6, {marginLeft: 10}]}>Chọn ngày</Text>
         <View style={styles.dateRange}>
           <IFNgay
             title={'Từ ngày'}
@@ -284,13 +284,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listItemDateTime: {
-    flex: 2,
+    flex: 3,
     paddingRight: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
   listItemDetail: {
-    flex: 3,
+    flex: 5,
     backgroundColor: '#fff',
     borderRadius: 10,
   },
@@ -304,16 +304,16 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   listItemText: {
-    fontSize: 16,
+    fontSize: 14,
   },
   listItemTextActive: {
     fontFamily: Fonts.bold,
-    fontSize: 16,
+    fontSize: 14,
     color: BCarefulTheme.colors.primary,
   },
   listItemTextPassive: {
     fontFamily: Fonts.regular,
-    fontSize: 16,
+    fontSize: 14,
     color: '#000',
   },
   dateTime: {

@@ -9,7 +9,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../../../assets/fonts/Fonts';
-import {BCarefulTheme} from '../../../component/Theme';
+import {BCarefulTheme, style} from '../../../component/Theme';
 import {Table, TableWrapper, Row, Rows} from 'react-native-table-component';
 
 function KetQuaKhamScreen({navigation, route}) {
@@ -19,7 +19,6 @@ function KetQuaKhamScreen({navigation, route}) {
   console.log('route.params', route.params);
   console.log('tableData', ctdtById);
   console.log('data', data);
-
 
   const tableHeadCTDTById = [
     'Tên thuốc',
@@ -54,7 +53,7 @@ function KetQuaKhamScreen({navigation, route}) {
         <View style={styles.title}>
           {data?.TENLOAIDV === 'Hóa đơn thuốc' ? (
             <>
-              <Text style={styles.content}>Chi tiết đơn thuốc</Text>
+              <Text style={style.h4}>Chi tiết đơn thuốc</Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -62,7 +61,7 @@ function KetQuaKhamScreen({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
-                  Thời gian tạo:{' '}
+                  Thời gian tạo:{'   '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
               </View>
@@ -77,7 +76,7 @@ function KetQuaKhamScreen({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
-                  Thời gian khám:{' '}
+                  Thời gian khám:{'   '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
               </View>
@@ -91,7 +90,7 @@ function KetQuaKhamScreen({navigation, route}) {
               alignItems: 'center',
             }}>
             <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
-              Loại dịch vụ:{' '}
+              Loại dịch vụ:{'   '}
             </Text>
             <Text style={styles.dateTime}>
               {data?.TENLOAIDV || 'Dịch vụ khám'}
@@ -105,16 +104,16 @@ function KetQuaKhamScreen({navigation, route}) {
             <View style={styles.itemContainer}>
               <Text style={styles.text}>Thông tin đơn thuốc</Text>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Người bán</Text>
-                <Text style={styles.itemLabelRight}>{data.NGUOIBAN}</Text>
+                <Text style={style.t1}>Người bán </Text>
+                <Text style={style.t2}>{data.NGUOIBAN}</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Trạng thái thanh toán</Text>
-                <Text style={styles.itemLabelRight}>{data.TTTT}</Text>
+                <Text style={style.t1}>Trạng thái thanh toán </Text>
+                <Text style={style.t2}>{data.TTTT}</Text>
               </View>
             </View>
             <View style={styles.itemContainer}>
-              <Text style={styles.text}>Chi tiết đơn thuốc</Text>
+              <Text style={styles.text}>Chi tiết đơn thuốc </Text>
               <ScrollView horizontal={true}>
                 <Table
                   borderStyle={{
@@ -149,40 +148,58 @@ function KetQuaKhamScreen({navigation, route}) {
               <View style={styles.itemContainer}>
                 <Text style={[styles.text]}>Thông tin khám</Text>
                 <View style={styles.itemGroup}>
-                  <Text style={styles.itemLabelLeft}>BSCD</Text>
-                  <Text style={styles.itemLabelRight}>{data.INFOBSCD}</Text>
-                </View>
-                <View style={styles.itemGroup}>
-                  <Text style={styles.itemLabelLeft}>BSTH</Text>
-                  <Text style={styles.itemLabelRight}>{data.INFOBSTH}</Text>
-                </View>
-                <View style={styles.itemGroup}>
-                  <Text style={styles.itemLabelLeft}>Nội dung khám</Text>
-                  <Text style={styles.itemLabelRight}>{data.TENDV}</Text>
-                </View>
-                <View style={styles.itemGroup}>
-                  <Text style={styles.itemLabelLeft}>Trạng thái thực hiện</Text>
-                  <Text style={styles.itemLabelRight}>{data.TRANGTHAITH}</Text>
-                </View>
-                <View style={styles.itemGroup}>
-                  <Text style={styles.itemLabelLeft}>
-                    Trạng thái thanh toán
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    BSCD{'   '}
                   </Text>
-                  <Text style={styles.itemLabelRight}>{data.TTTT}</Text>
+                  <Text style={style.t2}>{data.INFOBSCD}</Text>
+                </View>
+                <View style={styles.itemGroup}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    BSTH{'   '}
+                  </Text>
+                  <Text style={style.t2}>{data.INFOBSTH}</Text>
+                </View>
+                <View style={styles.itemGroup}>
+                  <Text
+                    style={[
+                      style.t2,
+                      {fontFamily: Fonts.semiBold},
+                    ]}>
+                    Nội dung khám{'   '}
+                  </Text>
+                  <Text style={[style.t2]}>
+                    {data.TENDV}
+                  </Text>
+                </View>
+                <View style={styles.itemGroup}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    Trạng thái thực hiện{'   '}
+                  </Text>
+                  <Text style={style.t2}>{data.TRANGTHAITH}</Text>
+                </View>
+                <View style={styles.itemGroup}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    Trạng thái thanh toán{'   '}
+                  </Text>
+                  <Text style={style.t2}>{data.TTTT}</Text>
                 </View>
               </View>
               <View style={styles.itemContainer}>
                 <Text style={styles.text}>Kết quả khám</Text>
                 <View style={styles.itemGroup}>
-                  <Text style={styles.itemLabelLeft}>Mô tả</Text>
-                  <Text style={styles.itemLabelRight}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    Mô tả{'   '}
+                  </Text>
+                  <Text style={style.t2}>
                     {data?.MOTA === null ? 'Chưa có' : data?.MOTA}
                   </Text>
                 </View>
                 <View style={styles.itemGroup}>
-                  <Text style={styles.itemLabelLeft}>Kết luận</Text>
-                  <Text style={styles.itemLabelRight}>
-                    {data?.KETLUANCLS === null ? 'Chưa có' : data?.KETLUANCLS}
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    Kết luận{'   '}
+                  </Text>
+                  <Text style={style.t2}>
+                    {data?.KETLUANCLS === null ? 'Chưa có' : data?.KETLUANCLS}{' '}
                   </Text>
                 </View>
               </View>
@@ -196,60 +213,113 @@ function KetQuaKhamScreen({navigation, route}) {
         <>
           <ScrollView style={styles.body}>
             <View style={styles.itemContainer}>
-              <Text style={[styles.text]}>Thông tin khám</Text>
+              <Text style={styles.text}>Thông tin khám</Text>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Bác sĩ khám</Text>
-                <Text style={styles.itemLabelRight}>{data.INFOBS}</Text>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                  Bác sĩ{'   '}
+                </Text>
+                <Text style={style.t2}>{data.INFOBS}</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Lý do khám</Text>
-                <Text style={styles.itemLabelRight}>{data.LYDOKHAM}</Text>
+                <Text
+                  style={[
+                    style.t2,
+                    styles.itemGroupTextLeft,
+                    {fontFamily: Fonts.semiBold},
+                  ]}>
+                  Lý do khám{'   '}
+                </Text>
+                <Text style={[style.t2, styles.itemGroupTextRight]}>
+                  {data.LYDOKHAM}
+                </Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Nội dung khám</Text>
-                <Text style={styles.itemLabelRight}>{data.TENDV}</Text>
+                <Text
+                  style={[
+                    style.t2,
+                    {fontFamily: Fonts.semiBold},
+                  ]}>
+                  Nội dung khám{'   '}
+                </Text>
+                <Text style={[style.t2]}>
+                  {data.TENDV}
+                </Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Trạng thái thực hiện</Text>
-                <Text style={styles.itemLabelRight}>{data.TRANGTHAITH}</Text>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                  Trạng thái thực hiện{'   '}
+                </Text>
+                <Text style={style.t2}>{data.TRANGTHAITH}</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Trạng thái thanh toán</Text>
-                <Text style={styles.itemLabelRight}>{data.TTTT}</Text>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                  Trạng thái thanh toán{'   '}
+                </Text>
+                <Text style={style.t2}>{data.TTTT}</Text>
               </View>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.text}>Chỉ số sinh tồn</Text>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Huyết áp</Text>
-                <Text style={styles.itemLabelRight}>{data?.HUYETAP} mmHg</Text>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                  Huyết áp{'   '}
+                </Text>
+                <Text style={style.t2}>{data?.HUYETAP} mmHg</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Chiều cao</Text>
-                <Text style={styles.itemLabelRight}>{data?.CHIEUCAO} cm</Text>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                  Chiều cao{'   '}
+                </Text>
+                <Text style={style.t2}>{data?.CHIEUCAO} cm</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Cân nặng</Text>
-                <Text style={styles.itemLabelRight}>{data?.CANNANG} kg</Text>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                  Cân nặng{'   '}
+                </Text>
+                <Text style={style.t2}>{data?.CANNANG} kg</Text>
               </View>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.text}>Kết quả khám</Text>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Bệnh sử</Text>
-                <Text style={styles.itemLabelRight}>
+                <Text
+                  style={[
+                    style.t2,
+                    styles.itemGroupTextLeft,
+                    {fontFamily: Fonts.semiBold},
+                  ]}>
+                  Bệnh sử{'   '}
+                </Text>
+                <Text style={[style.t2, styles.itemGroupTextRight]}>
                   {data?.TRIEUCHUNGBENH}
                 </Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Khám lâm sàn</Text>
-                <Text style={styles.itemLabelRight}>
+                <Text
+                  style={[
+                    style.t2,
+                    styles.itemGroupTextLeft,
+                    {fontFamily: Fonts.semiBold},
+                  ]}>
+                  Khám CLS{'   '}
+                </Text>
+                <Text style={[style.t2, styles.itemGroupTextRight]}>
                   {data?.TINHTRANGCOTHE}
                 </Text>
               </View>
-              <View style={styles.itemGroup}>
-                <Text style={styles.itemLabelLeft}>Kết luận</Text>
-                <Text style={styles.itemLabelRight}>{data?.KETLUAN}</Text>
+              <View style={[styles.itemGroup]}>
+                <Text
+                  style={[
+                    style.t2,
+                    styles.itemGroupTextLeft,
+                    {fontFamily: Fonts.semiBold},
+                  ]}>
+                  Kết luận{'   '}
+                </Text>
+                <Text style={[style.t2, styles.itemGroupTextRight]}>
+                  {data?.KETLUAN} Miền giá trị của một biến con trỏ là địa chỉ ô
+                  nhớ
+                </Text>
               </View>
             </View>
             <View style={styles.itemContainer}>
@@ -324,28 +394,29 @@ const styles = StyleSheet.create({
   body: {
     marginTop: 20,
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   itemContainer: {
-    borderTopWidth: 4,
+    borderTopWidth: 2,
     borderTopColor: BCarefulTheme.colors.primary,
     marginBottom: 10,
     paddingBottom: 10,
+    borderStyle: 'dashed',
   },
   itemGroup: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10,
+    alignItems: 'flex-start', // Ensure items are aligned at the top
   },
-  itemLabelLeft: {
-    fontSize: 16,
-    fontFamily: Fonts.regular,
-    color: BCarefulTheme.colors.primary,
+  itemGroupTextLeft: {
+    flex: 1,
+    flexShrink: 0, // Prevent shrinking
   },
-  itemLabelRight: {
-    fontSize: 16,
-    fontFamily: Fonts.bold,
-    color: '#000',
+  itemGroupTextRight: {
+    flex: 2, // Allow text to take up remaining space
+    flexWrap: 'wrap', // Enable wrapping
+    textAlign: 'left', // Optional: Align text to the right
   },
   text: {
     fontSize: 16,

@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#000',
     fontFamily: Fonts.regular,
-    fontSize: 16,
+    fontSize: 14,
   },
   status: {
     flexDirection: 'row',
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
   date: {
     color: BCarefulTheme.colors.primary,
     fontFamily: Fonts.regular,
-    fontSize: 16,
+    fontSize: 14,
   },
 });

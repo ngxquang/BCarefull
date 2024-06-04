@@ -230,7 +230,10 @@ function ChonThongTinKham({
 
   return (
     <View
-      style={[style.container, {backgroundColor: BCarefulTheme.colors.light}]}>
+      style={[
+        style.container,
+        {backgroundColor: BCarefulTheme.colors.background},
+      ]}>
       {!added && selectedDV.length === 0 ? (
         <>
           <View>
@@ -531,12 +534,12 @@ function ChonThongTinKham({
 
             <View style={style.spacebtw}>
               <TouchableOpacity
-                style={[style.btnSub, {paddingHorizontal: 22, marginLeft: 30}]}
+                style={[style.btnSub, {marginLeft: 10, minWidth: '44%'}]}
                 onPress={handleContinueDV}>
                 <Text style={[style.h4, style.white]}>Thêm dịch vụ</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[style.btnSub, {paddingHorizontal: 36, marginRight: 30}]}
+                style={[style.btnSub, {marginRight: 10, minWidth: '44%'}]}
                 onPress={handleContinue}>
                 <Text style={[style.h4, style.white]}>Tiếp tục</Text>
               </TouchableOpacity>

@@ -88,14 +88,14 @@ function HomeScreen({navigation}) {
     <View style={[styles.listItemContainer, {width: screenWidth - 46}]}>
       <View style={styles.itemGroup}>
         <Icon name={'clock'} style={styles.icon} />
-        <Text style={[style.t2, {marginRight: 10}]}>
+        <Text style={[style.t3, {marginRight: 10}]}>
           {item?.GIODATLICH || '11:11'}
         </Text>
-        <Text style={[style.t2]}>{item.NGAYKHAMMIN.split(' - ')[0]}</Text>
+        <Text style={[style.t3]}>{item.NGAYKHAMMIN.split(' - ')[0]}</Text>
       </View>
       <View style={styles.itemGroup}>
-        <Text style={[style.t2, {marginRight: 10}]}>Nội dung:</Text>
-        <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+        <Text style={[style.t3, {marginRight: 10}]}>Nội dung:</Text>
+        <Text style={[style.t3, {fontFamily: Fonts.semiBold}]}>
           {item.TENDV}
         </Text>
       </View>
@@ -140,10 +140,13 @@ function HomeScreen({navigation}) {
           </View>
         </View>
 
-        <View style={{flex: 1, marginTop: -20, marginBottom: 10}}>
-          <Text style={[style.h4, {marginLeft: 6}]}>Nhắc nhở</Text>
+        <View style={{flex: 1, marginTop: -6, marginBottom: 10}}>
+          <Text style={[style.h4, {marginLeft: 12, fontSize: 16}]}>
+            Nhắc nhở
+          </Text>
           <View style={styles.remindContainer}>
-            <Text style={[style.h6, {marginTop: 2, marginLeft: 20}]}>
+            <Text
+              style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
               Lịch khám
             </Text>
             {ctpkFutureById.length > 0 ? (
@@ -162,13 +165,16 @@ function HomeScreen({navigation}) {
               <>
                 <View
                   style={[styles.listItemContainer, {width: screenWidth - 46}]}>
-                  <Text>Không có lịch khám</Text>
+                  <Text style={[style.t3, {marginRight: 10}]}>
+                    Không có lịch khám
+                  </Text>
                 </View>
               </>
             )}
 
             <View style={styles.breakline}></View>
-            <Text style={[style.h6, {marginTop: 2, marginLeft: 20}]}>
+            <Text
+              style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
               Thuốc
             </Text>
             {ctpkFutureById.length > 0 ? (
@@ -187,7 +193,9 @@ function HomeScreen({navigation}) {
               <>
                 <View
                   style={[styles.listItemContainer, {width: screenWidth - 46}]}>
-                  <Text>Không có lịch uống thuốc</Text>
+                  <Text style={[style.t3, {marginRight: 10}]}>
+                    Không có lịch uống thuốc
+                  </Text>
                 </View>
               </>
             )}
@@ -195,7 +203,7 @@ function HomeScreen({navigation}) {
         </View>
 
         <View style={styles.carousel}>
-          <Text style={style.h4}>Tin nổi bật</Text>
+          <Text style={[style.h4, {fontSize: 16}]}>Tin nổi bật</Text>
           <Carousel data={data} />
         </View>
       </SafeAreaView>
@@ -273,7 +281,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: BCarefulTheme.colors.primary,
-    fontSize: 18,
+    fontSize: 16,
     marginRight: 4,
   },
   body: {

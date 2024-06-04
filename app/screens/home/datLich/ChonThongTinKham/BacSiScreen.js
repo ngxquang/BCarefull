@@ -101,10 +101,7 @@ const BacSiScreen = () => {
               </ListItem.Subtitle>
             </View>
             <View style={[styles.header, {paddingVertical: 0}]}>
-              <IoniconsIcon
-                name={'location'}
-                style={styles.icon}
-              />
+              <IoniconsIcon name={'location'} style={styles.icon} />
               <ListItem.Subtitle style={style.t1}>
                 Phòng 101 - Tầng 1
               </ListItem.Subtitle>
@@ -226,7 +223,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     margin: 5,
-    minWidth: '42%',
+    minWidth: '46%',
   },
   buttonText: {
     color: '#fff',

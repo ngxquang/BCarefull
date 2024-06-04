@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,12 @@ import {
   ActivityIndicator,
   TextInput,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { style } from '../../../../component/Theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllDichVuAction } from '../../../../redux/action/fetchAllDichVuAction';
-import { BCarefulTheme } from '../../../../component/Theme';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {style} from '../../../../component/Theme';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchAllDichVuAction} from '../../../../redux/action/fetchAllDichVuAction';
+import {BCarefulTheme} from '../../../../component/Theme';
 import Fonts from '../../../../../assets/fonts/Fonts';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,9 +22,9 @@ const DichVuScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute();
-  const { setService } = route.params;
+  const {setService} = route.params;
   const services = useSelector(state => state.dichVu?.data) || [];
-  console.log('services', services)
+  console.log('services', services);
   const [servicesKham, setServicesKham] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const isLoading = useSelector(state => state.dichVu?.isLoading);
@@ -85,7 +85,7 @@ const DichVuScreen = () => {
         <FlatList
           data={servicesKham}
           keyExtractor={item => item.MADV.toString()}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <TouchableOpacity
               style={[
                 style.input,
@@ -98,20 +98,15 @@ const DichVuScreen = () => {
               onPress={() => handleSelectService(item)}>
               <View style={styles.itemGroup}>
                 <View style={styles.itemDetails}>
-                  <Text style={[style.h6, { fontFamily: Fonts.bold }]}>
+                  <Text style={[style.h6, {fontFamily: Fonts.bold}]}>
                     {item.TENDV.toUpperCase()}
                   </Text>
-                  <Text style={style.t3}>
-                    Loaị dịch vụ: {item.TENLOAIDV}
-                  </Text>
+                  <Text style={style.t3}>Loaị dịch vụ: {item.TENLOAIDV}</Text>
                 </View>
                 <Text style={[style.t1, style.primary, styles.price]}>
                   {item.GIADV}đ
                 </Text>
-                <Icon
-                  name={'chevron-forward-outline'}
-                  style={styles.icon}
-                />
+                <Icon name={'chevron-forward-outline'} style={styles.icon} />
               </View>
             </TouchableOpacity>
           )}
@@ -124,7 +119,7 @@ const DichVuScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DED9FA',
+    // backgroundColor: '#DED9FA',
   },
   header: {
     height: 100,
