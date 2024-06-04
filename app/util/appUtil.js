@@ -38,6 +38,20 @@ export async function onDisplayNotification(title, message, data) {
   });
 }
 
+export function convertDayName(dayName) {
+  if (!dayName || typeof dayName !== 'string') {
+    return '';
+  }
+
+  const words = dayName.split(' ');
+
+  if (words.length !== 2 || words[0] !== 'Thứ') {
+    return dayName; // Return the original string if it doesn't match the expected pattern
+  }
+
+  return `${words[0]} ${words[1].charAt(0).toLowerCase() + words[1].slice(1)}`;
+}
+
 export function compareDates(date1, date2) {
   // Lấy ra các thành phần ngày, tháng, năm của date1 và date2
   const day1 = date1.getDate();
