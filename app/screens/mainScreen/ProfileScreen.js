@@ -18,7 +18,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
-import {BCarefulTheme} from '../../component/Theme';
+import {BCarefulTheme, style} from '../../component/Theme';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const ProfileScreen = ({navigation, route}) => {
@@ -57,6 +57,7 @@ const ProfileScreen = ({navigation, route}) => {
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
+    console.log("USER IN PROFILE >>>>>>>>>>>>", user)
     if (userInfo) {
       setFormData({
         maBN: userInfo.MABN || '',
@@ -133,84 +134,81 @@ const ProfileScreen = ({navigation, route}) => {
           <View style={styles.container02}>
             <Image
               source={require('../../../assets/images/Avatar.png')}
-              style={styles.container021}
+              style={styles.avatar}
             />
-            <View style={styles.container022}>
+            <View style={{gap: 20}}>
               <View>
-                <Text style={styles.itemText}>Họ Tên</Text>
+                <Text style={style.h4}>Họ Tên</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidHoTen
                         ? BCarefulTheme.colors.primary
-                        : 'red',
+                        : BCarefulTheme.colors.red,
                     },
                     {
-                      color: objValidInput.isValidHoTen ? 'black' : 'red',
+                      color: objValidInput.isValidHoTen ? 'black' : BCarefulTheme.colors.red,
                     },
-                    {marginBottom: 0},
                   ]}
                   value={formData.hoTen}
                   onChangeText={value => handleChange('hoTen', value)}
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidHoTen && (
-                    <Text style={styles.errorText}>Chưa nhập họ tên</Text>
+                    <Text style={[style.t3, style.danger]}>Chưa nhập họ tên</Text>
                   )}
                 </View>
               </View>
               <View>
-                <Text style={styles.itemText}>Email</Text>
+                <Text style={style.h4}>Email</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidEmail
                         ? BCarefulTheme.colors.primary
-                        : 'red',
+                        : BCarefulTheme.colors.red,
                     },
                     {
-                      color: objValidInput.isValidEmail ? 'black' : 'red',
+                      color: objValidInput.isValidEmail ? 'black' : BCarefulTheme.colors.red,
                     },
-                    {marginBottom: 0},
                   ]}
                   value={formData.email}
                   onChangeText={value => handleChange('email', value)}
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidEmail && (
-                    <Text style={styles.errorText}>Chưa nhập email</Text>
+                    <Text style={[style.t3, style.danger]}>Chưa nhập email</Text>
                   )}
                 </View>
               </View>
               <View>
-                <Text style={styles.itemText}>CCCD</Text>
+                <Text style={style.h4}>CCCD</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidCCCD
                         ? BCarefulTheme.colors.primary
-                        : 'red',
+                        : BCarefulTheme.colors.red,
                     },
                     {
-                      color: objValidInput.isValidCCCD ? 'black' : 'red',
+                      color: objValidInput.isValidCCCD ? 'black' : BCarefulTheme.colors.red,
                     },
-                    {marginBottom: 0},
                   ]}
                   value={formData.cccd}
                   onChangeText={value => handleChange('cccd', value)}
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidCCCD && (
-                    <Text style={styles.errorText}>Chưa nhập CCCD</Text>
+                    <Text style={[style.t3, style.danger]}>Chưa nhập CCCD</Text>
                   )}
                 </View>
               </View>
               <View style={styles.itemGroup}>
                 <View>
-                  <Text style={styles.itemText}>Giới Tính</Text>
+                  <Text style={style.h4}>Giới Tính</Text>
                   <SelectDropdown
                     data={gioiTinh}
                     // defaultValue={userInfo.gioiTinh}
@@ -218,7 +216,7 @@ const ProfileScreen = ({navigation, route}) => {
                       handleChange('gioiTinh', selectedItem.gioiTinh);
                     }}
                     renderButton={(selectedItem, isOpened) => (
-                      <View style={[styles.dropdownButtonStyle, {width: 130}]}>
+                      <View style={[style.input, {width: 130, flexDirection: 'row'}]}>
                         <Text style={styles.dropdownButtonTxtStyle}>
                           {(selectedItem && selectedItem.gioiTinh) ||
                             formData.gioiTinh ||
@@ -247,11 +245,11 @@ const ProfileScreen = ({navigation, route}) => {
                 </View>
 
                 <View>
-                  <Text style={styles.itemText}>Ngày Sinh</Text>
+                  <Text style={style.h4}>Ngày Sinh</Text>
                   <TouchableOpacity
                     onPress={() => setDatePickerVisibility(true)}>
                     <TextInput
-                      style={[styles.itemTextInput, {width: 160}]}
+                      style={[style.input, {width: 160}]}
                       value={formData.ngaySinh}
                       editable={false}
                     />
@@ -267,33 +265,33 @@ const ProfileScreen = ({navigation, route}) => {
               {showMore && (
                 <>
                   <View>
-                    <Text style={styles.itemText}>Số Điện Thoại</Text>
+                    <Text style={style.h4}>Số Điện Thoại</Text>
                     <TextInput
-                      style={[styles.itemTextInput]}
+                      style={[style.input]}
                       value={formData.soDienThoai}
                       onChangeText={value => handleChange('soDienThoai', value)}
                     />
                   </View>
                   <View>
-                    <Text style={styles.itemText}>Địa Chỉ</Text>
+                    <Text style={style.h4}>Địa Chỉ</Text>
                     <TextInput
-                      style={[styles.itemTextInput]}
+                      style={[style.input]}
                       value={formData.diaChi}
                       onChangeText={value => handleChange('diaChi', value)}
                     />
                   </View>
                   <View>
-                    <Text style={styles.itemText}>Tiền Sử Bệnh</Text>
+                    <Text style={style.h4}>Tiền Sử Bệnh</Text>
                     <TextInput
-                      style={[styles.itemTextInput]}
+                      style={[style.input]}
                       value={formData.tienSuBenh}
                       onChangeText={value => handleChange('tienSuBenh', value)}
                     />
                   </View>
                   <View>
-                    <Text style={styles.itemText}>Dị Ứng</Text>
+                    <Text style={style.h4}>Dị Ứng</Text>
                     <TextInput
-                      style={[styles.itemTextInput]}
+                      style={[style.input]}
                       value={formData.diUng}
                       onChangeText={value => handleChange('diUng', value)}
                     />
@@ -310,8 +308,8 @@ const ProfileScreen = ({navigation, route}) => {
               </TouchableOpacity>
             </View>
             <View style={styles.container023}>
-              <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
-                <Text style={styles.saveText}>Lưu thông tin</Text>
+              <TouchableOpacity style={style.btn} onPress={handleSave}>
+                <Text style={[style.h4, style.white]}>Lưu thông tin</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -345,14 +343,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 40,
   },
-  container021: {
+  avatar: {
     marginHorizontal: 'auto',
     borderRadius: 120,
     width: 120,
     height: 120,
-  },
-  container022: {
-    marginTop: 10,
   },
   container023: {
     justifyContent: 'flex-end',
@@ -361,12 +356,14 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   errorText: {
-    color: 'red',
+    color: BCarefulTheme.colors.red,
     fontSize: 12,
     fontFamily: Fonts.regular,
   },
   error: {
-    height: 20,
+    position: 'absolute',
+    bottom: -20,
+    // height: 20,
   },
   dropdownButtonStyle: {
     backgroundColor: '#E8D5FF',
@@ -427,18 +424,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: Fonts.bold,
     marginLeft: 4,
-  },
-  itemTextInput: {
-    fontSize: 16,
-    borderWidth: 4,
-    color: '#000000',
-    borderRadius: 10,
-    borderColor: BCarefulTheme.colors.primary,
-    backgroundColor: '#E8D5FF',
-    fontFamily: Fonts.regular,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    marginBottom: 20,
   },
   saveBtn: {
     backgroundColor: BCarefulTheme.colors.primary,

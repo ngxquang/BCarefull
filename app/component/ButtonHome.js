@@ -27,7 +27,7 @@ export function ButtonHome({ title, name, navigation }) {
           justifyContent: 'flex-end',
           padding: 3,
           width: '100%',
-          borderRadius: 5
+          borderRadius: 5,
         }}>
         <Button
           type="solid"

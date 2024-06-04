@@ -13,9 +13,14 @@ import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import {IFNgay} from '../../../component/Layout/TabLayout/InputForm';
 import {fetchLSKByIdBnAction} from '../../../redux/action/fetchPhieuKhamAction';
 import Fonts from '../../../../assets/fonts/Fonts';
-import {BCarefulTheme} from '../../../component/Theme';
+import {BCarefulTheme, style} from '../../../component/Theme';
 import {TTKICon} from '../../../component/StatusIcon';
 import {compareDates} from '../../../util/appUtil';
+import {
+  selectItem,
+  clearSelectedItem,
+} from '../../../redux/slice/selectedItemSlice';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 function LichSuKhamScreen({navigation}) {
   const dispatch = useDispatch();
@@ -32,6 +37,11 @@ function LichSuKhamScreen({navigation}) {
     {id: 3, title: 'Đã hoàn thành'},
     {id: 4, title: 'Đã hủy'},
   ]);
+
+  const handleChuyenTrangDSDV = item => {
+    dispatch(selectItem(item));
+    navigation.navigate('DSDV', {item});
+  };
 
   useEffect(() => {
     if (lichSuKham) {
@@ -104,12 +114,8 @@ function LichSuKhamScreen({navigation}) {
       </View>
       <View style={styles.bodyRight}>
         <View style={styles.listItemDateTime}>
-          <Text style={styles.dateTime}>
-            {item.NGAYKHAMMIN.split(' - ')[0]}
-          </Text>
-          <Text style={styles.dateTime}>
-            {item.NGAYKHAMMIN.split(' - ')[1]}
-          </Text>
+          <Text style={style.t2}>{item.NGAYKHAMMIN.split(' - ')[0]}</Text>
+          <Text style={style.t2}>{item.NGAYKHAMMIN.split(' - ')[1]}</Text>
           <View>
             <TTKICon value={item.TRANGTHAITH} />
           </View>
@@ -117,10 +123,10 @@ function LichSuKhamScreen({navigation}) {
         <View style={styles.listItemDetail}>
           <TouchableOpacity
             style={styles.detail}
-            onPress={() => navigation.navigate('DSDV', {item})}>
+            onPress={() => handleChuyenTrangDSDV(item)}>
             <View style={{flex: 6}}>
-              <Text style={styles.maPhieuKham}>MAPK - {item.MAPK}</Text>
-              <Text style={styles.tenDichVu}>{item.TENDV.toUpperCase()}</Text>
+              <Text style={style.t2}>MAPK - {item.MAPK}</Text>
+              <Text style={style.h6}>{item.TENDV.toUpperCase()}</Text>
             </View>
             <FontistoIcon
               name={'angle-right'}
@@ -139,10 +145,16 @@ function LichSuKhamScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Lịch sử khám</Text>
-        <Text style={styles.patientName}>
-          {user.HOTEN} (Mã BN - {user.MABN})
-        </Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name={'arrow-back'} style={styles.iconGoBack} />
+        </TouchableOpacity>
+        <View style={styles.title}>
+          <Text style={style.h2}>Lịch sử khám</Text>
+          <Text style={style.h6}>
+            {user.HOTEN} (Mã BN - {user.MABN})
+          </Text>
+        </View>
+        <View style={styles.iconGoBack} />
       </View>
       <View style={styles.status}>
         <FlatList
@@ -152,15 +164,7 @@ function LichSuKhamScreen({navigation}) {
         />
       </View>
       <View style={styles.date}>
-        <Text
-          style={{
-            fontFamily: Fonts.bold,
-            color: '#000',
-            paddingLeft: 16,
-            fontSize: 16,
-          }}>
-          Chọn ngày
-        </Text>
+        <Text style={[style.h4, {marginLeft: 16}]}>Chọn ngày</Text>
         <View style={styles.dateRange}>
           <IFNgay
             title={'Từ ngày'}
@@ -196,19 +200,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#DED9FA',
   },
   header: {
-    padding: 28,
+    flexDirection: 'row',
+    paddingVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 'auto',
+  },
+  content: {
+    fontSize: 20,
     fontFamily: Fonts.bold,
     color: '#000',
   },
-  patientName: {
-    fontSize: 16,
+  iconGoBack: {
+    fontSize: 26,
     color: '#000',
+    marginLeft: 10,
   },
   status: {
     flexDirection: 'row',
@@ -218,13 +229,14 @@ const styles = StyleSheet.create({
   },
   date: {
     backgroundColor: '#fff',
-    marginVertical: 6,
+    marginTop: 6,
     paddingVertical: 8,
   },
   dateRange: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: '#fff',
+    paddingVertical: 6,
   },
   icon: {
     fontSize: 26,
@@ -237,7 +249,6 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    marginVertical: 10,
   },
   listItem: {
     flex: 1,
@@ -273,11 +284,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listItemDateTime: {
-    flex: 4,
+    flex: 2,
     paddingRight: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listItemDetail: {
-    flex: 6,
+    flex: 3,
     backgroundColor: '#fff',
     borderRadius: 10,
   },

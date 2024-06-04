@@ -26,7 +26,7 @@ const isValidEmail = email => {
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('22520357@gm.uit.edu.vn');
+  const [email, setEmail] = useState('hattvd@gmail.com');
   const [password, setPassword] = useState('Abc@1234');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const defaultObjValidInput = {
@@ -80,7 +80,6 @@ const LoginScreen = ({navigation}) => {
       setPassword('');
     }
     if (response && response.data && response.data.errcode !== 0) {
-
       Alert.alert('Error', `${response.data.message}`);
     }
   };

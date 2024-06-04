@@ -43,9 +43,9 @@ export function DatLichHeader({ title, values }) {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        color: 'black',
-        fontFamily: Fonts.bold,
-        fontSize: 20,
-    }
-})
+  header: {
+    color: '#000',
+    fontFamily: Fonts.bold,
+    fontSize: 18,
+  },
+});
