@@ -1,56 +1,77 @@
 import {Text, TouchableOpacity, View, FlatList, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CustomHeader} from '../../../component/Header';
-import {style} from '../../../component/Theme';
+import {BCarefulTheme, style} from '../../../component/Theme';
 import {useNavigation} from '@react-navigation/native';
-import { fetchCTDTByIdAction } from '../../../redux/action/fetchCTDTById'
+import {fetchCTDTByIdAction} from '../../../redux/action/fetchCTDTById';
 import {useDispatch, useSelector} from 'react-redux';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
+import CustomSwitch from '../../../component/CustomSwitch';
 
 function DatLichNhacThuocScreen({route}) {
   const navigation = useNavigation();
   const maPK = route.params.item.MAPK;
   const tenDV = route.params.item.TENDV;
   console.log('params: ', route.params.item);
-  console.log('mapk: ', maPK);
   const dispatch = useDispatch();
   const ctdtById = useSelector(state => state.ctdtById.data) || [];
-  console.log('ctdt', ctdtById);
+  console.log('ctdtById', ctdtById);
   const isLoading = useSelector(state => state.ctdtById?.isLoading);
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  const [selectedTab, setSelectedTab] = useState('Chưa đặt lịch');
 
   useEffect(() => {
     dispatch(fetchCTDTByIdAction(maPK));
   }, [dispatch]);
 
-  const renderMedicineItem = ({ item }) => (
+  const chuaDatLichCount = ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch').length;
+  const daDatLichCount = ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch').length;
+
+  const filteredCtdtById = useMemo(() => {
+    if (selectedTab === 'Chưa đặt lịch') {
+      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch');
+    } else {
+      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch');
+    }
+  }, [ctdtById, selectedTab]);
+
+  const onSelectSwitch = (selectionMode) => {
+    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Đã đặt lịch');
+  };
+
+  const renderMedicineItem = ({item}) => (
     <View style={styles.medicineCard}>
       <Text style={style.h4}>{item.TENTHUOC}</Text>
       <Text style={style.t4}>Lần/ngày: {item.SOLANUONG}</Text>
       <Text style={style.t4}>Số lượng / lần: {item.SOLUONGUONG}</Text>
       <Text style={style.t4}>Cách dùng: {item.GHICHU}</Text>
-      <TouchableOpacity 
-        style={[style.btnSub]} 
-        onPress={() => navigation.navigate('ThemThuoc', { item: item })}>
-        <Text style={[style.h7, style.white]}>Đã đặt lịch nhắc</Text>
+      <TouchableOpacity
+        style={[style.btnSub]}
+        onPress={() => navigation.navigate('ThemThuoc', {item: item})}>
+        <Text style={[style.h7, style.white]}>{selectedTab === 'Chưa đặt lịch' ? 'Chưa đặt lịch nhắc' : 'Đã đặt lịch nhắc'}</Text>
       </TouchableOpacity>
     </View>
   );
 
-
-
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <CustomHeader title={'Đặt lịch nhắc thuốc'} />
-      <SafeAreaView style={{ flex: 1, padding: 16 }}>
-      <View style={styles.header}>
+      <SafeAreaView style={{flex: 1, padding: 16}}>
+        <CustomSwitch
+          selectionMode={1}
+          option1={`Chưa đặt lịch (${chuaDatLichCount})`}
+          option2={`Đã đặt lịch (${daDatLichCount})`}
+          onSelectSwitch={onSelectSwitch}
+          selectionColor={BCarefulTheme.colors.primary}
+        />          
+        <View style={styles.header}>
           <Text style={style.h4}>Toa thuốc: {tenDV}</Text>
         </View>
         <FlatList
-          data={ctdtById}
+          data={filteredCtdtById}
           renderItem={renderMedicineItem}
           keyExtractor={item => item.MATHUOC.toString()}
-          ListEmptyComponent={<Text>Không có dữ liệu thuốc</Text>}
+          ListEmptyComponent={<Text style={style.t1}>Tất cả toa thuốc đã được đặt lịch dùng</Text>}
         />
       </SafeAreaView>
     </View>
@@ -64,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 2,

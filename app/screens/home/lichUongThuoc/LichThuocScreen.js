@@ -19,7 +19,7 @@ import {CustomHeader} from '../../../component/Header';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchAllGioDatLichAction} from '../../../redux/action/fetchAllGioDatLichAction';
-import { fetchDatLichThuocByIdAction } from '../../../redux/action/fetchDatLichThuocByIdAction';
+import {fetchDatLichThuocByIdAction} from '../../../redux/action/fetchDatLichThuocByIdAction';
 
 function LichThuocScreen({route}) {
   const navigation = useNavigation();
@@ -158,22 +158,22 @@ function LichThuocScreen({route}) {
     return <Icon name="circle-o" size={24} color="grey" />;
   };
 
-  const handleDieuChinh = async (medMaCTDT) => {
+  const handleDieuChinh = async medMaCTDT => {
     if (selectedMedication && selectedMedication.MACTDT) {
+      console.log('selectedMedication: ', selectedMedication);
       console.log(medMaCTDT);
 
-    try {
-      const response = await dispatch(fetchDatLichThuocByIdAction(medMaCTDT));
-      const medicationDetails = response.payload; // Assuming payload contains the data
+      try {
+        const item = {MACTDT: medMaCTDT, TENTHUOC: selectedMedication.TENTHUOC, THANHPHAN: selectedMedication.THANHPHAN};
 
-      // Now you have the medication details and can navigate with confidence
-      navigation.navigate('ThemThuoc', { maCTDT: medMaCTDT, medicationDetails });
-    } catch (error) {
-      console.error('Error fetching medication details:', error);
-      // Handle error gracefully, e.g., show a toast message
+        // Now you have the medication details and can navigate with confidence
+        navigation.navigate('ThemThuoc', {item});
+      } catch (error) {
+        console.error('Error fetching medication details:', error);
+        // Handle error gracefully, e.g., show a toast message
+      }
     }
   };
-}
 
   const renderMedicationCard = (title, meds, timePeriod, index) => {
     if (meds.length === 0) return null;
@@ -350,13 +350,17 @@ function LichThuocScreen({route}) {
             title="NGỪNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
             buttonStyle={[style.btnSub, {paddingHorizontal: 0, width: 130}]}
-            onPress={() => {handleMedicationAction('skipped')}}
+            onPress={() => {
+              handleMedicationAction('skipped');
+            }}
           />
           <Button
             title="DÙNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
             buttonStyle={[style.btnSub, {width: 130}]}
-            onPress={() => {handleMedicationAction('taken')}}
+            onPress={() => {
+              handleMedicationAction('taken');
+            }}
           />
         </View>
       </View>
@@ -401,12 +405,16 @@ function LichThuocScreen({route}) {
               <View style={style.spaceard}>
                 <TouchableOpacity
                   style={style.btnDisable}
-                  onPress={() => handleMedicationAction('skipped', selectedMedication?.MAGIO)}>
+                  onPress={() =>
+                    handleMedicationAction('skipped', selectedMedication?.MAGIO)
+                  }>
                   <Text style={[style.h7, style.white]}>Bỏ qua</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={style.btnSub}
-                  onPress={() => handleMedicationAction('taken', selectedMedication?.MAGIO)}>
+                  onPress={() =>
+                    handleMedicationAction('taken', selectedMedication?.MAGIO)
+                  }>
                   <Text style={[style.h7, style.white]}>Dùng thuốc</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
