@@ -48,7 +48,7 @@ const data = [
 
 function HomeScreen({navigation}) {
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
-  const ctpkFutureById = useSelector(state => state.ctpkFutureById.data);
+  const ctpkFutureById = useSelector(state => state.ctpkFutureById.data) || [];
   console.log('ctpkFutureById', ctpkFutureById);
 
   const dispatch = useDispatch();
