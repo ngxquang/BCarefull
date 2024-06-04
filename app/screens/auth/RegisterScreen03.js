@@ -18,7 +18,6 @@ import {useColorScheme} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {registerUserTK_BN, registerUserTK} from '../../services/userService';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {fetchAllBenhNhanAction} from '../../redux/action/fetchAllBenhNhanAction';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import socket from '../../setup/socket';
@@ -26,19 +25,12 @@ import socket from '../../setup/socket';
 // NHAP HO SO DANG KI (PASSWORD, INFO)
 const RegisterScreen03 = ({navigation, route}) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const dispatch = useDispatch();
-  const selectDropdownRef = useRef();
-  const patients = useSelector(state => state.benhNhan?.data) || [];
   const gioiTinh = [{gioiTinh: 'Nam'}, {gioiTinh: 'Nữ'}, {gioiTinh: 'Khác'}];
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  useEffect(() => {
-    dispatch(fetchAllBenhNhanAction());
-  }, [dispatch]);
-
   const formDataDefault = {
-    // email: route.params.email ? route.params.email : '',
-    // password: route.params.password ? route.params.password : '',
+    email: route.params.email ? route.params.email : '',
+    password: route.params.password ? route.params.password : '',
     hoTen: '',
     cccd: '',
     gioiTinh: '',

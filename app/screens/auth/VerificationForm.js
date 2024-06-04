@@ -1,49 +1,77 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, Alert, TouchableOpacity, StyleSheet} from 'react-native';
-import {OtpInput} from 'react-native-otp-entry';
-import {confirmUser} from '../../services/userService';
+import React, {useState, useEffect, useRef} from 'react';
+import {
+  View,
+  Text,
+  Alert,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  Keyboard,
+} from 'react-native';
+import {confirmUser, verifyUser} from '../../services/userService';
 import Fonts from '../../../assets/fonts/Fonts';
-import {verifyUser} from '../../services/userService';
-import { style } from '../../component/Theme';
+import {style} from '../../component/Theme';
 
-
-// XAC THUC EMAIL 
+// XAC THUC EMAIL
 const VerificationForm = ({navigation, route}) => {
-  const [otp, setOtp] = useState('');
+  const [otps, setOtps] = useState(['', '', '', '', '', '']);
   const [countdown, setCountdown] = useState(60);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
-  let interval = null;
+  const inputRefs = useRef([]);
 
   useEffect(() => {
     if (countdown > 0) {
-      interval = setInterval(() => {
+      const interval = setInterval(() => {
         setCountdown(countdown => countdown - 1);
       }, 1000);
+      return () => clearInterval(interval);
     } else {
       setIsResendDisabled(false);
-      clearInterval(interval);
     }
-    return () => clearInterval(interval);
   }, [countdown]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (inputRefs.current[0]) {
+        inputRefs.current[0].focus();
+      }
+    }, 250);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleResendOtp = async () => {
     setCountdown(60);
     setIsResendDisabled(true);
-    setOtp(''), 
+    setOtps(['', '', '', '', '', '']);
     await verifyUser(route.params.email);
   };
 
   const handleConfirm = async () => {
     const email = route.params.email;
-
+    const otp = otps.join('');
+    console.log('otp', otp);
     const response = await confirmUser(email, otp);
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert('', `${response.data.message}`);
-      clearInterval(interval);
       navigation.navigate('Register02', {...route.params});
     } else {
       Alert.alert('Error', `${response.data.message}`);
-      clearInterval(interval);
+    }
+  };
+
+  const handleChangeText = (value, index) => {
+    const newOtp = [...otps];
+    newOtp[index] = value;
+    setOtps(newOtp);
+
+    if (value && index < 5) {
+      inputRefs.current[index + 1].focus();
+    }
+  };
+
+  const handleKeyPress = (e, index) => {
+    if (e.nativeEvent.key === 'Backspace' && !otps[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
     }
   };
 
@@ -55,27 +83,25 @@ const VerificationForm = ({navigation, route}) => {
         <Text style={style.t1}>chúng tôi vừa gửi cho bạn.</Text>
       </View>
 
-      <OtpInput
-        style={styles.otpInput}
-        numberOfDigits={6}
-        value={otp}
-        onTextChange={value => setOtp(value)}
-        focusColor={'#7864EA'}
-        focusStickBlinkingDuration={400}
-        textInputProps={{
-          accessibilityLabel: 'One-Time Password',
-        }}
-        theme={{
-          containerStyle: styles.containerOtpInput,
-          pinCodeContainerStyle: styles.pinCodeContainer,
-          pinCodeTextStyle: styles.pinCodeText,
-          focusStickStyle: styles.focusStick,
-          focusedPinCodeContainerStyle: styles.activePinCodeContainer,
-        }}
-      />
+      <View style={styles.otpContainer}>
+        {otps.map((digit, index) => (
+          <TextInput
+            key={index}
+            ref={el => (inputRefs.current[index] = el)}
+            style={styles.otpInput}
+            keyboardType="numeric"
+            maxLength={1}
+            value={digit}
+            onChangeText={value => handleChangeText(value, index)}
+            onKeyPress={e => handleKeyPress(e, index)}
+            autoFocus={index === 0}
+          />
+        ))}
+      </View>
+
       <View style={styles.resendCode}>
         <Text style={style.t1}>Không nhận được mã?</Text>
-        <TouchableOpacity onPress={handleResendOtp}>
+        <TouchableOpacity onPress={handleResendOtp} disabled={isResendDisabled}>
           <Text style={[style.h4, style.primary]}> Gửi lại mã.</Text>
         </TouchableOpacity>
       </View>
@@ -95,53 +121,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    fontSize: 26,
-    marginBottom: 10,
-    fontFamily: Fonts.bold,
-    color: '#000000',
+  otpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 20,
   },
-  button: {
-    backgroundColor: '#7864EA',
-    paddingVertical: 14,
+  otpInput: {
+    width: '15%',
+    height: 50,
+    borderColor: '#7864EA',
+    borderWidth: 1,
     borderRadius: 10,
-    marginTop: 20,
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 40,
-    marginTop: 40,
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#000',
   },
   resendCode: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-  },
-  btnText: {
-    color: '#7864EA',
-    fontSize: 18,
-    fontFamily: Fonts.bold,
-  },
-  submitBtnText: {
-    fontFamily: Fonts.bold,
-    color: '#ffffff',
-    fontSize: 18,
-  },
-  containerOtpInput: {
-    color: '#ffffff',
-  },
-  pinCodeContainer: {
-    color: '#ffffff',
-  },
-  pinCodeText: {
-    color: '#000000',
-  },
-  focusStick: {
-    color: '#ffffff',
-  },
-  activePinCodeContainer: {
-    color: '#ffffff',
   },
 });
 
