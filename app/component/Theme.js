@@ -16,6 +16,9 @@ export const BCarefulTheme = {
     dark: 'rgb(67,46,156)',
     green: 'rgb(14,170,114)',
     red: 'rgb(234,69,58)',
+    dark: 'rgb(67,46,156)',
+    green: 'rgb(14,170,114)',
+    red: 'rgb(234,69,58)',
   },
 };
 
@@ -75,6 +78,42 @@ export const style = StyleSheet.create({
       paddingHorizontal: 16,
       paddingVertical: 8,
       fontSize: 16,
+    },
+
+    card: {
+      backgroundColor: 'white',
+      margin: 10,
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 2,
+      borderColor: BCarefulTheme.colors.primary,
+    },
+    cardLeft: {
+      margin: 10,
+      width: '90%',
+      marginStart: 0,
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 2,
+      borderLeftWidth: 0,
+      borderTopStartRadius: 0,
+      borderBottomStartRadius: 0,
+      borderColor: BCarefulTheme.colors.primary,
+    },
+    cardRight: {
+      alignItems: 'flex-end',
+      alignContent: 'flex-end',
+      alignSelf: 'flex-end',
+      margin: 10,
+      width: '90%',
+      marginEnd: 0,
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 2,
+      borderRightWidth: 0,
+      borderTopEndRadius: 0,
+      borderBottomEndRadius: 0,
+      borderColor: BCarefulTheme.colors.primary,
     },
 
   btnDisable: {
@@ -151,28 +190,37 @@ export const style = StyleSheet.create({
     color: '#000000',
   },
 
-  //Text color
-  danger: {
-    color: 'red',
-  },
-  warning: {
-    color: 'gold',
-  },
-  primary: {
-    color: BCarefulTheme.colors.primary,
-  },
-  sub: {
-    color: BCarefulTheme.colors.secondary,
-  },
-  white: {
-    color: 'white',
-  },
-  black: {
-    color: 'black',
-  },
-  grey: {
-    color: 'grey',
-  },
+    //Text color
+    danger: {
+      color: 'red',
+    },
+    warning: {
+      color: 'gold',
+    },
+    primary: {
+      color: BCarefulTheme.colors.primary,
+    },
+    sub: {
+      color: BCarefulTheme.colors.secondary,
+    },
+    white: {
+      color: 'white',
+    },
+    black: {
+      color: 'black',
+    },
+    grey: {
+      color: 'grey',
+    },
+    dark: {
+      color: BCarefulTheme.colors.dark,
+    },
+    green: {
+      color: BCarefulTheme.colors.green,
+    },
+    red: {
+      color: BCarefulTheme.colors.red,
+    },
 
   //Input box
   input: {
@@ -212,6 +260,11 @@ export const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+    spaceard: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
+    },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -345,12 +398,41 @@ export const style = StyleSheet.create({
     paddingHorizontal: 16,
   },
 
-  seperateHorizontal: {
-    justifyContent: 'center',
-    borderTopWidth: 2,
-    borderTopColor: BCarefulTheme.colors.primary,
-    alignItems: 'center',
-    margin: 12,
-    marginHorizontal: 8,
-  },
-});
+    seperateHorizontal: {
+      justifyContent: 'center',
+      borderTopWidth: 2,
+      borderTopColor: BCarefulTheme.colors.primary,
+      alignItems: 'center',
+      margin: 12,
+      marginHorizontal: 8,
+    },
+
+    end: {
+      // justifyContent: 'flex-end',
+      textAlign: 'right',
+
+    },
+
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalView: {
+      width: '95%',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 20,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+  }
+)

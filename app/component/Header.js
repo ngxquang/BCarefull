@@ -1,40 +1,45 @@
-import * as React from 'react';
-import {Header, Icon} from '@rneui/base';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import {StatusBar, StyleSheet, View} from 'react-native';
-import {BCarefulTheme, style} from './Theme';
-import Fonts from '../../assets/fonts/Fonts';
-import {BackToHomeBtn} from './ButtonHome';
-import Progress from './datLich/Progress';
+import * as React from "react";
+import { Header, Icon } from "@rneui/base";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { BCarefulTheme } from "./Theme";
+import { StyleSheet, View } from "react-native";
+import Fonts from "../../assets/fonts/Fonts";
+import { BackToHomeBtn, GoBackBtn } from "./ButtonHome";
+import Progress from "./datLich/Progress";
 
-export function DatLich({title}) {
-  return (
-    <View style={{alignContent: 'center', justifyContent: 'center'}}>
-      <Header
-        backgroundColor="white"
-        centerComponent={{
-          text: title,
-          style: styles.header,
-        }}
-        leftComponent={BackToHomeBtn}
-        leftContainerStyle={{marginTop: -5}}
-        statusBarProps={{barStyle: 'dark-content'}}
-      />
-    </View>
-  );
+export function CustomHeader({ title, leftIcon = GoBackBtn, rightIcon = null }) {
+    return (
+        <View>
+            <Header
+                backgroundColor="white"
+                backgroundImageStyle={{}}
+                barStyle="default"
+                centerComponent={{
+                    text: title,
+                    style: styles.header
+                }}
+                centerContainerStyle={{ alignContent: 'flex-start' }}
+                leftComponent={leftIcon}
+                leftContainerStyle={{ left: 10}}
+                linearGradientProps={{}}
+                placement="center"
+                statusBarProps={{}}
+                rightComponent={rightIcon}
+                rightContainerStyle={{ right: 10 }}
+            />
+        </View>
+    );
 }
 
-export function DatLichHeader({title, values}) {
-  return (
-    <View style={{backgroundColor: '#fff'}}>
-      {/* <SafeAreaView style={{flex: 1}}> */}
-      <DatLich title={title} />
-      <View style={{padding: 30, backgroundColor: '#fff'}}>
-        <Progress values={values ? values : 0} />
-      </View>
-      {/* </SafeAreaView> */}
-    </View>
-  );
+export function DatLichHeader({ title, values }) {
+    return (
+        <>
+            <CustomHeader title={title} />
+            <View style={{padding: 30, paddingBottom: 0}}>
+                <Progress values={values ? values : 0} />
+            </View>
+        </>
+    )
 }
 
 const styles = StyleSheet.create({

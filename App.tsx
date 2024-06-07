@@ -14,7 +14,7 @@ import NotificationScreen from './app/screens/mainScreen/NotificationScreen';
 import ProfileScreen from './app/screens/mainScreen/ProfileScreen';
 import SystemScreen from './app/screens/mainScreen/SystemScreen';
 import DatLichScreen from './app/screens/home/datLich/DatLichSreen';
-import LichThuocScreen from './app/screens/home/LichThuocScreen';
+import LichThuocScreen from './app/screens/home/lichUongThuoc/LichThuocScreen';
 import QuyTrinhScreen from './app/screens/home/quyTrinh/QuyTrinhScreen';
 import TheoDoiScreen from './app/screens/home/TheoDoiScreen';
 import ThongTinScreen from './app/screens/profile/ThongTinScreen';
@@ -38,6 +38,9 @@ import CarouselScreen from './app/screens/auth/CarouselScreen';
 import ChangePasswordScreen from './app/screens/auth/ChangePasswordScreen';
 import DichVuScreen from './app/screens/home/datLich/ChonThongTinKham/DichVuScreen';
 import BacSiScreen from './app/screens/home/datLich/ChonThongTinKham/BacSiScreen';
+import QuanLyThuocScreen from './app/screens/home/lichUongThuoc/QuanLyThuocScreen';
+import ThemThuocScreen from './app/screens/home/lichUongThuoc/ThemThuocScreen';
+import DatLichNhacThuocScreen from './app/screens/home/lichUongThuoc/DatLichNhacThuocScreen';
 import NgayKhamScreen from './app/screens/home/datLich/ChonThongTinKham/NgayKhamScreen';
 import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
 import { useDispatch, useSelector } from "react-redux";
@@ -146,6 +149,9 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Screen name="ChonDichVu" component={DichVuScreen} />
           <Stack.Screen name="NgayKham" component={NgayKhamScreen} />
           <Stack.Screen name="ChonBacSi" component={BacSiScreen} />
+          <Stack.Screen name="QuanLyThuoc" component={QuanLyThuocScreen} />
+          <Stack.Screen name="ThemThuoc" component={ThemThuocScreen} />
+          <Stack.Screen name="DatLichNhacThuoc" component={DatLichNhacThuocScreen} />
           <Stack.Screen name="XacNhan" component={XacNhanScreen} />
         </Stack.Navigator>
       </NavigationContainer>
