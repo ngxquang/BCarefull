@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: 2,
     alignItems: 'flex-start',
   },
   label: {
