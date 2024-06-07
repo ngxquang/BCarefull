@@ -20,6 +20,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Button, fonts} from '@rneui/base';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchDatLichThuocByIdAction} from '../../../redux/action/fetchDatLichThuocByIdAction';
+import {fetchAllGioDatLichAction} from '../../../redux/action/fetchAllGioDatLichAction';
+import {fetchCTDTByIdAction} from '../../../redux/action/fetchCTDTById';
 import {
   updateGioDatLich,
   insertGioDatLich,
@@ -74,8 +76,8 @@ function ThemThuocScreen({route}) {
     setModalVisible(false); // close modal after deletion
   };
 
-  const buildDataToSave = () => {
-    const result = cards?.map(item => {
+  const buildDataToSave = async () => {
+    const result = await cards?.map(item => {
       let data = {MACTDT: +item.maCTDT, THOIGIAN: item.time};
       return data;
     });
@@ -173,6 +175,7 @@ function ThemThuocScreen({route}) {
   };
 
   const onChange = (event, selectedDate) => {
+    console.log('ONCHANGE IS CALLED >>>>>>>>');
     if (selectedDate) {
       const currentDate = selectedDate;
       const formattedTime = moment(currentDate).format('HH:mm');
@@ -189,12 +192,15 @@ function ThemThuocScreen({route}) {
   };
 
   const handleSave = async () => {
-    const data = buildDataToSave();
+    const data = await buildDataToSave();
 
     const response = await updateGioDatLich(data);
 
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert(response.data.message);
+      dispatch(fetchDatLichThuocByIdAction(MACTDT));
+      dispatch(fetchCTDTByIdAction(route.params?.item?.maPK));
+      dispatch(fetchAllGioDatLichAction());
     }
     if (response && response.data && response.data.errcode !== 0) {
       Alert.alert(response.data.message);

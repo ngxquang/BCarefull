@@ -24,19 +24,23 @@ function DatLichNhacThuocScreen({route}) {
     dispatch(fetchCTDTByIdAction(maPK));
   }, [dispatch]);
 
-  const chuaDatLichCount = ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch').length;
-  const daDatLichCount = ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch').length;
+  const chuaDatLichCount = ctdtById.filter(
+    item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch',
+  ).length;
+  const daDatLichCount = ctdtById.filter(
+    item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch',
+  ).length;
 
   const filteredCtdtById = useMemo(() => {
     if (selectedTab === 'Chưa đặt lịch') {
       return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch');
     } else {
-      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch');
+      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch');
     }
   }, [ctdtById, selectedTab]);
 
-  const onSelectSwitch = (selectionMode) => {
-    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Đã đặt lịch');
+  const onSelectSwitch = selectionMode => {
+    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Ðã đặt lịch');
   };
 
   const renderMedicineItem = ({item}) => (
@@ -47,8 +51,12 @@ function DatLichNhacThuocScreen({route}) {
       <Text style={style.t4}>Cách dùng: {item.GHICHU}</Text>
       <TouchableOpacity
         style={[style.btnSub]}
-        onPress={() => navigation.navigate('ThemThuoc', {item: item})}>
-        <Text style={[style.h7, style.white]}>{selectedTab === 'Chưa đặt lịch' ? 'Chưa đặt lịch nhắc' : 'Đã đặt lịch nhắc'}</Text>
+        onPress={() => navigation.navigate('ThemThuoc', {item: {...item, maPK: maPK}})}>
+        <Text style={[style.h7, style.white]}>
+          {selectedTab === 'Chưa đặt lịch'
+            ? 'Chưa đặt lịch nhắc'
+            : 'Đã đặt lịch nhắc'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -63,7 +71,7 @@ function DatLichNhacThuocScreen({route}) {
           option2={`Đã đặt lịch (${daDatLichCount})`}
           onSelectSwitch={onSelectSwitch}
           selectionColor={BCarefulTheme.colors.primary}
-        />          
+        />
         <View style={styles.header}>
           <Text style={style.h4}>Toa thuốc: {tenDV}</Text>
         </View>
@@ -71,7 +79,9 @@ function DatLichNhacThuocScreen({route}) {
           data={filteredCtdtById}
           renderItem={renderMedicineItem}
           keyExtractor={item => item.MATHUOC.toString()}
-          ListEmptyComponent={<Text style={style.t1}>Tất cả toa thuốc đã được đặt lịch dùng</Text>}
+          ListEmptyComponent={
+            <Text style={style.t1}>Tất cả toa thuốc đã được đặt lịch dùng</Text>
+          }
         />
       </SafeAreaView>
     </View>

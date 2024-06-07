@@ -2,7 +2,8 @@ import axios from '../setup/axios';
 
 // Cập nhật giờ đã đặt lịch
 export const updateGioDatLich = async data => {
-  return axios.post('/datlichthuoc/update', data);
+  const response = await axios.post('/datlichthuoc/update', data);
+  return response;
 };
 
 // Thêm giờ mới
