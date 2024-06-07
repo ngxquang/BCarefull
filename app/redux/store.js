@@ -18,6 +18,8 @@ import getPhieuKhamByIdReducer from './slice/getPhieuKhamByIdSlice';
 import getBacSiByDateReducer from './slice/getBacSiByDateSlice';
 import selectedItemReducer from './slice/selectedItemSlice';
 import getCTPKFutureByIdReducer from './slice/getCTPKFutureByIdSlice';
+import getAllDatLichThuocReducer from './slice/getAllDatLichThuocSlice'
+import getAllGioDatLichReducer from './slice/getAllGioDatLichSlice';
 
 const store = configureStore({
   reducer: {
@@ -40,6 +42,8 @@ const store = configureStore({
     ttk: getTTKReducer,
     benhById: getBenhByIdReducer,
     phieuKhamById: getPhieuKhamByIdReducer,
+    gioThuocById: getAllDatLichThuocReducer,
+    gioDatLich: getAllGioDatLichReducer,
     ctpkFutureById: getCTPKFutureByIdReducer,
   },
 });
