@@ -28,7 +28,9 @@ function QuanLyThuocScreen() {
     <TouchableOpacity
       style={styles.prescriptionCard}
       onPress={() => handlePress(item)}>
-      <Text style={style.t1}>Chuyên khoa: {item.TENDV}</Text>
+      <Text style={style.h6}>Mã Phiếu Khám: {item.MAPK}</Text>
+      <Text style={style.h6}>Mã Đơn Thuốc: {item.MADT}</Text>
+      <Text style={style.t1}>Dịch vụ: {item.TENDV}</Text>
       <Text style={style.t1}>Ngày khám: {item.NGAYKHAMMIN}</Text>
     </TouchableOpacity>
   );
