@@ -331,6 +331,7 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
+    // marginLeft: 10
   },
   doctor: {
     fontSize: 16,
@@ -460,6 +461,33 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+    alignItems: 'flex-start',
+  },
+  label: {
+    fontFamily: Fonts.regular,
+    fontSize: 16,
+    color: '#333333',
+    flex: 1,
+    textAlign: 'left',
+  },
+  value: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: '#000000',
+    flex: 2,
+    textAlign: 'right',
+  },
+  dichVuValue: {
+    fontFamily: Fonts.bold,
+    fontSize: 18,
+    color: '#000000',
+    flex: 1,
+    textAlign: 'left',
   },
 });
 

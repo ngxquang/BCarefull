@@ -216,7 +216,7 @@ function ThemThuocScreen({route}) {
         </Text>
         <CustomSwitch
           selectionMode={1}
-          option1={'Hàng ngày'}
+          option1={'Hằng ngày'}
           option2={'Tùy chỉnh'}
           onSelectSwitch={onSelectSwitch}
           selectionColor={BCarefulTheme.colors.primary}
