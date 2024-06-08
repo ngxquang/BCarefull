@@ -17,21 +17,45 @@ import {BCarefulTheme, style} from '../../../component/Theme';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CustomHeader} from '../../../component/Header';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchAllGioDatLichAction} from '../../../redux/action/fetchAllGioDatLichAction';
+import {fetchDatLichThuocByIdAction} from '../../../redux/action/fetchDatLichThuocByIdAction';
 
-function LichThuocScreen() {
+function LichThuocScreen({route}) {
   const navigation = useNavigation();
   const flatListRef = useRef(null);
+  const dispatch = useDispatch();
+  const gioDatLich = useSelector(state => state.gioDatLich?.data);
+  console.log('gioDatLich', gioDatLich);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMedication, setSelectedMedication] = useState(null);
   const [date, setDate] = useState(null);
   const [selectedDate, setSelectedDate] = useState(moment());
   const [medicationStatus, setMedicationStatus] = useState({});
   const [currentTimePeriod, setCurrentTimePeriod] = useState('');
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  console.log('user: ', user.HOTEN);
+
+  // const medications = [
+  //   {
+  //     id: 1,
+  //     name: 'Cetirizin dihydrochlorid',
+  //     time: '08:00',
+  //     dosage: 'Uống 1 viên trước ăn',
+  //   },
+  //   {id: 3, name: 'Ibuprofen', time: '11:00', dosage: 'Uống 1 viên sau ăn'},
+  //   {id: 4, name: 'Paracetamol', time: '14:00', dosage: 'Uống 2 viên sau ăn'},
+  //   {id: 5, name: 'Amoxicillin', time: '19:00', dosage: 'Uống 1 viên trước ăn'},
+  // ];
 
   const handleMedication = medication => {
     setSelectedMedication(medication);
     setModalVisible(true);
   };
+
+  useEffect(() => {
+    dispatch(fetchAllGioDatLichAction());
+  }, [dispatch]);
 
   useEffect(() => {
     scrollToSelectedDate();
@@ -93,36 +117,27 @@ function LichThuocScreen() {
   };
   const weekDays = generateWeekDays(selectedDate);
 
-  const medications = [
-    {
-      id: 1,
-      name: 'Cetirizin dihydrochlorid',
-      time: '08:00',
-      dosage: 'Uống 1 viên trước ăn',
-    },
-    {
-      id: 2,
-      name: 'Cetirizin dihydrochlorid',
-      time: '09:00',
-      dosage: 'Uống 2 viên sau ăn',
-    },
-    {id: 3, name: 'Ibuprofen', time: '11:00', dosage: 'Uống 1 viên sau ăn'},
-    {id: 4, name: 'Paracetamol', time: '14:00', dosage: 'Uống 2 viên sau ăn'},
-    {id: 5, name: 'Amoxicillin', time: '19:00', dosage: 'Uống 1 viên trước ăn'},
-  ];
-
   const filterMedicationsByTime = (startHour, endHour) => {
-    return medications.filter(med => {
-      const medHour = moment(med.time, 'HH:mm').hour();
+    return gioDatLich.filter(med => {
+      const medHour = moment(med.THOIGIAN, 'HH:mm').hour();
       return medHour >= startHour && medHour < endHour;
     });
   };
 
-  const handleMedicationAction = action => {
-    setMedicationStatus(prevStatus => ({
-      ...prevStatus,
-      [selectedMedication.id]: action,
-    }));
+  const handleMedicationAction = (action, medId = null) => {
+    if (medId) {
+      setMedicationStatus(prevStatus => ({
+        ...prevStatus,
+        [medId]: action,
+      }));
+    } else {
+      const allMeds = gioDatLich.map(med => med.MAGIO);
+      const newStatus = allMeds.reduce((acc, id) => {
+        acc[id] = action;
+        return acc;
+      }, {});
+      setMedicationStatus(newStatus);
+    }
     setModalVisible(false);
   };
 
@@ -144,8 +159,27 @@ function LichThuocScreen() {
     return <Icon name="circle-o" size={24} color="grey" />;
   };
 
+  const handleDieuChinh = async medMaCTDT => {
+    if (selectedMedication && selectedMedication.MACTDT) {
+      console.log('selectedMedication: ', selectedMedication);
+      console.log(medMaCTDT);
+
+      try {
+        const item = {MACTDT: medMaCTDT, TENTHUOC: selectedMedication.TENTHUOC, THANHPHAN: selectedMedication.THANHPHAN};
+
+        // Now you have the medication details and can navigate with confidence
+        navigation.navigate('ThemThuoc', {item});
+      } catch (error) {
+        console.error('Error fetching medication details:', error);
+        // Handle error gracefully, e.g., show a toast message
+      }
+    }
+  };
+
   const renderMedicationCard = (title, meds, timePeriod, index) => {
     if (meds.length === 0) return null;
+
+    console.log('meds: ', meds);
 
     let source;
     switch (timePeriod) {
@@ -189,25 +223,25 @@ function LichThuocScreen() {
           />
         )}
         {meds.map(med => (
-          <View key={med.id} style={style.spacebtw}>
+          <View key={med.MAGIO} style={style.spacebtw}>
             {index % 2 === 0 ? (
               <>
                 <View style={[style.m2, style.mx4]}>
-                  {renderMedicationStatus(med.id)}
+                  {renderMedicationStatus(med.MAGIO)}
                 </View>
                 <TouchableOpacity
                   style={styles.medicationItem}
                   onPress={() => handleMedication(med)}>
-                  <Text style={style.h7}>{med.name}</Text>
+                  <Text style={style.h7}>{med.TENTHUOC}</Text>
                   <Text style={style.t2}>
                     <Text
                       style={[
                         style.h6,
                         currentTimePeriod === timePeriod ? style.sub : {},
                       ]}>
-                      {med.time}
+                      {med.THOIGIAN}
                     </Text>
-                    {''} - {med.dosage}
+                    {''} - {med.GHICHU}
                   </Text>
                 </TouchableOpacity>
               </>
@@ -216,20 +250,20 @@ function LichThuocScreen() {
                 <TouchableOpacity
                   style={styles.medicationItem}
                   onPress={() => handleMedication(med)}>
-                  <Text style={[style.h7, style.end]}>{med.name}</Text>
+                  <Text style={[style.h7, style.end]}>{med.TENTHUOC}</Text>
                   <Text style={[style.t2, style.end]}>
                     <Text
                       style={[
                         style.h6,
                         currentTimePeriod === timePeriod ? style.sub : {},
                       ]}>
-                      {med.time}
+                      {med.THOIGIAN}
                     </Text>
-                    {''} - {med.dosage}
+                    {''} - {med.GHICHU}
                   </Text>
                 </TouchableOpacity>
                 <View style={[style.m2, style.mx4]}>
-                  {renderMedicationStatus(med.id)}
+                  {renderMedicationStatus(med.MAGIO)}
                 </View>
               </>
             )}
@@ -322,19 +356,25 @@ function LichThuocScreen() {
             title="NGỪNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
             buttonStyle={[style.btnSub, {paddingHorizontal: 0, width: 130}]}
-            onPress={() => {}}
+            onPress={() => {
+              handleMedicationAction('skipped');
+            }}
           />
           <Button
             title="DÙNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
             buttonStyle={[style.btnSub, {width: 130}]}
-            onPress={() => {}}
+            onPress={() => {
+              handleMedicationAction('taken');
+            }}
           />
         </View>
       </View>
 
       <ScrollView style={styles.scrollContainer}>
-        <Text style={[style.h4, style.mx3]}>LÊ DUY NGUYÊN (N23-0253996)</Text>
+        <Text style={[style.h4, style.mx3]}>
+          {user.HOTEN} ({user.MABN})
+        </Text>
         {renderCards()}
         {noMedications && (
           <Text style={styles.noMedicationText}>Bạn chưa có lịch nào</Text>
@@ -360,29 +400,33 @@ function LichThuocScreen() {
           <View style={style.modalContainer}>
             <View style={style.modalView}>
               <Text style={style.h2}>Xác nhận uống thuốc</Text>
-              <Text style={style.t1}>LÊ DUY NGUYÊN (N23-0253996)</Text>
-              <Text style={style.h4}>{selectedMedication.name}</Text>
+              <Text style={style.t1}>
+                {user.HOTEN} ({user.MABN})
+              </Text>
+              <Text style={style.h4}>{selectedMedication.TENTHUOC}</Text>
               <Text style={[style.t2, style.grey, style.mb4]}>
-                {selectedMedication.time} - {selectedMedication.dosage}
+                {selectedMedication.THOIGIAN} - {selectedMedication.GHICHU}
               </Text>
 
               <View style={style.spaceard}>
                 <TouchableOpacity
                   style={style.btnDisable}
-                  onPress={() => handleMedicationAction('skipped')}>
-                  <Text style={[style.h8, style.white]}>Bỏ qua</Text>
+                  onPress={() =>
+                    handleMedicationAction('skipped', selectedMedication?.MAGIO)
+                  }>
+                  <Text style={[style.h7, style.white]}>Bỏ qua</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={style.btnSub}
-                  onPress={() => handleMedicationAction('taken')}>
-                  <Text style={[style.h8, style.white]}>Dùng thuốc</Text>
+                  onPress={() =>
+                    handleMedicationAction('taken', selectedMedication?.MAGIO)
+                  }>
+                  <Text style={[style.h7, style.white]}>Dùng thuốc</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={style.btn}
-                  onPress={() => {
-                    /* logic điều chỉnh */
-                  }}>
-                  <Text style={[style.h8, style.white]}>Điều chỉnh</Text>
+                  onPress={() => handleDieuChinh(selectedMedication?.MACTDT)}>
+                  <Text style={[style.h7, style.white]}>Điều chỉnh</Text>
                 </TouchableOpacity>
               </View>
 
