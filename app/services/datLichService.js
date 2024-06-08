@@ -12,6 +12,7 @@ export const insertGioDatLich = async (maCTDT, thoiGian) => {
 };
 
 // Xóa giờ đã đặt lịch
-export const deleteGioDatLich = async maGio => {
-  return axios.post('/datlichthuoc/delete', {maGio});
+export const deleteGioDatLich = async maCTDT => {
+  console.log('maCTDT: ', maCTDT);
+  return axios.post('/datlichthuoc/delete', {maCTDT});
 };

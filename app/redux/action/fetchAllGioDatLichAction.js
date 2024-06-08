@@ -3,9 +3,9 @@ import axios from '../../setup/axios';
 
 export const fetchAllGioDatLichAction = createAsyncThunk(
   'fetchAllGioDatLichAction',
-  async () => {
+  async (maBN, { meta }) => {
     try {
-      const response = await axios.get('/datlichthuoc/getAll');
+      const response = await axios.get(`/datlichthuoc/getAll/${maBN}`);
       return response.data;
     } catch (error) {
       return error.message;

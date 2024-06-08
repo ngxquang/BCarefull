@@ -43,6 +43,7 @@ function ThemThuocScreen({route}) {
   const [initialCards, setInitialCards] = useState([]);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
 
   useEffect(() => {
     dispatch(fetchDatLichThuocByIdAction(MACTDT));
@@ -193,14 +194,23 @@ function ThemThuocScreen({route}) {
 
   const handleSave = async () => {
     const data = await buildDataToSave();
+    console.log('>>>>>>>>>>>> data: ', data);
 
-    const response = await updateGioDatLich(data);
+    let response;
+
+    if (data.length === 0) {
+      console.log(">>>>>>>>>>>>>>>>>MACTDT: ", MACTDT);
+        response = await deleteGioDatLich(MACTDT);
+    } else {
+        response = await updateGioDatLich(data);
+    }
+
 
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert(response.data.message);
       dispatch(fetchDatLichThuocByIdAction(MACTDT));
       dispatch(fetchCTDTByIdAction(route.params?.item?.maPK));
-      dispatch(fetchAllGioDatLichAction());
+      dispatch(fetchAllGioDatLichAction(user.MABN));
     }
     if (response && response.data && response.data.errcode !== 0) {
       Alert.alert(response.data.message);
