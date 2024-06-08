@@ -208,7 +208,7 @@ function DSDVScreen({navigation, route}) {
             {item.NGAYKHAMMIN ? item.NGAYKHAMMIN.split(' - ')[1] : '-- : --'}
           </Text>
         </View>
-        <View style={styles.card}>
+        <View style={styles.newCard}>
           {item.TRANGTHAITH && (
             <View style={styles.statusContainer}>
               <TTKICon
@@ -222,35 +222,56 @@ function DSDVScreen({navigation, route}) {
               navigation.navigate('KetQuaKham', {item, ctdtById, benhById})
             }>
             <View style={styles.detailsContainer}>
-              <Text style={[style.h4]}>{item.TENDV}</Text>
+              <View style={styles.row}>
+                <Text style={styles.dichVuValue}>{item.TENDV}</Text>
+              </View>
+              {/* <Text style={[style.h4]}>{item.TENDV}</Text> */}
               {item.INFOBSCD && item.INFOBSTH ? (
                 <>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={[style.t3, {fontFamily: Fonts.bold}]}>
                       BSCD:{' '}
                     </Text>
                     <Text style={style.t3}>{item.INFOBSCD}</Text>
+                  </View> */}
+                  <View style={styles.row}>
+                    <Text style={styles.label}>BSCD:</Text>
+                    <Text style={styles.value}>{item.INFOBSCD}</Text>
                   </View>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={[style.t3, {fontFamily: Fonts.bold}]}>
                       BSTH:{' '}
                     </Text>
                     <Text style={style.t3}>{item.INFOBSTH}</Text>
+                  </View> */}
+                  <View style={styles.row}>
+                    <Text style={styles.label}>BSTH:</Text>
+                    <Text style={styles.value}>{item.INFOBSTH}</Text>
                   </View>
                 </>
               ) : item.INFOBS ? (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={[style.t3, {fontFamily: Fonts.bold}]}>BS: </Text>
-                  <Text style={style.t3}>
+                // <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                //   <Text style={[style.t3, {fontFamily: Fonts.bold}]}>BS: </Text>
+                //   <Text style={style.t3}>
+                //     {item.TRINHDO} {item.TENBS}
+                //   </Text>
+                // </View>
+                <View style={styles.row}>
+                  <Text style={styles.bsLabel}>BS:</Text>
+                  <Text style={styles.value}>
                     {item.TRINHDO} {item.TENBS}
                   </Text>
                 </View>
               ) : item.NGUOIBAN ? (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
-                    Người bán:{' '}
-                  </Text>
-                  <Text style={styles.doctor}>{item.NGUOIBAN}</Text>
+                // <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                //   <Text style={[styles.doctor, {fontFamily: Fonts.bold}]}>
+                //     Người bán:{' '}
+                //   </Text>
+                //   <Text style={styles.doctor}>{item.NGUOIBAN}</Text>
+                // </View>
+                <View style={styles.row}>
+                  <Text style={styles.ltLabel}>Người bán:</Text>
+                  <Text style={styles.value}>Lễ tân {item.NGUOIBAN}</Text>
                 </View>
               ) : null}
               <View style={styles.buttonContainer}>
@@ -331,6 +352,7 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
+    // marginLeft: 10
   },
   doctor: {
     fontSize: 16,
@@ -460,6 +482,61 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  newCard: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#6C4EF1',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    marginRight: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 2,
+    alignItems: 'flex-start',
+  },
+  label: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: '#333333',
+    flex: 0.5,
+    textAlign: 'left',
+  },
+  bsLabel: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: '#333333',
+    flex: 0.25,
+    textAlign: 'left',
+  },
+  ltLabel: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: '#333333',
+    flex: 1.1,
+    textAlign: 'left',
+  },
+  value: {
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+    color: '#000000',
+    flex: 2,
+    textAlign: 'left',
+  },
+  dichVuValue: {
+    fontFamily: Fonts.bold,
+    fontSize: 20,
+    color: '#000000',
+    flex: 1,
+    textAlign: 'left',
   },
 });
 

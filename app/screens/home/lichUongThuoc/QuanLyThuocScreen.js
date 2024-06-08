@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity, View, FlatList, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CustomHeader} from '../../../component/Header';
-import {style} from '../../../component/Theme';
+import {BCarefulTheme, style} from '../../../component/Theme';
 import {useNavigation} from '@react-navigation/native';
 import {fetchLSKByIdBnAction} from '../../../redux/action/fetchPhieuKhamAction';
 import {useDispatch, useSelector} from 'react-redux';
@@ -28,8 +28,17 @@ function QuanLyThuocScreen() {
     <TouchableOpacity
       style={styles.prescriptionCard}
       onPress={() => handlePress(item)}>
-      <Text style={style.t1}>Chuyên khoa: {item.TENDV}</Text>
-      <Text style={style.t1}>Ngày khám: {item.NGAYKHAMMIN}</Text>
+      <Text style={style.h6}>
+        DT{item.MADT} - PK{item.MAPK}
+      </Text>
+      <View style={styles.row}>
+        <Text style={styles.label}>Dịch vụ:</Text>
+        <Text style={styles.dichVuValue}>{item.TENDV?.toUpperCase()}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.label}>Ngày khám:</Text>
+        <Text style={styles.timeValue}>{item.NGAYKHAMMIN}</Text>
+      </View>
     </TouchableOpacity>
   );
 
@@ -44,7 +53,7 @@ function QuanLyThuocScreen() {
           }}>
           <Text>Thêm thuốc</Text>
         </TouchableOpacity> */}
-        <Text style={style.h4}>Danh sách toa thuốc ({lichSuKham.length})</Text>
+        <Text style={style.h4}>Danh sách đơn thuốc ({lichSuKham.length})</Text>
         <FlatList
           data={lichSuKham}
           renderItem={renderPrescriptionItem}
@@ -84,6 +93,33 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 14,
     color: '#666',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+    alignItems: 'flex-start',
+  },
+  label: {
+    fontFamily: Fonts.regular,
+    fontSize: 16,
+    color: '#000000',
+    flex: 1,
+    textAlign: 'left',
+  },
+  timeValue: {
+    fontFamily: Fonts.medium,
+    fontSize: 16,
+    color: '#000000',
+    flex: 2,
+    textAlign: 'right',
+  },
+  dichVuValue: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: '#7864EA',
+    flex: 2,
+    textAlign: 'right',
   },
 });
 

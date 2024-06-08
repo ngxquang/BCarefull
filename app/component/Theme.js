@@ -46,6 +46,16 @@ export const style = StyleSheet.create({
     fontSize: 16,
   },
 
+  btnSubGreen: {
+    backgroundColor: '#A1DD70',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    fontSize: 16,
+  },
+
   btnOutline: {
     borderColor: BCarefulTheme.colors.primary,
     borderWidth: 3,
@@ -160,6 +170,26 @@ export const style = StyleSheet.create({
     fontFamily: Fonts.medium,
     fontSize: 16,
     color: '#000000',
+  },
+  h72: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: '#000000',
+  },
+  h73: {
+    fontFamily: Fonts.medium,
+    fontSize: 14,
+    color: '#000000',
+  },
+  h8: {
+    fontFamily: Fonts.medium,
+    fontSize: 16,
+    color: BCarefulTheme.colors.primary,
+  },
+  h9: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: BCarefulTheme.colors.secondary,
   },
   t1: {
     fontFamily: Fonts.regular,

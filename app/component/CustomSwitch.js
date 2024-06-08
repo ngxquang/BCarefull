@@ -8,7 +8,8 @@ const CustomSwitch = ({
   option1,
   option2,
   onSelectSwitch,
-  selectionColor
+  selectionColor,
+  width,
 }) => {
   const [getSelectionMode, setSelectionMode] = useState(selectionMode);
   const slideValue = useRef(new Animated.Value(getSelectionMode === 1 ? 0 : 1)).current;
@@ -38,7 +39,7 @@ const CustomSwitch = ({
       <View
         style={{
           height: 'auto',
-          width: '80%',
+          width: 'auto',
           backgroundColor: 'white',
           borderRadius: 10,
           borderWidth: 1,
@@ -57,7 +58,8 @@ const CustomSwitch = ({
           }}>
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() => updatedSwitchData(1)}>
+            onPress={() => updatedSwitchData(1)}
+          >
             <Text
               style={[style.h7, style.p3,{
                 color: getSelectionMode === 1 ? 'white' : selectionColor,

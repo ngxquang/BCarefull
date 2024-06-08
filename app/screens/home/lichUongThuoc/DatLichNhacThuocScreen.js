@@ -7,6 +7,7 @@ import {fetchCTDTByIdAction} from '../../../redux/action/fetchCTDTById';
 import {useDispatch, useSelector} from 'react-redux';
 import React, {useEffect, useState, useMemo} from 'react';
 import CustomSwitch from '../../../component/CustomSwitch';
+import Fonts from '../../../../assets/fonts/Fonts';
 
 function DatLichNhacThuocScreen({route}) {
   const navigation = useNavigation();
@@ -24,31 +25,44 @@ function DatLichNhacThuocScreen({route}) {
     dispatch(fetchCTDTByIdAction(maPK));
   }, [dispatch]);
 
-  const chuaDatLichCount = ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch').length;
-  const daDatLichCount = ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch').length;
+  const chuaDatLichCount = ctdtById.filter(
+    item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch',
+  ).length;
+  const daDatLichCount = ctdtById.filter(
+    item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch',
+  ).length;
 
   const filteredCtdtById = useMemo(() => {
     if (selectedTab === 'Chưa đặt lịch') {
       return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch');
     } else {
-      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch');
+      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch');
     }
   }, [ctdtById, selectedTab]);
 
-  const onSelectSwitch = (selectionMode) => {
-    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Đã đặt lịch');
+  const onSelectSwitch = selectionMode => {
+    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Ðã đặt lịch');
   };
 
   const renderMedicineItem = ({item}) => (
     <View style={styles.medicineCard}>
-      <Text style={style.h4}>{item.TENTHUOC}</Text>
-      <Text style={style.t4}>Lần/ngày: {item.SOLANUONG}</Text>
-      <Text style={style.t4}>Số lượng / lần: {item.SOLUONGUONG}</Text>
-      <Text style={style.t4}>Cách dùng: {item.GHICHU}</Text>
+      <Text style={styles.medText}>{item.TENTHUOC}</Text>
+      <Text style={style.t2}>Lần/ngày: {item.SOLANUONG}</Text>
+      <Text style={style.t2}>Số lượng / lần: {item.SOLUONGUONG}</Text>
+      <Text style={style.t2}>Cách dùng: {item.GHICHU}</Text>
       <TouchableOpacity
-        style={[style.btnSub]}
-        onPress={() => navigation.navigate('ThemThuoc', {item: item})}>
-        <Text style={[style.h7, style.white]}>{selectedTab === 'Chưa đặt lịch' ? 'Chưa đặt lịch nhắc' : 'Đã đặt lịch nhắc'}</Text>
+        style={[
+          selectedTab === 'Chưa đặt lịch' ? style.btnSub : style.btnSubGreen,
+          {marginTop: 10},
+        ]}
+        onPress={() =>
+          navigation.navigate('ThemThuoc', {item: {...item, maPK: maPK}})
+        }>
+        <Text style={[style.h7, style.white]}>
+          {selectedTab === 'Chưa đặt lịch'
+            ? 'Đặt lịch nhắc'
+            : 'Cập nhật lịch'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -63,7 +77,7 @@ function DatLichNhacThuocScreen({route}) {
           option2={`Đã đặt lịch (${daDatLichCount})`}
           onSelectSwitch={onSelectSwitch}
           selectionColor={BCarefulTheme.colors.primary}
-        />          
+        />
         <View style={styles.header}>
           <Text style={style.h4}>Toa thuốc: {tenDV}</Text>
         </View>
@@ -71,7 +85,9 @@ function DatLichNhacThuocScreen({route}) {
           data={filteredCtdtById}
           renderItem={renderMedicineItem}
           keyExtractor={item => item.MATHUOC.toString()}
-          ListEmptyComponent={<Text style={style.t1}>Tất cả toa thuốc đã được đặt lịch dùng</Text>}
+          ListEmptyComponent={
+            <Text style={style.t1}>Tất cả toa thuốc đã được đặt lịch dùng</Text>
+          }
         />
       </SafeAreaView>
     </View>
@@ -79,6 +95,10 @@ function DatLichNhacThuocScreen({route}) {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    marginVertical: 7,
+    marginHorizontal: 5,
+  },
   medicineCard: {
     padding: 16,
     borderRadius: 8,
@@ -96,6 +116,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#4caf50',
     alignItems: 'center',
+  },
+  medText: {
+    fontFamily: Fonts.bold,
+    fontSize: 18,
+    color: BCarefulTheme.colors.primary,
   },
 });
 
