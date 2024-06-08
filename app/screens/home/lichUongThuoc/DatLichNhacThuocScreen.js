@@ -29,19 +29,19 @@ function DatLichNhacThuocScreen({route}) {
     item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch',
   ).length;
   const daDatLichCount = ctdtById.filter(
-    item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch',
+    item => item.TRANGTHAIDATLICH === 'Đã đặt lịch',
   ).length;
 
   const filteredCtdtById = useMemo(() => {
     if (selectedTab === 'Chưa đặt lịch') {
       return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch');
     } else {
-      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch');
+      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch');
     }
   }, [ctdtById, selectedTab]);
 
   const onSelectSwitch = selectionMode => {
-    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Ðã đặt lịch');
+    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Đã đặt lịch');
   };
 
   const renderMedicineItem = ({item}) => (
