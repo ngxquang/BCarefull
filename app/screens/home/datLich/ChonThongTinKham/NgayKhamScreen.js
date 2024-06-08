@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {BCarefulTheme, style} from '../../../../component/Theme';
+import { BCarefulTheme, style } from '../../../../component/Theme';
 import Fonts from '../../../../../assets/fonts/Fonts';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 LocaleConfig.locales['vi'] = {
   monthNames: [
@@ -54,7 +54,7 @@ LocaleConfig.defaultLocale = 'vi';
 const NgayKhamScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const {setDate} = route.params;
+  const { setDate } = route.params;
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const today = new Date().toISOString().split('T')[0];
@@ -181,15 +181,8 @@ const NgayKhamScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name={'arrow-back'} style={styles.icon} />
-        </TouchableOpacity>
-        <View style={styles.title}>
-          <Text style={style.h3}>Chọn ngày khám</Text>
-        </View>
-      </View>
+    <View style={styles.container}>
+      <CustomHeader title={'Chọn ngày khám'} />
       <View style={styles.body}>
         <Calendar
           current={selectedDate.toISOString().split('T')[0]}
@@ -255,14 +248,14 @@ const NgayKhamScreen = () => {
         <View style={styles.chuThichContainer}>
           <View style={styles.chuThich}>
             <View
-              style={[styles.mauChuThich, {backgroundColor: '#fff'}]}></View>
+              style={[styles.mauChuThich, { backgroundColor: '#fff' }]}></View>
             <Text style={style.t2}>Ngày hôm nay</Text>
           </View>
           <View style={styles.chuThich}>
             <View
               style={[
                 styles.mauChuThich,
-                {backgroundColor: 'lightgray'},
+                { backgroundColor: 'lightgray' },
               ]}></View>
             <Text style={style.t2}>Ngày ngoài vùng đăng ký khám</Text>
           </View>
@@ -270,7 +263,7 @@ const NgayKhamScreen = () => {
             <View
               style={[
                 styles.mauChuThich,
-                {backgroundColor: BCarefulTheme.colors.primary},
+                { backgroundColor: BCarefulTheme.colors.primary },
               ]}></View>
             <Text style={style.t2}>Ngày có thể chọn</Text>
           </View>
@@ -278,13 +271,13 @@ const NgayKhamScreen = () => {
             <View
               style={[
                 styles.mauChuThich,
-                {backgroundColor: 'lightyellow'},
+                { backgroundColor: 'lightyellow' },
               ]}></View>
             <Text style={style.t2}>Ngày nghỉ, lễ, tết</Text>
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

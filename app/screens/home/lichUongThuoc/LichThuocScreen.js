@@ -23,6 +23,7 @@ function LichThuocScreen() {
   const flatListRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMedication, setSelectedMedication] = useState(null);
+  const [date, setDate] = useState(null);
   const [selectedDate, setSelectedDate] = useState(moment());
   const [medicationStatus, setMedicationStatus] = useState({});
   const [currentTimePeriod, setCurrentTimePeriod] = useState('');
@@ -272,6 +273,11 @@ function LichThuocScreen() {
           type="ionicon"
           color={BCarefulTheme.colors.primary}
           size={24}
+          onPress={() => {
+            navigation.navigate('LichThang', {setDate})
+            console.log(date)
+            console.log(selectedDate)
+          }}
         />
       </TouchableOpacity>
     );
