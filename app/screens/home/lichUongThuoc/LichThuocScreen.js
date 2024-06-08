@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  Dimensions,
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -20,6 +21,11 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchAllGioDatLichAction} from '../../../redux/action/fetchAllGioDatLichAction';
 import {fetchDatLichThuocByIdAction} from '../../../redux/action/fetchDatLichThuocByIdAction';
+
+// Get screen width
+const screenWidth = Dimensions.get('window').width;
+// Calculate margins based on screen width
+const buttonMargin = screenWidth * 0.03; // 5% of screen width
 
 function LichThuocScreen({route}) {
   const navigation = useNavigation();
@@ -164,7 +170,11 @@ function LichThuocScreen({route}) {
       console.log(medMaCTDT);
 
       try {
-        const item = {MACTDT: medMaCTDT, TENTHUOC: selectedMedication.TENTHUOC, THANHPHAN: selectedMedication.THANHPHAN};
+        const item = {
+          MACTDT: medMaCTDT,
+          TENTHUOC: selectedMedication.TENTHUOC,
+          THANHPHAN: selectedMedication.THANHPHAN,
+        };
 
         // Now you have the medication details and can navigate with confidence
         navigation.navigate('ThemThuoc', {item});
@@ -205,16 +215,22 @@ function LichThuocScreen({route}) {
       <View
         style={[
           cardStyle,
-          currentTimePeriod === timePeriod
-            ? {
-                borderColor: BCarefulTheme.colors.secondary,
-                borderBottomWidth: 7,
-                elevation: 4,
-                backgroundColor: 'white',
-              }
-            : {},
+          // currentTimePeriod === timePeriod
+          //   ? {
+          //       borderColor: BCarefulTheme.colors.secondary,
+          //       borderBottomWidth: 7,
+          //       elevation: 4,
+          //       backgroundColor: 'white',
+          //     }
+          //   : {},
+          {
+            borderColor: timePeriod=='noon'||timePeriod=='afternoon' ? BCarefulTheme.colors.secondary : BCarefulTheme.colors.primary,
+            borderBottomWidth: 7,
+            elevation: 4,
+            backgroundColor: 'white',
+          },
         ]}>
-        <Text style={style.h7}>{title}</Text>
+        <Text style={style.h72}>{title}</Text>
         {source && (
           <Image
             source={source}
@@ -231,11 +247,11 @@ function LichThuocScreen({route}) {
                 <TouchableOpacity
                   style={styles.medicationItem}
                   onPress={() => handleMedication(med)}>
-                  <Text style={style.h7}>{med.TENTHUOC}</Text>
+                  <Text style={style.h8}>{med.TENTHUOC}</Text>
                   <Text style={style.t2}>
                     <Text
                       style={[
-                        style.h6,
+                        style.h9,
                         currentTimePeriod === timePeriod ? style.sub : {},
                       ]}>
                       {med.THOIGIAN}
@@ -249,11 +265,11 @@ function LichThuocScreen({route}) {
                 <TouchableOpacity
                   style={styles.medicationItem}
                   onPress={() => handleMedication(med)}>
-                  <Text style={[style.h7, style.end]}>{med.TENTHUOC}</Text>
+                  <Text style={[style.h8, style.end]}>{med.TENTHUOC}</Text>
                   <Text style={[style.t2, style.end]}>
                     <Text
                       style={[
-                        style.h6,
+                        style.h9,
                         currentTimePeriod === timePeriod ? style.sub : {},
                       ]}>
                       {med.THOIGIAN}
@@ -349,7 +365,10 @@ function LichThuocScreen({route}) {
           <Button
             title="NGỪNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
-            buttonStyle={[style.btnSub, {paddingHorizontal: 0, width: 130}]}
+            buttonStyle={[
+              style.btnSub,
+              {flex: 1, width: 'auto', marginHorizontal: buttonMargin},
+            ]}
             onPress={() => {
               handleMedicationAction('skipped');
             }}
@@ -357,7 +376,10 @@ function LichThuocScreen({route}) {
           <Button
             title="DÙNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
-            buttonStyle={[style.btnSub, {width: 130}]}
+            buttonStyle={[
+              style.btnSubGreen,
+              {flex: 1, width: 'auto', marginHorizontal: buttonMargin},
+            ]}
             onPress={() => {
               handleMedicationAction('taken');
             }}
@@ -402,25 +424,25 @@ function LichThuocScreen({route}) {
                 {selectedMedication.THOIGIAN} - {selectedMedication.GHICHU}
               </Text>
 
-              <View style={style.spaceard}>
+              <View style={[style.spaceard]}>
                 <TouchableOpacity
-                  style={style.btnDisable}
+                  style={styles.btnDisable}
                   onPress={() =>
                     handleMedicationAction('skipped', selectedMedication?.MAGIO)
                   }>
-                  <Text style={[style.h7, style.white]}>Bỏ qua</Text>
+                  <Text style={[style.h73, style.white]}>Bỏ qua</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={style.btnSub}
+                  style={styles.btnSub}
                   onPress={() =>
                     handleMedicationAction('taken', selectedMedication?.MAGIO)
                   }>
-                  <Text style={[style.h7, style.white]}>Dùng thuốc</Text>
+                  <Text style={[style.h73, style.white]}>Dùng thuốc</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={style.btn}
+                  style={styles.btn}
                   onPress={() => handleDieuChinh(selectedMedication?.MACTDT)}>
-                  <Text style={[style.h7, style.white]}>Điều chỉnh</Text>
+                  <Text style={[style.h73, style.white]}>Điều chỉnh</Text>
                 </TouchableOpacity>
               </View>
 
@@ -472,8 +494,9 @@ const styles = StyleSheet.create({
   },
   actionButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: BCarefulTheme.colors.background,
     borderBottomColor: BCarefulTheme.colors.border,
     borderBottomWidth: 1,
@@ -509,6 +532,34 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: 10,
+  },
+  btn: {
+    backgroundColor: BCarefulTheme.colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    // marginHorizontal: 5,
+    paddingHorizontal: 13,
+    paddingVertical: 8,
+    fontSize: 16,
+  },
+  btnSub: {
+    backgroundColor: BCarefulTheme.colors.secondary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 13,
+    paddingVertical: 8,
+    fontSize: 16,
+  },
+  btnDisable: {
+    backgroundColor: '#D3D3D3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 13,
+    paddingVertical: 8,
+    fontSize: 16,
   },
 });
 
