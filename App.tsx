@@ -46,7 +46,7 @@ import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
 import { useDispatch, useSelector } from "react-redux";
 import { onDisplayNotification } from './app/util/appUtil';
 import { linking } from './app/util/appUtil';
-import LichThangScreen from './app/screens/home/lichUongThuoc/LichThang';
+import LichThang from './app/screens/home/lichUongThuoc/LichThang';
 
 
 const Tab = createBottomTabNavigator();
@@ -154,7 +154,7 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Screen name="ThemThuoc" component={ThemThuocScreen} />
           <Stack.Screen name="DatLichNhacThuoc" component={DatLichNhacThuocScreen} />
           <Stack.Screen name="XacNhan" component={XacNhanScreen} />
-          <Stack.Screen name="LichThang" component={LichThangScreen} />
+          <Stack.Screen name="LichThang" component={LichThang} />
         </Stack.Navigator>
       </NavigationContainer>
   );

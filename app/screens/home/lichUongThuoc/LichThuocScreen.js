@@ -1,5 +1,5 @@
-import {Badge, Button} from '@rneui/themed';
-import React, {useState, useRef, useEffect} from 'react';
+import { Badge, Button } from '@rneui/themed';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,15 +13,15 @@ import {
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Fonts from '../../../../assets/fonts/Fonts';
-import {BCarefulTheme, style} from '../../../component/Theme';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {CustomHeader} from '../../../component/Header';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchAllGioDatLichAction} from '../../../redux/action/fetchAllGioDatLichAction';
-import {fetchDatLichThuocByIdAction} from '../../../redux/action/fetchDatLichThuocByIdAction';
+import { BCarefulTheme, style } from '../../../component/Theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { CustomHeader } from '../../../component/Header';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllGioDatLichAction } from '../../../redux/action/fetchAllGioDatLichAction';
+import { fetchDatLichThuocByIdAction } from '../../../redux/action/fetchDatLichThuocByIdAction';
 
-function LichThuocScreen({route}) {
+function LichThuocScreen({ route }) {
   const navigation = useNavigation();
   const flatListRef = useRef(null);
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ function LichThuocScreen({route}) {
       day.date.isSame(selectedDate, 'day'),
     );
     if (index !== -1) {
-      flatListRef.current.scrollToIndex({animated: true, index: index - 3});
+      flatListRef.current.scrollToIndex({ animated: true, index: index - 3 });
     }
   };
 
@@ -86,7 +86,7 @@ function LichThuocScreen({route}) {
     }
   };
 
-  const renderDay = ({item}) => {
+  const renderDay = ({ item }) => {
     const isSelected = item.date.isSame(selectedDate, 'day');
     const dayStyle = isSelected ? [style.t1, style.primary] : [style.t2];
     const dateStyle = isSelected ? [style.h7, style.primary] : [style.t1];
@@ -106,7 +106,7 @@ function LichThuocScreen({route}) {
 
   const generateWeekDays = date => {
     const startOfWeek = moment(date).startOf('isoWeek');
-    return Array.from({length: 14}).map((_, index) => {
+    return Array.from({ length: 14 }).map((_, index) => {
       const day = moment(startOfWeek).add(index - 7, 'days');
       return {
         day: day.format('dd').toUpperCase(),
@@ -165,10 +165,10 @@ function LichThuocScreen({route}) {
       console.log(medMaCTDT);
 
       try {
-        const item = {MACTDT: medMaCTDT, TENTHUOC: selectedMedication.TENTHUOC, THANHPHAN: selectedMedication.THANHPHAN};
+        const item = { MACTDT: medMaCTDT, TENTHUOC: selectedMedication.TENTHUOC, THANHPHAN: selectedMedication.THANHPHAN };
 
         // Now you have the medication details and can navigate with confidence
-        navigation.navigate('ThemThuoc', {item});
+        navigation.navigate('ThemThuoc', { item });
       } catch (error) {
         console.error('Error fetching medication details:', error);
         // Handle error gracefully, e.g., show a toast message
@@ -208,11 +208,11 @@ function LichThuocScreen({route}) {
           cardStyle,
           currentTimePeriod === timePeriod
             ? {
-                borderColor: BCarefulTheme.colors.secondary,
-                borderBottomWidth: 7,
-                elevation: 4,
-                backgroundColor: 'white',
-              }
+              borderColor: BCarefulTheme.colors.secondary,
+              borderBottomWidth: 7,
+              elevation: 4,
+              backgroundColor: 'white',
+            }
             : {},
         ]}>
         <Text style={style.h7}>{title}</Text>
@@ -286,10 +286,10 @@ function LichThuocScreen({route}) {
 
   const renderCards = () => {
     const cards = [
-      {title: 'Buổi sáng', meds: morningMeds, timePeriod: 'morning'},
-      {title: 'Buổi trưa', meds: noonMeds, timePeriod: 'noon'},
-      {title: 'Buổi chiều', meds: afternoonMeds, timePeriod: 'afternoon'},
-      {title: 'Buổi tối', meds: eveningMeds, timePeriod: 'evening'},
+      { title: 'Buổi sáng', meds: morningMeds, timePeriod: 'morning' },
+      { title: 'Buổi trưa', meds: noonMeds, timePeriod: 'noon' },
+      { title: 'Buổi chiều', meds: afternoonMeds, timePeriod: 'afternoon' },
+      { title: 'Buổi tối', meds: eveningMeds, timePeriod: 'evening' },
     ];
 
     const card2 = cards.filter(card => card.meds.length > 0);
@@ -301,16 +301,14 @@ function LichThuocScreen({route}) {
 
   const calendarBtn = () => {
     return (
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => { }}>
         <Icon
           name="calendar"
           type="ionicon"
           color={BCarefulTheme.colors.primary}
           size={24}
           onPress={() => {
-            navigation.navigate('LichThang', {setDate})
-            console.log(date)
-            console.log(selectedDate)
+            navigation.navigate('LichThang', { setSelectedDate })
           }}
         />
       </TouchableOpacity>
@@ -320,7 +318,10 @@ function LichThuocScreen({route}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.fixedHeader}>
-        <CustomHeader title={'Lịch sử dụng thuốc'} rightIcon={calendarBtn} />
+        <CustomHeader
+          title={'Lịch sử dụng thuốc'}
+          rightIcon={() => calendarBtn(selectedDate, setSelectedDate)}
+        />
 
         <FlatList
           ref={flatListRef}
@@ -355,7 +356,7 @@ function LichThuocScreen({route}) {
           <Button
             title="NGỪNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
-            buttonStyle={[style.btnSub, {paddingHorizontal: 0, width: 130}]}
+            buttonStyle={[style.btnSub, { paddingHorizontal: 0, width: 130 }]}
             onPress={() => {
               handleMedicationAction('skipped');
             }}
@@ -363,7 +364,7 @@ function LichThuocScreen({route}) {
           <Button
             title="DÙNG TẤT CẢ"
             titleStyle={[style.h7, style.white]}
-            buttonStyle={[style.btnSub, {width: 130}]}
+            buttonStyle={[style.btnSub, { width: 130 }]}
             onPress={() => {
               handleMedicationAction('taken');
             }}
