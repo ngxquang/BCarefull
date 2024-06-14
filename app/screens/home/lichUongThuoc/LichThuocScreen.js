@@ -32,7 +32,7 @@ function LichThuocScreen({route}) {
   const flatListRef = useRef(null);
   const dispatch = useDispatch();
   const gioDatLich = useSelector(state => state.gioDatLich?.data);
-  console.log('gioDatLich', gioDatLich);
+  console.log('>>>>>>>>>>.gioDatLich', gioDatLich);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMedication, setSelectedMedication] = useState(null);
   const [selectedDate, setSelectedDate] = useState(moment());
@@ -59,7 +59,7 @@ function LichThuocScreen({route}) {
   };
 
   useEffect(() => {
-    dispatch(fetchAllGioDatLichAction());
+    dispatch(fetchAllGioDatLichAction(user.MABN));
   }, [dispatch]);
 
   useEffect(() => {
