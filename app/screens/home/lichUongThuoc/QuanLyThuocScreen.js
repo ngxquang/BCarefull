@@ -55,7 +55,7 @@ function QuanLyThuocScreen() {
         </TouchableOpacity> */}
         <Text style={style.h4}>Danh sách đơn thuốc ({lichSuKham.length})</Text>
         <FlatList
-          data={lichSuKham}
+          data={lichSuKham.filter(pk => pk.MADT !== null)}
           renderItem={renderPrescriptionItem}
           keyExtractor={item => item.MAPK.toString()}
           ListEmptyComponent={<Text>Không có dữ liệu toa thuốc</Text>}
