@@ -29,19 +29,19 @@ function DatLichNhacThuocScreen({route}) {
     item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch',
   ).length;
   const daDatLichCount = ctdtById.filter(
-    item => item.TRANGTHAIDATLICH === 'Đã đặt lịch',
+    item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch',
   ).length;
 
   const filteredCtdtById = useMemo(() => {
     if (selectedTab === 'Chưa đặt lịch') {
       return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Chưa đặt lịch');
     } else {
-      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Đã đặt lịch');
+      return ctdtById.filter(item => item.TRANGTHAIDATLICH === 'Ðã đặt lịch');
     }
   }, [ctdtById, selectedTab]);
 
   const onSelectSwitch = selectionMode => {
-    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Đã đặt lịch');
+    setSelectedTab(selectionMode === 1 ? 'Chưa đặt lịch' : 'Ðã đặt lịch');
   };
 
   const renderMedicineItem = ({item}) => (
@@ -59,9 +59,7 @@ function DatLichNhacThuocScreen({route}) {
           navigation.navigate('ThemThuoc', {item: {...item, maPK: maPK}})
         }>
         <Text style={[style.h7, style.white]}>
-          {selectedTab === 'Chưa đặt lịch'
-            ? 'Đặt lịch nhắc'
-            : 'Cập nhật lịch'}
+          {selectedTab === 'Chưa đặt lịch' ? 'Đặt lịch nhắc' : 'Cập nhật lịch'}
         </Text>
       </TouchableOpacity>
     </View>
@@ -74,7 +72,7 @@ function DatLichNhacThuocScreen({route}) {
         <CustomSwitch
           selectionMode={1}
           option1={`Chưa đặt lịch (${chuaDatLichCount})`}
-          option2={`Đã đặt lịch (${daDatLichCount})`}
+          option2={`Ðã đặt lịch (${daDatLichCount})`}
           onSelectSwitch={onSelectSwitch}
           selectionColor={BCarefulTheme.colors.primary}
         />

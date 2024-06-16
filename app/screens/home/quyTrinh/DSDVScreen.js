@@ -184,6 +184,9 @@ function DSDVScreen({navigation, route}) {
     TENLOAIDV: 'Hóa đơn thuốc',
     MAHD: ctdtById[0]?.MAHD,
     THANHTIEN: ctdtById[0]?.THANHTIEN,
+    TENPHONG: 'Quầy Thuốc',
+    SOPHONG: 'A104',
+    TANG: 1,
   };
 
   const data = donThuoc.MAHD
@@ -280,7 +283,9 @@ function DSDVScreen({navigation, route}) {
                   onPress={() => handleThanhToan(item)}>
                   <TTTTIcon value={item.TTTT} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.routeButton}>
+                <TouchableOpacity
+                  style={styles.routeButton}
+                  onPress={() => navigation.navigate('ChiDuong', {item})}>
                   <Text style={[style.t2, {fontFamily: Fonts.bold}]}>
                     Chỉ đường
                   </Text>
