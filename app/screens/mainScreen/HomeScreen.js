@@ -121,14 +121,14 @@ function HomeScreen({navigation}) {
           {item.TENTHUOC}
         </Text>
       </View>
-      <View style={styles.itemGroup}>
+      {/* <View style={styles.itemGroup}>
         <Text style={[style.t3, {marginRight: 10}]}>Thành phần:</Text>
         <Text style={[style.t3]}>{item.THANHPHAN}</Text>
       </View>
       <View style={styles.itemGroup}>
         <Text style={[style.t3, {marginRight: 10}]}>Ghi chú:</Text>
         <Text style={[style.t3]}>{item.GHICHU}</Text>
-      </View>
+      </View> */}
     </View>
   );
 
@@ -205,7 +205,7 @@ function HomeScreen({navigation}) {
             <View style={styles.breakline}></View>
             <Text
               style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
-              Thuốc
+              Lịch uống thuốc
             </Text>
             {gioDatLich.length > 0 ? (
               <>
