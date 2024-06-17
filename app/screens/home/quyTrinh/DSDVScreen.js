@@ -305,10 +305,13 @@ function DSDVScreen({navigation, route}) {
           <Icon name={'arrow-back'} style={styles.icon} />
         </TouchableOpacity>
         <View style={styles.title}>
-          <Text style={style.h4}>Chi tiết phiếu khám MAPK - {maPK}</Text>
+          <Text style={style.h4}>Chi tiết phiếu khám</Text>
+          <Text style={style.h4}>MAPK - {maPK}</Text>
           <Text style={style.h7}>{NGAYKHAMMIN}</Text>
         </View>
-        <View style={styles.icon} />
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Icon name={'home'} style={styles.iconGoHome} />
+        </TouchableOpacity>
       </View>
       {isLoading ? (
         <ActivityIndicator size="large" />
@@ -400,7 +403,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    paddingVertical: 20,
+    paddingVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -422,7 +425,12 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 26,
     color: '#000',
-    marginLeft: 10,
+    marginLeft: 15,
+  },
+  iconGoHome: {
+    fontSize: 26,
+    color: '#000',
+    marginRight: 15,
   },
   body: {
     flex: 1,
