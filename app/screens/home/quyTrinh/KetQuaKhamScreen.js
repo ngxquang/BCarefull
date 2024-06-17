@@ -218,7 +218,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                     />
                   </TouchableOpacity>
                 ) : (
-                  <Text style={styles.dateTime}>Không có ảnh</Text>
+                  <Text style={[style.t2, {fontFamily: Fonts.italic, color: 'red'}]}>Không có ảnh</Text>
                 )}
               </View>
               <ImageView

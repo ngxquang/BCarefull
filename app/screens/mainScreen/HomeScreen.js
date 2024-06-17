@@ -122,10 +122,6 @@ function HomeScreen({navigation}) {
         </Text>
       </View>
       <View style={styles.itemGroup}>
-        <Text style={[style.t3, {marginRight: 10}]}>Thành phần:</Text>
-        <Text style={[style.t3]}>{item.THANHPHAN}</Text>
-      </View>
-      <View style={styles.itemGroup}>
         <Text style={[style.t3, {marginRight: 10}]}>Ghi chú:</Text>
         <Text style={[style.t3]}>{item.GHICHU}</Text>
       </View>
@@ -151,7 +147,7 @@ function HomeScreen({navigation}) {
               navigation={navigation}
             />
             <ButtonHome
-              title={'Theo dõi sức khỏe'}
+              title={'Bản đồ'}
               name={'TheoDoi'}
               navigation={navigation}
             />
