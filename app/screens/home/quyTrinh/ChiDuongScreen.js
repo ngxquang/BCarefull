@@ -11,14 +11,14 @@ import {useState} from 'react';
 
 const screenWidth = Dimensions.get('window').width;
 const images = {
-  'A101': require('../../../../assets/images/A101.png'),
-  'A102': require('../../../../assets/images/A102.png'),
-  'A103': require('../../../../assets/images/A103.png'),
-  'A104': require('../../../../assets/images/A104.png'),
-  'B201': require('../../../../assets/images/B201.png'),
-  'B202': require('../../../../assets/images/B202.png'),
-  'B203': require('../../../../assets/images/B203.png'),
-  'B204': require('../../../../assets/images/B204.png'),
+  A101: require('../../../../assets/images/A101.png'),
+  A102: require('../../../../assets/images/A102.png'),
+  A103: require('../../../../assets/images/A103.png'),
+  A104: require('../../../../assets/images/A104.png'),
+  B201: require('../../../../assets/images/B201.png'),
+  B202: require('../../../../assets/images/B202.png'),
+  B203: require('../../../../assets/images/B203.png'),
+  B204: require('../../../../assets/images/B204.png'),
 };
 
 function ChiDuongScreen({navigation, route}) {
@@ -46,20 +46,17 @@ function ChiDuongScreen({navigation, route}) {
           <Icon name={'arrow-back'} style={styles.icon} />
         </TouchableOpacity>
         <View style={styles.title}>
-          <Text style={style.h4}>Bản đồ bệnh viện</Text>
+          <Text style={style.h4}>Bản đồ bệnh viện - Tầng {item.TANG}</Text>
           <Text style={style.h7}>
-            {item.TENPHONG} {item.SOPHONG} - Tầng {item.TANG}
+            {item.TENPHONG} {item.SOPHONG}
           </Text>
         </View>
-        <View style={styles.icon} />
+        <View style={styles.rightIconSpacer} />
       </View>
 
       <View style={styles.body}>
         <TouchableOpacity onPress={() => handleZoomImage()}>
-          <Image
-            style={styles.mapImage}
-            source={selectedImage}
-          />
+          <Image style={styles.mapImage} source={selectedImage} />
         </TouchableOpacity>
       </View>
 
@@ -105,9 +102,13 @@ const styles = StyleSheet.create({
     color: '#000',
     marginLeft: 10,
   },
+  rightIconSpacer: {
+    width: 26, // Same width as the icon for symmetry
+  },
   mapImage: {
     resizeMode: 'contain',
-    width: screenWidth*0.975,
+    width: screenWidth * 0.975,
+    marginBottom: 60,
   },
 });
 
