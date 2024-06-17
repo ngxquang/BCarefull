@@ -151,7 +151,7 @@ function HomeScreen({navigation}) {
               navigation={navigation}
             />
             <ButtonHome
-              title={'Theo dõi sức khỏe'}
+              title={'Bản đồ'}
               name={'TheoDoi'}
               navigation={navigation}
             />
