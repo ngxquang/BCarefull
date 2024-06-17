@@ -20,57 +20,57 @@ function NotificationScreen() {
   const [readNotifications, setReadNotifications] = useState([
     {
       id: '1',
-      title: 'Thông báo 1 read',
+      title: 'Đề phòng dịch COVID19',
       date: '2024-05-15',
-      content: 'Thông báo về cuộc họp tổng kết cuối năm vào ngày 20/12.',
+      content: 'Với tình trạng dịch COVID đang diễn biến phức tạp, phòng khám sẽ chỉ khám tối đa 2 bệnh nhân một lúc, mong Quý bệnh nhân thông cảm vì sự bất tiện này.',
     },
     {
       id: '2',
-      title: 'Thông báo 2 read',
+      title: 'Thông báo nghỉ tết Nguyên Đán 2024',
       date: '2024-05-18',
-      content: 'Lịch nghỉ Tết Nguyên Đán năm nay từ ngày 10/02 đến 16/02.',
+      content: 'Lịch nghỉ Tết Nguyên Đán năm nay từ ngày 10/02 đến 16/02, phòng khám sẽ tạm nghỉ trong khoảng thời gian này.',
     },
     {
       id: '3',
-      title: 'Thông báo 3 read',
+      title: 'Lời cảm ơn từ BCare',
       date: '2024-05-17',
       content:
-        'Công ty sẽ tổ chức buổi dã ngoại vào cuối tuần này tại công viên ABC.',
+        'Xin cảm ơn Quý Người bệnh, Người nhà đã tin tưởng lựa chọn phòng khám BCare.',
     },
     {
       id: '4',
-      title: 'Thông báo 4 read',
+      title: 'Giảm giá nhân dịp khai trương',
       date: '2024-05-21',
-      content: 'Đăng ký khóa học nâng cao kỹ năng mềm từ ngày 01/06.',
+      content: 'Phòng khám giảm giá 30% các loại thuốc từ ngày 1/5 đến 7/5 năm 2024',
     },
   ]);
 
   const [unreadNotifications, setUnreadNotifications] = useState([
     {
       id: '5',
-      title: 'Thông báo 5 unread',
+      title: 'Sửa đổi chính sách bảo hiểm y tế',
       date: '2024-05-20',
       content:
-        'Thông báo về việc thay đổi chính sách bảo hiểm y tế từ tháng sau.',
+        'Từ ngày 15/6/2024, phòng khám sẽ ngừng áp dụng các chính sách về BHYT, mong Quý bệnh nhân lưu ý trong quá trình đăng ký khám tại phòng khám.',
     },
     {
       id: '6',
-      title: 'Thông báo 6 unread',
+      title: 'Chào mừng đến với BCare',
       date: '2024-05-16',
-      content: 'Lịch kiểm tra sức khỏe định kỳ sẽ diễn ra vào ngày 25/05.',
+      content: 'Bạn đã đăng ký thành công tài khoản tại BCare, tiến hành đặt khám ngay tại mục Đặt lịch khám.',
     },
     {
       id: '7',
-      title: 'Thông báo 7 unread',
+      title: 'Tuyển dụng nhân sự',
       date: '2024-05-10',
-      content: 'Công ty tuyển dụng thêm nhân viên cho vị trí kỹ thuật viên IT.',
+      content: 'Công ty có nhu cầu tuyển dụng thêm nhân viên cho vị trí kỹ thuật viên IT, nộp đơn ứng tuyển tại bcare.com.vn',
     },
     {
       id: '8',
-      title: 'Thông báo 8 unread',
+      title: 'Liên kết ví MOMO',
       date: '2024-05-3',
       content:
-        'Khuyến mãi đặc biệt cho nhân viên khi mua sản phẩm của công ty trong tháng này.',
+        'Kể từ tháng 6/2024, phòng khám sẽ tích hợp MOMO vào quy trình thanh toán khi đi khám, Quý bệnh nhân có thể sử dụng MOMO UAT để thanh toán các dịch vụ tại phòng khám.',
     },
   ]);
 
