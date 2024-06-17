@@ -83,10 +83,6 @@ const TheoDoiScreen = () => {
                 apikey={GOOGLE_MAPS_APIKEY}
                 strokeWidth={3}
                 strokeColor="blue"
-                onError={(errorMessage) => {
-                  console.log('GOT AN ERROR:', errorMessage);
-                  Alert.alert('Error', 'Could not fetch directions: ' + errorMessage);
-                }}
               />
             </>
           )}
