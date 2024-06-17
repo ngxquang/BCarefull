@@ -1,4 +1,9 @@
-import notifee from '@notifee/react-native';
+import notifee, {
+  TimestampTrigger,
+  TriggerType,
+  TimeUnit,
+  RepeatFrequency,
+} from '@notifee/react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 export const getUser = () => {
@@ -19,8 +24,8 @@ export const linking = {
 export async function onDisplayNotification(title, message, data) {
   // Create a channel (required for Android)
   const channelId = await notifee.createChannel({
-    id: 'default',
-    name: 'Default Channel',
+    id: 'fromBS',
+    name: 'Thong Bao From Bac Si',
   });
 
   // Display a notification
@@ -35,6 +40,58 @@ export async function onDisplayNotification(title, message, data) {
         id: 'default',
       },
     },
+  });
+}
+
+export async function onCreateTriggerNotification(
+  notiId,
+  hour,
+  minute,
+  message,
+) {
+  const date = new Date(Date.now());
+  date.setHours(hour);
+  date.setMinutes(minute);
+
+  // Create a time-based trigger
+  const trigger = {
+    type: TriggerType.TIMESTAMP,
+    timestamp: date.getTime(),
+    repeatFrequency: RepeatFrequency.DAILY,
+    alarmManager: {
+      allowWhileIdle: true,
+    },
+  };
+
+  // Create a channel (required for Android)
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  // Create a trigger notification
+  await notifee.createTriggerNotification(
+    {
+      id: notiId,
+      title: 'BCare - Lời nhắc dùng thuốc',
+      body: message,
+      android: {
+        channelId,
+      },
+    },
+    trigger,
+  );
+  console.log('THONG BAO HAS BEEN CREATED !!!!!!');
+}
+
+export async function cancelThongBao(mactdt) {
+  console.log('GO INTO CANCEL THONGBAO >>>>>>>>>>>');
+  const ids = await notifee.getTriggerNotificationIds();
+  ids.forEach(async id => {
+    if (id.includes(mactdt)) {
+      await notifee.cancelNotification(id);
+      console.log('XOA MOT THONG BAO ID >>>>>>>>>>> ', id);
+    }
   });
 }
 

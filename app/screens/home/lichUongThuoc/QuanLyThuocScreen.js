@@ -53,7 +53,7 @@ function QuanLyThuocScreen() {
           }}>
           <Text>Thêm thuốc</Text>
         </TouchableOpacity> */}
-        <Text style={style.h4}>Danh sách đơn thuốc ({lichSuKham.length})</Text>
+        <Text style={style.h4}>Danh sách đơn thuốc ({lichSuKham.filter(pk => pk.MADT !== null).length})</Text>
         <FlatList
           data={lichSuKham.filter(pk => pk.MADT !== null)}
           renderItem={renderPrescriptionItem}
