@@ -25,6 +25,7 @@ import {fetchCTPKFutureByIdAction} from '../../redux/action/fetchCTPKFutureByIdA
 import Icon from 'react-native-vector-icons/Octicons';
 import notifee, {EventType} from '@notifee/react-native';
 import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
+import { fetchAllGioDatLichAction } from '../../redux/action/fetchAllGioDatLichAction'
 import axios from '../../setup/axios';
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -48,6 +49,9 @@ const data = [
 
 function HomeScreen({navigation}) {
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  const gioDatLich = useSelector(state => state.gioDatLich?.data);
+  console.log('>>>>>>>>>>.gioDatLichFromHome', gioDatLich);
+
   const ctpkFutureById = useSelector(state => state.ctpkFutureById.data) || [];
   console.log('ctpkFutureById', ctpkFutureById);
 
@@ -82,6 +86,7 @@ function HomeScreen({navigation}) {
 
   useEffect(() => {
     dispatch(fetchCTPKFutureByIdAction(user.MABN));
+    dispatch(fetchAllGioDatLichAction(user.MABN));
   }, []);
 
   const renderItem = ({item}) => (
@@ -98,6 +103,31 @@ function HomeScreen({navigation}) {
         <Text style={[style.t3, {fontFamily: Fonts.semiBold}]}>
           {item.TENDV}
         </Text>
+      </View>
+    </View>
+  );
+
+  const renderGioDatLichItem = ({item}) => (
+    <View style={[styles.listItemContainer, {width: screenWidth - 46}]}>
+      <View style={styles.itemGroup}>
+        <Icon name={'clock'} style={styles.icon} />
+        <Text style={[style.t3, {marginRight: 10}]}>
+          {item?.THOIGIAN || '00:00'}
+        </Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t3, {marginRight: 10}]}>Tên thuốc:</Text>
+        <Text style={[style.t3, {fontFamily: Fonts.semiBold}]}>
+          {item.TENTHUOC}
+        </Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t3, {marginRight: 10}]}>Thành phần:</Text>
+        <Text style={[style.t3]}>{item.THANHPHAN}</Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t3, {marginRight: 10}]}>Ghi chú:</Text>
+        <Text style={[style.t3]}>{item.GHICHU}</Text>
       </View>
     </View>
   );
@@ -177,11 +207,11 @@ function HomeScreen({navigation}) {
               style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
               Thuốc
             </Text>
-            {ctpkFutureById.length > 0 ? (
+            {gioDatLich.length > 0 ? (
               <>
                 <FlatList
-                  data={ctpkFutureById}
-                  renderItem={renderItem}
+                  data={gioDatLich}
+                  renderItem={renderGioDatLichItem}
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                   snapToAlignment={'center'}
