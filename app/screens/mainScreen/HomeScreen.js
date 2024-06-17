@@ -128,7 +128,7 @@ function HomeScreen({navigation}) {
           </View>
           <View style={[styles.column, {paddingLeft: 10}]}>
             <ButtonHome
-              title={'Quy trình khám'}
+              title={'Lịch  sử khám'}
               name={'QuyTrinh'}
               navigation={navigation}
             />
