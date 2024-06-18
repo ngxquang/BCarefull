@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,8 +13,11 @@ import Fonts from '../../../../assets/fonts/Fonts';
 import { BCarefulTheme, style } from '../../../component/Theme';
 import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
 import ImageView from 'react-native-image-viewing';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchNewsAction } from '../../../redux/action/fetchNewsAction';
 
 function KetQuaKhamScreen({ navigation, route }) {
+  const dispatch = useDispatch();
   const data = route.params.item;
   const ctdtById = route.params.ctdtById;
   const benhById = route.params.benhById;
@@ -47,6 +50,13 @@ function KetQuaKhamScreen({ navigation, route }) {
   const tableDataBenhById = benhById.map(item => [item.MAICD, item.TENBENH]);
 
   const widthArrBenhById = [100, 200];
+
+  useEffect(() => {
+    if (benhById.length > 0) {
+      const {TENBENH} = benhById[0];
+      dispatch(fetchNewsAction(TENBENH))
+    }
+  }, [benhById])
 
   return (
     <SafeAreaView style={styles.container}>
