@@ -25,7 +25,7 @@ import {fetchCTPKFutureByIdAction} from '../../redux/action/fetchCTPKFutureByIdA
 import Icon from 'react-native-vector-icons/Octicons';
 import notifee, {EventType} from '@notifee/react-native';
 import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
-import { fetchAllGioDatLichAction } from '../../redux/action/fetchAllGioDatLichAction'
+import {fetchAllGioDatLichAction} from '../../redux/action/fetchAllGioDatLichAction';
 import axios from '../../setup/axios';
 import getArticles from '../../services/newsService';
 const {width: screenWidth} = Dimensions.get('window');

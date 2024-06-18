@@ -53,6 +53,10 @@ function HomeScreen({navigation}) {
           <Icon name={'log-out-outline'} style={styles.icon} />
           <Text style={styles.text}>Đăng xuất</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('ChatBot')}>
+          <Icon name={'book-outline'} style={styles.icon} />
+          <Text style={styles.text}>ChatBot</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
