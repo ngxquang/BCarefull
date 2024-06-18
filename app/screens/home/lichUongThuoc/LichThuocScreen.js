@@ -215,20 +215,20 @@ function LichThuocScreen({route}) {
       <View
         style={[
           cardStyle,
-          // currentTimePeriod === timePeriod
-          //   ? {
-          //       borderColor: BCarefulTheme.colors.secondary,
-          //       borderBottomWidth: 7,
-          //       elevation: 4,
-          //       backgroundColor: 'white',
-          //     }
-          //   : {},
-          {
-            borderColor: timePeriod=='noon'||timePeriod=='afternoon' ? BCarefulTheme.colors.secondary : BCarefulTheme.colors.primary,
-            borderBottomWidth: 7,
-            elevation: 4,
-            backgroundColor: 'white',
-          },
+          currentTimePeriod === timePeriod
+            ? {
+                borderColor: BCarefulTheme.colors.secondary,
+                borderBottomWidth: 7,
+                elevation: 4,
+                backgroundColor: 'white',
+              }
+            : {},
+          // {
+          //   borderColor: timePeriod=='noon'||timePeriod=='afternoon' ? BCarefulTheme.colors.secondary : BCarefulTheme.colors.primary,
+          //   borderBottomWidth: 7,
+          //   elevation: 4,
+          //   backgroundColor: 'white',
+          // },
         ]}>
         <Text style={style.h72}>{title}</Text>
         {source && (
