@@ -49,7 +49,10 @@ const data = [
 ];
 
 function HomeScreen({navigation}) {
-  getArticles('Diabetic');
+  // getArticles('Diabetic');
+  const news = useSelector(state => state.news?.data);
+  console.log('NEWSSSS >>>>>>>> ', news);
+
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const gioDatLich = useSelector(state => state.gioDatLich?.data);
   console.log('>>>>>>>>>>.gioDatLichFromHome', gioDatLich);
@@ -236,7 +239,7 @@ function HomeScreen({navigation}) {
 
         <View style={styles.carousel}>
           <Text style={[style.h4, {fontSize: 16}]}>Tin nổi bật</Text>
-          <Carousel data={data} />
+          <Carousel data={news.length === 0 ? data : news} />
         </View>
       </SafeAreaView>
     </ThemeProvider>

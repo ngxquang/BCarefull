@@ -84,7 +84,7 @@ const Carousel = ({data}) => {
             source={{uri: data[data.length - 1].img}}
             style={styles.image}
           />
-          <Text style={styles.text}>{data[data.length - 1].title}</Text>
+          <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">{data[data.length - 1].title}</Text>
         </TouchableOpacity>
         {data.map((item, index) => (
           <TouchableOpacity
@@ -92,7 +92,7 @@ const Carousel = ({data}) => {
             style={styles.page}
             onPress={() => openLink(item.path)}>
             <Image source={{uri: item.img}} style={styles.image} />
-            <Text style={styles.text}>{item.title}</Text>
+            <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">{item.title}</Text>
           </TouchableOpacity>
         ))}
         {/* Trang giả */}
@@ -100,7 +100,7 @@ const Carousel = ({data}) => {
           style={styles.page}
           onPress={() => openLink(data[0].path)}>
           <Image source={{uri: data[0].img}} style={styles.image} />
-          <Text style={styles.text}>{data[0].title}</Text>
+          <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">{data[0].title}</Text>
         </TouchableOpacity>
       </ScrollView>
       <View style={styles.pagination}>
