@@ -27,6 +27,7 @@ import notifee, {EventType} from '@notifee/react-native';
 import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
 import { fetchAllGioDatLichAction } from '../../redux/action/fetchAllGioDatLichAction'
 import axios from '../../setup/axios';
+import getArticles from '../../services/newsService';
 const {width: screenWidth} = Dimensions.get('window');
 
 const data = [
@@ -48,6 +49,7 @@ const data = [
 ];
 
 function HomeScreen({navigation}) {
+  getArticles('Diabetic');
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const gioDatLich = useSelector(state => state.gioDatLich?.data);
   console.log('>>>>>>>>>>.gioDatLichFromHome', gioDatLich);
