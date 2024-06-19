@@ -33,6 +33,7 @@ function HomeScreen({navigation}) {
   const handleChangePassword = () => {
     navigation.navigate('ChangePassword');
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Hệ Thống</Text>
@@ -52,6 +53,10 @@ function HomeScreen({navigation}) {
         <TouchableOpacity style={styles.button} onPress={handleLogout}>
           <Icon name={'log-out-outline'} style={styles.icon} />
           <Text style={styles.text}>Đăng xuất</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('ChatBot')}>
+          <Icon name={'chatbubbles-outline'} style={styles.icon} />
+          <Text style={styles.text}>Trợ lý ảo BCare</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
