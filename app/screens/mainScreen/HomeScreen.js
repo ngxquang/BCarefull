@@ -49,7 +49,7 @@ const data = [
 ];
 
 function HomeScreen({navigation}) {
-  getArticles('Diabetic');
+  // getArticles('Diabetic');
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const gioDatLich = useSelector(state => state.gioDatLich?.data);
   console.log('>>>>>>>>>>.gioDatLichFromHome', gioDatLich);

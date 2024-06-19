@@ -46,6 +46,9 @@ import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
 import { useDispatch, useSelector } from "react-redux";
 import { onDisplayNotification } from './app/util/appUtil';
 import { linking } from './app/util/appUtil';
+import Game2048 from './app/screens/game/Game2048';
+import Game from './app/screens/game/Game';
+import GameBlock from './app/screens/game/GameBlock';
 
 
 const Tab = createBottomTabNavigator();
@@ -153,6 +156,9 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Screen name="ThemThuoc" component={ThemThuocScreen} />
           <Stack.Screen name="DatLichNhacThuoc" component={DatLichNhacThuocScreen} />
           <Stack.Screen name="XacNhan" component={XacNhanScreen} />
+          <Stack.Screen name='Game' component={Game} />
+          <Stack.Screen name='2048' component={Game2048} />
+          <Stack.Screen name='BlockPuzzle' component={GameBlock} />
         </Stack.Navigator>
       </NavigationContainer>
   );
