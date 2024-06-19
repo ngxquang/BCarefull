@@ -55,7 +55,7 @@ function HomeScreen({navigation}) {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('ChatBot')}>
           <Icon name={'book-outline'} style={styles.icon} />
-          <Text style={styles.text}>ChatBot</Text>
+          <Text style={styles.text}>Trợ lý ảo BCare</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
