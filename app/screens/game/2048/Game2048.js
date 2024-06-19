@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { getEmptyBoard, addRandomTile, move, isGameOver } from './game2048Logic'; // Cập nhật đường dẫn tùy vào cấu trúc thư mục của bạn
+import { getEmptyBoard, addRandomTile, move, isGameOver } from './game2048Logic'; 
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { style } from '../../component/Theme';
+import { style } from '../../../component/Theme';
+import Tile from './Tile';
 
 const Game2048 = () => {
   const [board, setBoard] = useState(getEmptyBoard());
@@ -29,13 +30,6 @@ const Game2048 = () => {
       const boardWithNewTile = addRandomTile(newBoard);
       setBoard(boardWithNewTile);
 
-      if (isGameOver(boardWithNewTile)) {
-        setGameOver(true);
-      }
-    }
-
-    if (JSON.stringify(board) == JSON.stringify(newBoard)) {
-      const boardWithNewTile = addRandomTile(newBoard);
       if (isGameOver(boardWithNewTile)) {
         setGameOver(true);
       }
@@ -81,17 +75,9 @@ const Game2048 = () => {
         )}
         {board.map((row, rowIndex) => (
           <View key={rowIndex} style={styles.row}>
-            {row.map((tile, colIndex) => {
-              const colors = ['#eee', '#ffd8e5', '#e5b7f2', '#ce75f0', '#965dec', '#704fde', '#4343d2', '#6de7d7', '#90F4B2', '#D2FA84', '#F9F871', '#FFFD12']
-              let color;
-              if (tile == 0) { color = colors[0]; }
-              else { color = colors[Math.log2(tile)] }
-              return (
-                <View key={colIndex} style={[styles.tile, { backgroundColor: color }]}>
-                  <Text style={styles.tileText}>{tile !== 0 ? tile : ''}</Text>
-                </View>
-              )
-            })}
+            {row.map((tile, colIndex) => (
+              <Tile key={`${rowIndex}-${colIndex}-${tile}`} value={tile} rowIndex={rowIndex} colIndex={colIndex} />
+            ))}
           </View>
         ))}
       </View>
@@ -107,31 +93,6 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-  },
-  tile: {
-    width: 80,
-    height: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5,
-    backgroundColor: '#eee',
-  },
-  tileText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  controls: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '60%',
-  },
-  controlText: {
-    fontSize: 18,
-    padding: 10,
-    backgroundColor: '#ccc',
-    margin: 5,
-    textAlign: 'center',
   },
   gameOver: {
     position: 'absolute',

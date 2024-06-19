@@ -46,9 +46,9 @@ import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
 import { useDispatch, useSelector } from "react-redux";
 import { onDisplayNotification } from './app/util/appUtil';
 import { linking } from './app/util/appUtil';
-import Game2048 from './app/screens/game/Game2048';
+import Game2048 from './app/screens/game/2048/Game2048';
 import Game from './app/screens/game/Game';
-import GameBlock from './app/screens/game/GameBlock';
+import GameBlock from './app/screens/game/BlockPuzzle/GameBlock';
 
 
 const Tab = createBottomTabNavigator();
