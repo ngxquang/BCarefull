@@ -2,19 +2,19 @@ import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   TextInput,
-  Button,
   Text,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {Badge, Button} from '@rneui/themed';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {sendMessageToTextCortex} from '../../services/chatBotService';
 import {saveMessage} from '../../redux/slice/chatMessageSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import TypingIndicator from '../../component/TypingIndicator';
 import Fonts from '../../../assets/fonts/Fonts';
-import {style} from '../../component/Theme';
+import {BCarefulTheme, BCarefulTheme2, style} from '../../component/Theme';
 
 const initMessages = [
   {
@@ -113,7 +113,15 @@ function ChatBotScreen({navigation}) {
           onChangeText={setInputText}
           placeholder="Type your message..."
         />
-        <Button title="Send" onPress={handleSend} />
+        {/* <Button
+          title="SEND"
+          titleStyle={[style.h7, style.white]}
+          buttonStyle={[style.btnSub, {flex: 1, width: 'auto'}]}
+          onPress={handleSend}
+        /> */}
+        <TouchableOpacity onPress={handleSend}>
+          <Icon name={'send'} style={styles.iconSend} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -146,7 +154,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    borderColor: 'gray',
+    borderColor: BCarefulTheme2.colors.primary,
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
@@ -154,17 +162,22 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#DCF8C6',
+    color: '#FFF',
+    backgroundColor: BCarefulTheme.colors.primary,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 10,
+    marginLeft: 35,
   },
   botMessage: {
     alignSelf: 'flex-start',
     backgroundColor: '#E4E4E4',
+    // backgroundColor: '#FFF',
+    // color: '#000',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 10,
+    marginRight: 35,
   },
   icon: {
     fontSize: 26,
@@ -175,6 +188,11 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: '#000',
     marginRight: 15,
+  },
+  iconSend: {
+    fontSize: 30,
+    color: BCarefulTheme.colors.secondary,
+    marginRight: 5,
   },
 });
 
