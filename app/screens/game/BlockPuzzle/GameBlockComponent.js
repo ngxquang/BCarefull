@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
 export const Board = ({ board }) => {
     return (
@@ -9,8 +9,9 @@ export const Board = ({ board }) => {
                     {row.map((cell, cellIndex) => (
                         <View
                             key={cellIndex}
-                            style={[styles.cell, cell && styles.filledCell]}
-                        />
+                            style={[styles.cell, cell && styles.filledCell]}>
+                            <Text>A</Text>
+                        </View>
                     ))}
                 </View>
             ))}

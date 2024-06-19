@@ -8,6 +8,10 @@ export const shapes = [
     [[0, 1, 0], [1, 1, 1]], // T shape
 ];
 
+export const createEmptyBoard = () => {
+    return Array.from({ length: 10 }, () => Array(10).fill(0));
+};
+
 export const getRandomShape = () => {
     const randomIndex = Math.floor(Math.random() * shapes.length);
     return shapes[randomIndex];

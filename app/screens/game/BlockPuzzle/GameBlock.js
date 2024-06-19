@@ -1,15 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { View, StyleSheet, PanResponder, Animated } from 'react-native';
 import { Board, Block } from './GameBlockComponent';
-import { shapes } from './gameBlockLogic';
+import { shapes, getRandomShape, createEmptyBoard, isValidPosition } from './gameBlockLogic';
 
-const createEmptyBoard = () => {
-    return Array.from({ length: 10 }, () => Array(10).fill(0));
-};
+
 
 const GameBlock = () => {
     const [board, setBoard] = useState(createEmptyBoard());
-    const [currentBlock, setCurrentBlock] = useState(shapes[0]);
+    const [currentBlock, setCurrentBlock] = useState(getRandomShape());
     const pan = useRef(new Animated.ValueXY()).current;
 
     const panResponder = useRef(
