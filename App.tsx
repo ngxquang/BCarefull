@@ -49,6 +49,7 @@ import { linking } from './app/util/appUtil';
 import Game2048 from './app/screens/game/2048/Game2048';
 import Game from './app/screens/game/Game';
 import GameBlock from './app/screens/game/BlockPuzzle/GameBlock';
+import Termwalk from './app/screens/game/termwalk/Termwalk';
 
 
 const Tab = createBottomTabNavigator();
@@ -159,6 +160,7 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Screen name='Game' component={Game} />
           <Stack.Screen name='2048' component={Game2048} />
           <Stack.Screen name='BlockPuzzle' component={GameBlock} />
+          <Stack.Screen name='Termwalk' component={Termwalk} />
         </Stack.Navigator>
       </NavigationContainer>
   );

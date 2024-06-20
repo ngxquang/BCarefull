@@ -16,6 +16,10 @@ function Game() {
                 onPress={() => navigation.navigate('BlockPuzzle')}>
                     <Text style={[style.h2,]}>Block puzzle</Text>
                 </TouchableOpacity>
+                {/* <TouchableOpacity style={[style.btnOutline, style.m5]}
+                onPress={() => navigation.navigate('Termwalk')}>
+                    <Text style={[style.h2,]}>Termwalk</Text>
+                </TouchableOpacity> */}
             </View>
         </SafeAreaView>
     );
