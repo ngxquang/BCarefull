@@ -47,7 +47,7 @@ export const style = StyleSheet.create({
   },
 
   btnSubGreen: {
-    backgroundColor: '#A1DD70',
+    backgroundColor: BCarefulTheme.colors.green,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

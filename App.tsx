@@ -43,6 +43,8 @@ import ThemThuocScreen from './app/screens/home/lichUongThuoc/ThemThuocScreen';
 import DatLichNhacThuocScreen from './app/screens/home/lichUongThuoc/DatLichNhacThuocScreen';
 import NgayKhamScreen from './app/screens/home/datLich/ChonThongTinKham/NgayKhamScreen';
 import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
+import ChanDoanXQuangScreen from './app/screens/AI/ChanDoanXQuangScreen';
+import ChatBotScreen from './app/screens/chat/chatBotScreen';
 import { useDispatch, useSelector } from "react-redux";
 import { onDisplayNotification } from './app/util/appUtil';
 import { linking } from './app/util/appUtil';
@@ -115,6 +117,7 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Screen name="HomeTabs" component={HomeTabsScreen} />
           <Stack.Group>
             <Stack.Screen name="DatLich" component={DatLichScreen} />
+            <Stack.Screen name="TheoDoi" component={TheoDoiScreen} />
             <Stack.Screen name="LichThuoc" component={LichThuocScreen} />
             <Stack.Screen name="QuyTrinh" component={LichSuKhamScreen} />
             <Stack.Group>
@@ -126,7 +129,6 @@ function App({navigation} : any): React.JSX.Element {
               <Stack.Screen name="ThanhToan" component={ThanhToanScreen} />
               <Stack.Screen name="LichSuKham" component={LichSuKhamScreen} />
             </Stack.Group>
-            <Stack.Screen name="TheoDoi" component={LichSuKhamScreen} />
           </Stack.Group>
 
           <Stack.Group>
@@ -153,6 +155,9 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Screen name="ThemThuoc" component={ThemThuocScreen} />
           <Stack.Screen name="DatLichNhacThuoc" component={DatLichNhacThuocScreen} />
           <Stack.Screen name="XacNhan" component={XacNhanScreen} />
+
+          <Stack.Screen name="ChanDoanXQuang" component={ChanDoanXQuangScreen} />
+          <Stack.Screen name="ChatBot" component={ChatBotScreen} />
         </Stack.Navigator>
       </NavigationContainer>
   );

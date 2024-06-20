@@ -154,7 +154,9 @@ function LichSuKhamScreen({navigation}) {
             {user.HOTEN} (Mã BN - {user.MABN})
           </Text>
         </View>
-        <View style={styles.iconGoBack} />
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Icon name={'home'} style={styles.iconGoHome} />
+        </TouchableOpacity>
       </View>
       <View style={styles.status}>
         <FlatList
@@ -220,6 +222,11 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: '#000',
     marginLeft: 10,
+  },
+  iconGoHome: {
+    fontSize: 26,
+    color: '#000',
+    marginRight: 10,
   },
   status: {
     flexDirection: 'row',

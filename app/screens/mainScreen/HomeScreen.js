@@ -25,7 +25,9 @@ import {fetchCTPKFutureByIdAction} from '../../redux/action/fetchCTPKFutureByIdA
 import Icon from 'react-native-vector-icons/Octicons';
 import notifee, {EventType} from '@notifee/react-native';
 import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
+import {fetchAllGioDatLichAction} from '../../redux/action/fetchAllGioDatLichAction';
 import axios from '../../setup/axios';
+import getArticles from '../../services/newsService';
 const {width: screenWidth} = Dimensions.get('window');
 
 const data = [
@@ -47,7 +49,14 @@ const data = [
 ];
 
 function HomeScreen({navigation}) {
+  // getArticles('Diabetic');
+  const news = useSelector(state => state.news?.data);
+  console.log('NEWSSSS >>>>>>>> ', news);
+
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
+  const gioDatLich = useSelector(state => state.gioDatLich?.data);
+  console.log('>>>>>>>>>>.gioDatLichFromHome', gioDatLich);
+
   const ctpkFutureById = useSelector(state => state.ctpkFutureById.data) || [];
   console.log('ctpkFutureById', ctpkFutureById);
 
@@ -82,6 +91,7 @@ function HomeScreen({navigation}) {
 
   useEffect(() => {
     dispatch(fetchCTPKFutureByIdAction(user.MABN));
+    dispatch(fetchAllGioDatLichAction(user.MABN));
   }, []);
 
   const renderItem = ({item}) => (
@@ -99,6 +109,31 @@ function HomeScreen({navigation}) {
           {item.TENDV}
         </Text>
       </View>
+    </View>
+  );
+
+  const renderGioDatLichItem = ({item}) => (
+    <View style={[styles.listItemContainer, {width: screenWidth - 46}]}>
+      <View style={styles.itemGroup}>
+        <Icon name={'clock'} style={styles.icon} />
+        <Text style={[style.t3, {marginRight: 10}]}>
+          {item?.THOIGIAN || '00:00'}
+        </Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t3, {marginRight: 10}]}>Tên thuốc:</Text>
+        <Text style={[style.t3, {fontFamily: Fonts.semiBold}]}>
+          {item.TENTHUOC}
+        </Text>
+      </View>
+      {/* <View style={styles.itemGroup}>
+        <Text style={[style.t3, {marginRight: 10}]}>Thành phần:</Text>
+        <Text style={[style.t3]}>{item.THANHPHAN}</Text>
+      </View>
+      <View style={styles.itemGroup}>
+        <Text style={[style.t3, {marginRight: 10}]}>Ghi chú:</Text>
+        <Text style={[style.t3]}>{item.GHICHU}</Text>
+      </View> */}
     </View>
   );
 
@@ -121,14 +156,14 @@ function HomeScreen({navigation}) {
               navigation={navigation}
             />
             <ButtonHome
-              title={'Theo dõi sức khỏe'}
+              title={'Đường tới BCare'}
               name={'TheoDoi'}
               navigation={navigation}
             />
           </View>
           <View style={[styles.column, {paddingLeft: 10}]}>
             <ButtonHome
-              title={'Quy trình khám'}
+              title={'Lịch  sử khám'}
               name={'QuyTrinh'}
               navigation={navigation}
             />
@@ -175,13 +210,13 @@ function HomeScreen({navigation}) {
             <View style={styles.breakline}></View>
             <Text
               style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
-              Thuốc
+              Lịch uống thuốc
             </Text>
-            {ctpkFutureById.length > 0 ? (
+            {gioDatLich?.length > 0 ? (
               <>
                 <FlatList
-                  data={ctpkFutureById}
-                  renderItem={renderItem}
+                  data={gioDatLich}
+                  renderItem={renderGioDatLichItem}
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                   snapToAlignment={'center'}
@@ -204,7 +239,7 @@ function HomeScreen({navigation}) {
 
         <View style={styles.carousel}>
           <Text style={[style.h4, {fontSize: 16}]}>Tin nổi bật</Text>
-          <Carousel data={data} />
+          <Carousel data={news.length === 0 ? data : news} />
         </View>
       </SafeAreaView>
     </ThemeProvider>

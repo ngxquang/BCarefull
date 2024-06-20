@@ -28,6 +28,10 @@ import {
   deleteGioDatLich,
 } from '../../../services/datLichService';
 import moment from 'moment';
+import {
+  cancelThongBao,
+  onCreateTriggerNotification,
+} from '../../../util/appUtil';
 
 function ThemThuocScreen({route}) {
   const navigation = useNavigation();
@@ -199,18 +203,26 @@ function ThemThuocScreen({route}) {
     let response;
 
     if (data.length === 0) {
-      console.log(">>>>>>>>>>>>>>>>>MACTDT: ", MACTDT);
-        response = await deleteGioDatLich(MACTDT);
+      console.log('>>>>>>>>>>>>>>>>>MACTDT: ', MACTDT);
+      response = await deleteGioDatLich(MACTDT);
     } else {
-        response = await updateGioDatLich(data);
+      response = await updateGioDatLich(data);
     }
-
 
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert(response.data.message);
       dispatch(fetchDatLichThuocByIdAction(MACTDT));
       dispatch(fetchCTDTByIdAction(route.params?.item?.maPK));
       dispatch(fetchAllGioDatLichAction(user.MABN));
+      // xóa các thông báo cũ để tạo thông báo mới
+      await cancelThongBao(MACTDT);
+      data.map(card => {
+        const timeString = card.THOIGIAN;
+        const [hour, minute] = timeString.split(':');
+        const message = `BN ${user.HOTEN} đã đến giờ dùng thuốc ${TENTHUOC} (${THANHPHAN}) vào lúc ${card.THOIGIAN}`;
+        const notiId = MACTDT + timeString;
+        onCreateTriggerNotification(notiId, hour, minute, message);
+      });
     }
     if (response && response.data && response.data.errcode !== 0) {
       Alert.alert(response.data.message);
