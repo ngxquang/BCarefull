@@ -60,9 +60,9 @@ function DSDVScreen({navigation, route}) {
       pttt: 'Chuyển khoản',
     });
     if (response.status === 200) {
-      dispatch(fetchCTDTByIdAction(maPK));
-      dispatch(fetchPhieuKhamByIdAction(maPK));
-      dispatch(fetchDsClsByIdAction(maPK));
+      // dispatch(fetchCTDTByIdAction(maPK));
+      // dispatch(fetchPhieuKhamByIdAction(maPK));
+      // dispatch(fetchDsClsByIdAction(maPK));
       dispatch(fetchLSKByIdBnAction(user.MABN));
       socket.emit('send-message', {actionName: 'DSHD', maID: maPK});
       socket.emit('send-message', {actionName: 'DSDK'});
@@ -142,20 +142,25 @@ function DSDVScreen({navigation, route}) {
   useEffect(() => {
     console.log('ROUTE IN USEEFFECT >>>>>>>>>>>>>>>> ', route);
 
-    if (route && route.params.resultCode === '0' && newPKArray) {
-      console.log('INSERT HDPK IS CALLED >>>>>>> ');
-      insertHDPK(newPKArray);
-    } else if (route && route.params.resultCode === '0') {
-      updateHoaDon(selectedItemThanhToan);
-    }
+    const handleOpenScreen = async () => {
+      if (route && route.params.resultCode === '0' && newPKArray) {
+        console.log('INSERT HDPK IS CALLED >>>>>>> ');
+        await insertHDPK(newPKArray);
+        return;
+      } else if (route && route.params.resultCode === '0') {
+        await updateHoaDon(selectedItemThanhToan);
+      }
 
-    dispatch(fetchCTDTByIdAction(maPK));
-    // dispatch(fetchDSHDByIdAction(maPK));
-    dispatch(fetchDsClsByIdAction(maPK));
-    dispatch(fetchPkByIdHdAction(maHDofPK));
-    // dispatch(fetchTTKAction(maPK));
-    dispatch(fetchBenhByIdAction(maPK));
-    dispatch(fetchPhieuKhamByIdAction(maPK));
+      dispatch(fetchCTDTByIdAction(maPK));
+      // dispatch(fetchDSHDByIdAction(maPK));
+      dispatch(fetchDsClsByIdAction(maPK));
+      dispatch(fetchPkByIdHdAction(maHDofPK));
+      // dispatch(fetchTTKAction(maPK));
+      dispatch(fetchBenhByIdAction(maPK));
+      dispatch(fetchPhieuKhamByIdAction(maPK));
+    };
+
+    handleOpenScreen();
   }, [route]);
 
   const ctdtById = useSelector(state => state.ctdtById.data) || [];
