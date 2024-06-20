@@ -20,6 +20,8 @@ import selectedItemReducer from './slice/selectedItemSlice';
 import getCTPKFutureByIdReducer from './slice/getCTPKFutureByIdSlice';
 import getAllDatLichThuocReducer from './slice/getAllDatLichThuocSlice'
 import getAllGioDatLichReducer from './slice/getAllGioDatLichSlice';
+import getNewsReducer from './slice/getNewsSlice'
+import getMessageReducer from './slice/chatMessageSlice'
 
 const store = configureStore({
   reducer: {
@@ -45,6 +47,8 @@ const store = configureStore({
     gioThuocById: getAllDatLichThuocReducer,
     gioDatLich: getAllGioDatLichReducer,
     ctpkFutureById: getCTPKFutureByIdReducer,
+    news: getNewsReducer,
+    messages: getMessageReducer,
   },
 });
 

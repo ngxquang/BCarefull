@@ -1,5 +1,5 @@
-import {Badge, Button} from '@rneui/themed';
-import React, {useState, useRef, useEffect} from 'react';
+import { Badge, Button } from '@rneui/themed';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,20 +14,20 @@ import {
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Fonts from '../../../../assets/fonts/Fonts';
-import {BCarefulTheme, style} from '../../../component/Theme';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {CustomHeader} from '../../../component/Header';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchAllGioDatLichAction} from '../../../redux/action/fetchAllGioDatLichAction';
-import {fetchDatLichThuocByIdAction} from '../../../redux/action/fetchDatLichThuocByIdAction';
+import { BCarefulTheme, style } from '../../../component/Theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { CustomHeader } from '../../../component/Header';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllGioDatLichAction } from '../../../redux/action/fetchAllGioDatLichAction';
+import { fetchDatLichThuocByIdAction } from '../../../redux/action/fetchDatLichThuocByIdAction';
 
 // Get screen width
 const screenWidth = Dimensions.get('window').width;
 // Calculate margins based on screen width
 const buttonMargin = screenWidth * 0.03; // 5% of screen width
 
-function LichThuocScreen({route}) {
+function LichThuocScreen({ route }) {
   const navigation = useNavigation();
   const flatListRef = useRef(null);
   const dispatch = useDispatch();
@@ -52,7 +52,6 @@ function LichThuocScreen({route}) {
   //   {id: 4, name: 'Paracetamol', time: '14:00', dosage: 'Uống 2 viên sau ăn'},
   //   {id: 5, name: 'Amoxicillin', time: '19:00', dosage: 'Uống 1 viên trước ăn'},
   // ];
-
   const handleMedication = medication => {
     setSelectedMedication(medication);
     setModalVisible(true);
@@ -72,7 +71,7 @@ function LichThuocScreen({route}) {
       day.date.isSame(selectedDate, 'day'),
     );
     if (index !== -1) {
-      flatListRef.current.scrollToIndex({animated: true, index: index - 3});
+      flatListRef.current.scrollToIndex({ animated: true, index: index - 3 });
     }
   };
 
@@ -91,7 +90,7 @@ function LichThuocScreen({route}) {
     }
   };
 
-  const renderDay = ({item}) => {
+  const renderDay = ({ item }) => {
     const isSelected = item.date.isSame(selectedDate, 'day');
     const dayStyle = isSelected ? [style.t1, style.primary] : [style.t2];
     const dateStyle = isSelected ? [style.h7, style.primary] : [style.t1];
@@ -111,7 +110,7 @@ function LichThuocScreen({route}) {
 
   const generateWeekDays = date => {
     const startOfWeek = moment(date).startOf('isoWeek');
-    return Array.from({length: 14}).map((_, index) => {
+    return Array.from({ length: 14 }).map((_, index) => {
       const day = moment(startOfWeek).add(index - 7, 'days');
       return {
         day: day.format('dd').toUpperCase(),
@@ -177,7 +176,7 @@ function LichThuocScreen({route}) {
         };
 
         // Now you have the medication details and can navigate with confidence
-        navigation.navigate('ThemThuoc', {item});
+        navigation.navigate('ThemThuoc', { item });
       } catch (error) {
         console.error('Error fetching medication details:', error);
         // Handle error gracefully, e.g., show a toast message
@@ -215,75 +214,71 @@ function LichThuocScreen({route}) {
       <View
         style={[
           cardStyle,
-          // currentTimePeriod === timePeriod
-          //   ? {
-          //       borderColor: BCarefulTheme.colors.secondary,
-          //       borderBottomWidth: 7,
-          //       elevation: 4,
-          //       backgroundColor: 'white',
-          //     }
-          //   : {},
-          {
-            borderColor: timePeriod=='noon'||timePeriod=='afternoon' ? BCarefulTheme.colors.secondary : BCarefulTheme.colors.primary,
-            borderBottomWidth: 7,
-            elevation: 4,
-            backgroundColor: 'white',
-          },
+          currentTimePeriod === timePeriod
+            ? {
+              borderColor: BCarefulTheme.colors.secondary,
+              borderBottomWidth: 7,
+              elevation: 4,
+              backgroundColor: 'white',
+            }
+            : {},
         ]}>
-        <Text style={style.h72}>{title}</Text>
+        <Text style={style.h7}>{title}</Text>
         {source && (
           <Image
             source={source}
             style={index % 2 === 0 ? styles.iconLeft : styles.iconRight}
           />
         )}
-        {meds.map(med => (
-          <View key={med.MAGIO} style={style.spacebtw}>
-            {index % 2 === 0 ? (
-              <>
-                <View style={[style.m2, style.mx4]}>
-                  {renderMedicationStatus(med.MAGIO)}
-                </View>
-                <TouchableOpacity
-                  style={styles.medicationItem}
-                  onPress={() => handleMedication(med)}>
-                  <Text style={style.h8}>{med.TENTHUOC}</Text>
-                  <Text style={style.t2}>
-                    <Text
-                      style={[
-                        style.h9,
-                        currentTimePeriod === timePeriod ? style.sub : {},
-                      ]}>
-                      {med.THOIGIAN}
+        {meds.map(med => {
+          return (
+            <View key={med.MAGIO} style={style.spacebtw}>
+              {index % 2 === 0 ? (
+                <>
+                  <View style={[style.m2, style.mx4]}>
+                    {renderMedicationStatus(med.MAGIO)}
+                  </View>
+                  <TouchableOpacity
+                    style={styles.medicationItem}
+                    onPress={() => handleMedication(med)}>
+                    <Text style={style.h6}>{med.TENTHUOC}</Text>
+                    <Text style={style.t2}>
+                      <Text
+                        style={[
+                          style.h9,
+                          currentTimePeriod === timePeriod ? style.sub : {},
+                        ]}>
+                        {med.THOIGIAN}
+                      </Text>
+                      {''} - {med.GHICHU}
                     </Text>
-                    {''} - {med.GHICHU}
-                  </Text>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <>
-                <TouchableOpacity
-                  style={styles.medicationItem}
-                  onPress={() => handleMedication(med)}>
-                  <Text style={[style.h8, style.end]}>{med.TENTHUOC}</Text>
-                  <Text style={[style.t2, style.end]}>
-                    <Text
-                      style={[
-                        style.h9,
-                        currentTimePeriod === timePeriod ? style.sub : {},
-                      ]}>
-                      {med.THOIGIAN}
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={styles.medicationItem}
+                    onPress={() => handleMedication(med)}>
+                    <Text style={[style.h6, style.end]}>{med.TENTHUOC}</Text>
+                    <Text style={[style.t2, style.end]}>
+                      {med.GHICHU} -
+                      <Text
+                        style={[
+                          style.h9,
+                          currentTimePeriod === timePeriod ? style.sub : {},
+                        ]}> {''}
+                        {med.THOIGIAN}
+                      </Text>
                     </Text>
-                    {''} - {med.GHICHU}
-                  </Text>
-                </TouchableOpacity>
-                <View style={[style.m2, style.mx4]}>
-                  {renderMedicationStatus(med.MAGIO)}
-                </View>
-              </>
-            )}
-          </View>
-        ))}
+                  </TouchableOpacity>
+                  <View style={[style.m2, style.mx4]}>
+                    {renderMedicationStatus(med.MAGIO)}
+                  </View>
+                </>
+              )}
+            </View>
+          );
+        })}
       </View>
     );
   };
@@ -301,10 +296,10 @@ function LichThuocScreen({route}) {
 
   const renderCards = () => {
     const cards = [
-      {title: 'Buổi sáng', meds: morningMeds, timePeriod: 'morning'},
-      {title: 'Buổi trưa', meds: noonMeds, timePeriod: 'noon'},
-      {title: 'Buổi chiều', meds: afternoonMeds, timePeriod: 'afternoon'},
-      {title: 'Buổi tối', meds: eveningMeds, timePeriod: 'evening'},
+      { title: 'Buổi sáng', meds: morningMeds, timePeriod: 'morning' },
+      { title: 'Buổi trưa', meds: noonMeds, timePeriod: 'noon' },
+      { title: 'Buổi chiều', meds: afternoonMeds, timePeriod: 'afternoon' },
+      { title: 'Buổi tối', meds: eveningMeds, timePeriod: 'evening' },
     ];
 
     const card2 = cards.filter(card => card.meds.length > 0);
@@ -316,7 +311,7 @@ function LichThuocScreen({route}) {
 
   const calendarBtn = () => {
     return (
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => { }}>
         <Icon
           name="calendar"
           type="ionicon"
@@ -367,7 +362,7 @@ function LichThuocScreen({route}) {
             titleStyle={[style.h7, style.white]}
             buttonStyle={[
               style.btnSub,
-              {flex: 1, width: 'auto', marginHorizontal: buttonMargin},
+              { flex: 1, width: 'auto', marginHorizontal: buttonMargin },
             ]}
             onPress={() => {
               handleMedicationAction('skipped');
@@ -378,7 +373,7 @@ function LichThuocScreen({route}) {
             titleStyle={[style.h7, style.white]}
             buttonStyle={[
               style.btnSubGreen,
-              {flex: 1, width: 'auto', marginHorizontal: buttonMargin},
+              { flex: 1, width: 'auto', marginHorizontal: buttonMargin },
             ]}
             onPress={() => {
               handleMedicationAction('taken');

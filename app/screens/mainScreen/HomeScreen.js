@@ -25,8 +25,9 @@ import {fetchCTPKFutureByIdAction} from '../../redux/action/fetchCTPKFutureByIdA
 import Icon from 'react-native-vector-icons/Octicons';
 import notifee, {EventType} from '@notifee/react-native';
 import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
-import { fetchAllGioDatLichAction } from '../../redux/action/fetchAllGioDatLichAction'
+import {fetchAllGioDatLichAction} from '../../redux/action/fetchAllGioDatLichAction';
 import axios from '../../setup/axios';
+import getArticles from '../../services/newsService';
 const {width: screenWidth} = Dimensions.get('window');
 
 const data = [
@@ -48,6 +49,10 @@ const data = [
 ];
 
 function HomeScreen({navigation}) {
+  // getArticles('Diabetic');
+  const news = useSelector(state => state.news?.data);
+  console.log('NEWSSSS >>>>>>>> ', news);
+
   const user = useSelector(state => state.auth?.user?.account?.userInfo[0]);
   const gioDatLich = useSelector(state => state.gioDatLich?.data);
   console.log('>>>>>>>>>>.gioDatLichFromHome', gioDatLich);
@@ -121,10 +126,14 @@ function HomeScreen({navigation}) {
           {item.TENTHUOC}
         </Text>
       </View>
+      {/* <View style={styles.itemGroup}>
+        <Text style={[style.t3, {marginRight: 10}]}>Thành phần:</Text>
+        <Text style={[style.t3]}>{item.THANHPHAN}</Text>
+      </View>
       <View style={styles.itemGroup}>
         <Text style={[style.t3, {marginRight: 10}]}>Ghi chú:</Text>
         <Text style={[style.t3]}>{item.GHICHU}</Text>
-      </View>
+      </View> */}
     </View>
   );
 
@@ -147,7 +156,7 @@ function HomeScreen({navigation}) {
               navigation={navigation}
             />
             <ButtonHome
-              title={'Bản đồ'}
+              title={'Đường tới BCare'}
               name={'TheoDoi'}
               navigation={navigation}
             />
@@ -201,7 +210,7 @@ function HomeScreen({navigation}) {
             <View style={styles.breakline}></View>
             <Text
               style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
-              Thuốc
+              Lịch uống thuốc
             </Text>
             {gioDatLich?.length > 0 ? (
               <>
@@ -230,7 +239,7 @@ function HomeScreen({navigation}) {
 
         <View style={styles.carousel}>
           <Text style={[style.h4, {fontSize: 16}]}>Tin nổi bật</Text>
-          <Carousel data={data} />
+          <Carousel data={news.length === 0 ? data : news} />
         </View>
       </SafeAreaView>
     </ThemeProvider>
