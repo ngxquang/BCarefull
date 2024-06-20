@@ -22,7 +22,7 @@ const ChanDoanXQuangScreen = () => {
   const [predictions, setPredictions] = useState([]);
   const navigation = useNavigation();
   const tableHeadBenhById = ['Tên bệnh', 'Xác suất'];
-  const tableDataBenhById = predictions.map(item => [item.class_name, item.probability.toFixed(3)]);
+  const tableDataBenhById = predictions.map(item => [item[0], item[1].toFixed(3)]);
   const widthArrBenhById = [100, 200];
 
   const selectImage = () => {
@@ -65,9 +65,8 @@ const ChanDoanXQuangScreen = () => {
 
       console.log('>>>base64', response.data); // Log kết quả từ backend Flask
       if (response.data.predictions) {
-        const sortedPredictions = response.data.predictions.sort(
-          (a, b) => b.probability - a.probability,
-        );
+        const predictionsArray = Object.entries(response.data.predictions);
+        const sortedPredictions = predictionsArray.sort((a, b) => b[1] - a[1]);
         setPredictions(sortedPredictions.slice(0, 5)); // Lấy 5 bệnh có xác suất cao nhất
         Alert.alert('Thành công', 'Ảnh đã được gửi lên server.');
       }
