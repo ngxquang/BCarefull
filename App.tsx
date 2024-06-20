@@ -43,6 +43,7 @@ import ThemThuocScreen from './app/screens/home/lichUongThuoc/ThemThuocScreen';
 import DatLichNhacThuocScreen from './app/screens/home/lichUongThuoc/DatLichNhacThuocScreen';
 import NgayKhamScreen from './app/screens/home/datLich/ChonThongTinKham/NgayKhamScreen';
 import XacNhanScreen from './app/screens/home/datLich/XacNhan/XacNhanScreen';
+import ChanDoanXQuangScreen from './app/screens/AI/ChanDoanXQuangScreen';
 import { useDispatch, useSelector } from "react-redux";
 import { onDisplayNotification } from './app/util/appUtil';
 import { linking } from './app/util/appUtil';
@@ -153,6 +154,8 @@ function App({navigation} : any): React.JSX.Element {
           <Stack.Screen name="ThemThuoc" component={ThemThuocScreen} />
           <Stack.Screen name="DatLichNhacThuoc" component={DatLichNhacThuocScreen} />
           <Stack.Screen name="XacNhan" component={XacNhanScreen} />
+
+          <Stack.Screen name="ChanDoanXQuang" component={ChanDoanXQuangScreen} />
         </Stack.Navigator>
       </NavigationContainer>
   );

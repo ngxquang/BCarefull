@@ -33,6 +33,11 @@ function HomeScreen({navigation}) {
   const handleChangePassword = () => {
     navigation.navigate('ChangePassword');
   };
+
+  const handleAI = () => {
+    navigation.navigate('ChanDoanXQuang');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Hệ Thống</Text>
@@ -41,9 +46,9 @@ function HomeScreen({navigation}) {
           <Icon name={'book-outline'} style={styles.icon} />
           <Text style={styles.text}>Câu hỏi thường gặp</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleAI}>
           <Icon name={'document-text-outline'} style={styles.icon} />
-          <Text style={styles.text}>Chính sách bảo mật</Text>
+          <Text style={styles.text}>Chẩn đoán X-Quang</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
           <Icon name={'lock-closed-outline'} style={styles.icon} />

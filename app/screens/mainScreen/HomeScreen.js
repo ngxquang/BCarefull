@@ -203,7 +203,7 @@ function HomeScreen({navigation}) {
               style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
               Thuốc
             </Text>
-            {gioDatLich.length > 0 ? (
+            {gioDatLich?.length > 0 ? (
               <>
                 <FlatList
                   data={gioDatLich}
