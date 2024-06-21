@@ -48,6 +48,9 @@ import ChatBotScreen from './app/screens/chat/chatBotScreen';
 import { useDispatch, useSelector } from "react-redux";
 import { onDisplayNotification } from './app/util/appUtil';
 import { linking } from './app/util/appUtil';
+import Game2048 from './app/screens/game/2048/Game2048';
+import Game from './app/screens/game/Game';
+import SlideGame from './app/screens/game/Slide/SlideGame';
 
 
 const Tab = createBottomTabNavigator();
@@ -158,6 +161,9 @@ function App({navigation} : any): React.JSX.Element {
 
           <Stack.Screen name="ChanDoanXQuang" component={ChanDoanXQuangScreen} />
           <Stack.Screen name="ChatBot" component={ChatBotScreen} />
+          <Stack.Screen name='Game' component={Game} />
+          <Stack.Screen name='2048' component={Game2048} />
+          <Stack.Screen name='Slide' component={SlideGame} />
         </Stack.Navigator>
       </NavigationContainer>
   );
