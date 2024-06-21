@@ -4,7 +4,7 @@ import store from '../redux/store';
 
 // Create an instance of axios
 const instance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'http://152.69.209.236:3001',
 });
 
 instance.defaults.withCredentials = true;

@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: Fonts.semiBold,
     color: 'black',
-    fontSize: 14,
-    paddingTop: 5,
+    fontSize: 12,
+    paddingTop: 2,
   },
   pagination: {
     flexDirection: 'row',

@@ -513,7 +513,7 @@ function ChonThongTinKham({
             style={[
               {
                 backgroundColor: '#fff',
-                paddingBottom: 20,
+                paddingBottom: 10,
                 paddingTop: 10,
                 borderTopLeftRadius: 16,
                 borderTopRightRadius: 16,
@@ -523,8 +523,8 @@ function ChonThongTinKham({
                 right: 0,
               },
             ]}>
-            <View style={[styles.itemGroup, {marginVertical: 4}]}>
-              <Text style={[style.t1, {marginLeft: 30, fontSize: 18}]}>
+            <View style={[styles.itemGroup, {marginBottom: 4, marginHorizontal: 10}]}>
+              <Text style={[style.t1, {fontSize: 16}]}>
                 Thanh toán tạm tính:
               </Text>
               <Text style={[style.h6, {marginLeft: 10, fontSize: 18}]}>
@@ -534,12 +534,12 @@ function ChonThongTinKham({
 
             <View style={style.spacebtw}>
               <TouchableOpacity
-                style={[style.btnSub, {marginLeft: 10, minWidth: '44%'}]}
+                style={[style.btnSub, {marginLeft: 10, width: '44%'}]}
                 onPress={handleContinueDV}>
-                <Text style={[style.h4, style.white]}>Thêm dịch vụ</Text>
+                <Text style={[style.h4, style.white, {textAlign: 'center'}]}>Thêm tiếp</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[style.btnSub, {marginRight: 10, minWidth: '44%'}]}
+                style={[style.btnSub, {marginRight: 10, width: '44%'}]}
                 onPress={handleContinue}>
                 <Text style={[style.h4, style.white]}>Tiếp tục</Text>
               </TouchableOpacity>

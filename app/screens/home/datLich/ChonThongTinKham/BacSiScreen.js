@@ -111,7 +111,7 @@ const BacSiScreen = () => {
         isExpanded={expanded[item.MABS]}
         onPress={() => toggleExpand(item.MABS)}>
         <View style={styles.breakline}></View>
-        <Text style={[style.t1, {paddingLeft: 24, paddingVertical: 10}]}>
+        <Text style={[style.t1, {paddingHorizontal: 20, paddingVertical: 10}]}>
           Chọn một trong các giờ sau
         </Text>
         <View style={styles.buttonContainer}>
@@ -137,7 +137,7 @@ const BacSiScreen = () => {
   );
 
   return (
-    <SafeAreaView style={StyleSheet.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name={'arrow-back'} style={styles.icon} />
@@ -146,13 +146,11 @@ const BacSiScreen = () => {
           <Text style={styles.content}>Chọn giờ khám</Text>
         </View>
       </View>
-      <View style={styles.body}>
-        <FlatList
+      <FlatList
           data={doctorsByDate}
           keyExtractor={item => item.MABS.toString()}
           renderItem={renderItem}
         />
-      </View>
     </SafeAreaView>
   );
 };
@@ -161,6 +159,9 @@ export default BacSiScreen;
 
 const styles = StyleSheet.create({
   listItemContainer: {
+    flex: 1,
+    marginHorizontal: 24,
+    marginVertical: 10,
     backgroundColor: '#fff',
     marginTop: 20,
     borderRadius: 10,
@@ -168,7 +169,6 @@ const styles = StyleSheet.create({
     borderColor: BCarefulTheme.colors.border,
     elevation: 2,
     overflow: 'hidden',
-    margin: 8,
   },
   input: {
     fontSize: 16,
@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonContainer: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',

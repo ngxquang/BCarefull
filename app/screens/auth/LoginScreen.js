@@ -26,8 +26,8 @@ const isValidEmail = email => {
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('hattvd@gmail.com');
-  const [password, setPassword] = useState('Abc@1234');
+  const [email, setEmail] = useState('doandanhdu999@gmail.com');
+  const [password, setPassword] = useState('Admin@1234');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const defaultObjValidInput = {
     isValidEmail: true,
@@ -74,13 +74,12 @@ const LoginScreen = ({navigation}) => {
       };
 
       dispatch(login(data));
-      Alert.alert('', `${response.data.message}`);
       navigation.navigate('HomeTabs');
       setEmail('');
       setPassword('');
     }
     if (response && response.data && response.data.errcode !== 0) {
-      Alert.alert('Error', `${response.data.message}`);
+      Alert.alert('Lỗi', `${response.data.message}`);
     }
   };
 
@@ -224,13 +223,15 @@ const LoginScreen = ({navigation}) => {
               <Text style={style.t4}>Quên Mật Khẩu?</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={style.btnOutlineSub}
-            onPress={() => {
-              navigation.navigate('Register01');
-            }}>
-            <Text style={style.h4}>Đăng Kí Tài Khoản Mới</Text>
-          </TouchableOpacity>
+          <View style={{paddingVertical: 20}}>
+            <TouchableOpacity
+              style={[style.btnOutlineSub]}
+              onPress={() => {
+                navigation.navigate('Register01');
+              }}>
+              <Text style={style.h4}>Đăng Kí Tài Khoản Mới</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>
@@ -272,6 +273,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'back',
+    paddingVertical: 20,
   },
   logo: {
     marginLeft: 40,

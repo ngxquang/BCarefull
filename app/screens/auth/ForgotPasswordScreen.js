@@ -59,7 +59,6 @@ const ForgotPassword = ({navigation}) => {
       isAuthenticated: true,
     };
     dispatch(login(data));
-    Alert.alert('Thành công', 'Đăng nhập thành công');
     navigation.navigate('HomeTabs');
     setUsername('');
     setPassword('');

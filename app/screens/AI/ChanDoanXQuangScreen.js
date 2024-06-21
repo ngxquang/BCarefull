@@ -68,7 +68,7 @@ const ChanDoanXQuangScreen = () => {
         const predictionsArray = Object.entries(response.data.predictions);
         const sortedPredictions = predictionsArray.sort((a, b) => b[1] - a[1]);
         setPredictions(sortedPredictions.slice(0, 5)); // Lấy 5 bệnh có xác suất cao nhất
-        Alert.alert('Thành công', 'Ảnh đã được gửi lên server.');
+        Alert.alert('Thành công', 'Đã có kết quả chẩn đoán.');
       }
     } catch (error) {
       console.error(error);

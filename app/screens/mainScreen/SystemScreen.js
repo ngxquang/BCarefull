@@ -36,8 +36,7 @@ function HomeScreen({navigation}) {
 
   const handleAI = () => {
     navigation.navigate('ChanDoanXQuang');
-  }
-
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,6 +50,12 @@ function HomeScreen({navigation}) {
           <Icon name={'document-text-outline'} style={styles.icon} />
           <Text style={styles.text}>Chẩn đoán X-Quang</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('ChatBot')}>
+          <Icon name={'chatbubbles-outline'} style={styles.icon} />
+          <Text style={styles.text}>Trợ lý ảo BCare</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
           <Icon name={'lock-closed-outline'} style={styles.icon} />
           <Text style={styles.text}>Đổi mật khẩu</Text>
@@ -58,10 +63,6 @@ function HomeScreen({navigation}) {
         <TouchableOpacity style={styles.button} onPress={handleLogout}>
           <Icon name={'log-out-outline'} style={styles.icon} />
           <Text style={styles.text}>Đăng xuất</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('ChatBot')}>
-          <Icon name={'chatbubbles-outline'} style={styles.icon} />
-          <Text style={styles.text}>Trợ lý ảo BCare</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -100,10 +101,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   text: {
-    fontFamily: Fonts.bold,
-    fontSize: 18,
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
     color: '#000',
-    paddingLeft: 20,
+    paddingLeft: 18,
   },
 });
 

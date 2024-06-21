@@ -108,7 +108,7 @@ function App({navigation} : any): React.JSX.Element {
   return (
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName="Carousel"
           screenOptions={{
             headerShown: false,
             animation: 'slide_from_right',

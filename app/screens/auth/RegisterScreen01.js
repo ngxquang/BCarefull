@@ -92,7 +92,7 @@ const RegisterScreen01 = ({navigation}) => {
       navigation.navigate('VerificationForm', {...oldPatient, email});
     }
     if (response && response.data && response.data.errcode !== 0) {
-      Alert.alert('Error', `${response.data.message}`);
+      Alert.alert('Lỗi', `${response.data.message}`);
     }
   };
 

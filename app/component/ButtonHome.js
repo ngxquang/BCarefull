@@ -48,7 +48,7 @@ export function ButtonHome({ title, name, navigation }) {
             }}
           />
           <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', marginLeft: 8, }}>
-            <Text style={{ fontFamily: Fonts.bold, color: 'black', }}>
+            <Text style={{ fontFamily: Fonts.semiBold, color: 'black', fontSize: 14}}>
               {title}
             </Text>
           </View>

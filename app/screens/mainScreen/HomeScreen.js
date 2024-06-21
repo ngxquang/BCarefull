@@ -140,107 +140,124 @@ function HomeScreen({navigation}) {
   return (
     <ThemeProvider theme={BCarefulTheme2}>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>
-          Bcareful
-          <Text style={{fontFamily: Fonts.medium, fontSize: 24}}>
-            {' '}
-            Xin chào,
-          </Text>
-        </Text>
-
-        <View style={styles.menu}>
-          <View style={[styles.column, {paddingRight: 10}]}>
-            <ButtonHome
-              title={'Đặt lịch khám'}
-              name={'DatLich'}
-              navigation={navigation}
-            />
-            <ButtonHome
-              title={'Đường tới BCare'}
-              name={'TheoDoi'}
-              navigation={navigation}
-            />
-          </View>
-          <View style={[styles.column, {paddingLeft: 10}]}>
-            <ButtonHome
-              title={'Lịch  sử khám'}
-              name={'QuyTrinh'}
-              navigation={navigation}
-            />
-            <ButtonHome
-              title={'Lịch uống thuốc'}
-              name={'LichThuoc'}
-              navigation={navigation}
-            />
-          </View>
-        </View>
-
-        <View style={{flex: 1, marginTop: -6, marginBottom: 10}}>
-          <Text style={[style.h4, {marginLeft: 12, fontSize: 16}]}>
-            Nhắc nhở
-          </Text>
-          <View style={styles.remindContainer}>
-            <Text
-              style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
-              Lịch khám
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+          keyboardShouldPersistTaps="handle">
+          <Text style={styles.title}>
+            Bcareful
+            <Text style={{fontFamily: Fonts.medium, fontSize: 24}}>
+              {' '}
+              Xin chào,
             </Text>
-            {ctpkFutureById.length > 0 ? (
-              <>
-                <FlatList
-                  data={ctpkFutureById}
-                  renderItem={renderItem}
-                  horizontal={true}
-                  snapToAlignment={'center'}
-                  showsHorizontalScrollIndicator={false}
-                  snapToInterval={screenWidth - 46}
-                  decelerationRate={'fast'}
-                />
-              </>
-            ) : (
-              <>
-                <View
-                  style={[styles.listItemContainer, {width: screenWidth - 46}]}>
-                  <Text style={[style.t3, {marginRight: 10}]}>
-                    Không có lịch khám
-                  </Text>
-                </View>
-              </>
-            )}
+          </Text>
 
-            <View style={styles.breakline}></View>
-            <Text
-              style={[style.h6, {marginTop: 2, marginLeft: 20, fontSize: 14}]}>
-              Lịch uống thuốc
-            </Text>
-            {gioDatLich?.length > 0 ? (
-              <>
-                <FlatList
-                  data={gioDatLich}
-                  renderItem={renderGioDatLichItem}
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  snapToAlignment={'center'}
-                  snapToInterval={screenWidth - 46}
-                  decelerationRate={'fast'}
-                />
-              </>
-            ) : (
-              <>
-                <View
-                  style={[styles.listItemContainer, {width: screenWidth - 46}]}>
-                  <Text style={[style.t3, {marginRight: 10}]}>
-                    Không có lịch uống thuốc
-                  </Text>
-                </View>
-              </>
-            )}
+          <View style={styles.menu}>
+            <View style={[styles.column, {paddingRight: 10}]}>
+              <ButtonHome
+                title={'Đặt lịch khám'}
+                name={'DatLich'}
+                navigation={navigation}
+              />
+              <ButtonHome
+                title={'Đường tới BCare'}
+                name={'TheoDoi'}
+                navigation={navigation}
+              />
+            </View>
+            <View style={[styles.column, {paddingLeft: 10}]}>
+              <ButtonHome
+                title={'Lịch  sử khám'}
+                name={'QuyTrinh'}
+                navigation={navigation}
+              />
+              <ButtonHome
+                title={'Lịch uống thuốc'}
+                name={'LichThuoc'}
+                navigation={navigation}
+              />
+            </View>
           </View>
-        </View>
 
-        <View style={styles.carousel}>
-          <Text style={[style.h4, {fontSize: 16}]}>Tin nổi bật</Text>
-          <Carousel data={news.length === 0 ? data : news} />
-        </View>
+          <View style={{flex: 1, marginBottom: 10}}>
+            <Text style={[style.h4, {marginLeft: 12, fontSize: 16}]}>
+              Nhắc nhở
+            </Text>
+            <View style={styles.remindContainer}>
+              <Text
+                style={[
+                  style.h6,
+                  {marginTop: 2, marginLeft: 20, fontSize: 14},
+                ]}>
+                Lịch khám
+              </Text>
+              {ctpkFutureById.length > 0 ? (
+                <>
+                  <FlatList
+                    data={ctpkFutureById}
+                    renderItem={renderItem}
+                    horizontal={true}
+                    snapToAlignment={'center'}
+                    showsHorizontalScrollIndicator={false}
+                    snapToInterval={screenWidth - 46}
+                    decelerationRate={'fast'}
+                  />
+                </>
+              ) : (
+                <>
+                  <View
+                    style={[
+                      styles.listItemContainer,
+                      {width: screenWidth - 46},
+                    ]}>
+                    <Text style={[style.t3, {marginRight: 10}]}>
+                      Không có lịch khám
+                    </Text>
+                  </View>
+                </>
+              )}
+
+              <View style={styles.breakline}></View>
+              <Text
+                style={[
+                  style.h6,
+                  {marginTop: 2, marginLeft: 20, fontSize: 14},
+                ]}>
+                Lịch uống thuốc
+              </Text>
+              {gioDatLich?.length > 0 ? (
+                <>
+                  <FlatList
+                    data={gioDatLich}
+                    renderItem={renderGioDatLichItem}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    snapToAlignment={'center'}
+                    snapToInterval={screenWidth - 46}
+                    decelerationRate={'fast'}
+                  />
+                </>
+              ) : (
+                <>
+                  <View
+                    style={[
+                      styles.listItemContainer,
+                      {width: screenWidth - 46},
+                    ]}>
+                    <Text style={[style.t3, {marginRight: 10}]}>
+                      Không có lịch uống thuốc
+                    </Text>
+                  </View>
+                </>
+              )}
+            </View>
+          </View>
+
+          <View style={styles.carousel}>
+            <Text style={[style.h4, {fontSize: 16}]}>Tin nổi bật</Text>
+            <Carousel data={news.length === 0 ? data : news} />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </ThemeProvider>
   );
@@ -252,12 +269,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 10,
   },
+  scrollView: {
+    flex: 1,
+  },
   column: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
   },
   menu: {
     flex: 1,
+    height: 230,
     flexDirection: 'row',
     alignContent: 'space-between',
     paddingTop: 10,
@@ -276,13 +298,14 @@ const styles = StyleSheet.create({
   },
   carousel: {
     flex: 1,
+    height: 220,
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: 'gainsboro',
     borderRadius: 10,
     padding: 12,
     paddingTop: 4,
-    elevation: 2,
+    elevation: 1,
   },
   listItemContainer: {
     paddingHorizontal: 20,

@@ -36,7 +36,11 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
   };
 
   const renderItem = ({item}) => (
-    <View style={[styles.listItemContainer, {padding: 20}]}>
+    <View
+      style={[
+        styles.listItemContainer,
+        {paddingHorizontal: 20, paddingVertical: 10},
+      ]}>
       <View style={styles.itemGroup}>
         <Text style={[style.t2, {flex: 1}]}>Chuyên khoa</Text>
         <Text
@@ -131,13 +135,12 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
             renderItem={renderItem}
           />
         </View>
-        <View styl={{flex: 1, marginBottom: 100}}></View>
+
         <View
           style={[
             {
               backgroundColor: '#fff',
-              paddingBottom: 20,
-              paddingTop: 10,
+              paddingBottom: 10,
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
               position: 'absolute',
@@ -151,10 +154,9 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
               overflow: 'hidden',
             },
           ]}>
-          <View style={[styles.itemGroup, {marginVertical: 4}]}>
-            <Text style={[style.t1, {marginLeft: 30, fontSize: 18}]}>
-              Thanh toán tạm tính:
-            </Text>
+          <View
+            style={[styles.itemGroup, {marginBottom: 4, marginHorizontal: 10}]}>
+            <Text style={[style.t1]}>Thanh toán tạm tính:</Text>
             <Text style={[style.h6, {marginLeft: 10, fontSize: 18}]}>
               {tongPhi()}đ
             </Text>
@@ -189,7 +191,8 @@ function XacNhanScreen({setValues, formSubmit, formDisplay}) {
 
 const styles = StyleSheet.create({
   listDVContainer: {
-    marginBottom: 280,
+    flex: 1,
+    paddingBottom: 120,
     overflow: 'hidden',
   },
   listItemContainer: {
@@ -212,14 +215,13 @@ const styles = StyleSheet.create({
   itemGroup: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
+    paddingVertical: 4,
   },
   container: {
     flex: 1,
     backgroundColor: BCarefulTheme.colors.background,
   },
   header: {
-    paddingVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
