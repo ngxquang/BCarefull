@@ -1,6 +1,7 @@
 import {
   Alert,
   Modal,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -121,8 +122,8 @@ function ThemThuocScreen({route}) {
         <TouchableOpacity
           style={[style.card, style.spacebtw, style.row]}
           onPress={() => handleSelectCard(index)}>
-          <Text style={[style.h1, style.sub, {width: '30%'}]}>{time}</Text>
-          <Text style={[style.t1, styles.seperate, {width: '55%'}]}>
+          <Text style={[style.h1, style.sub, {width: '35%'}]}>{time}</Text>
+          <Text style={[style.t1, styles.seperate, {width: '50%'}]}>
             Dùng {dosage} {unit}, {note}
           </Text>
           <Icon
@@ -247,17 +248,17 @@ function ThemThuocScreen({route}) {
 
         {/* Hàng ngày */}
         {mode === 1 && (
-          <View style={style.mt4}>
+          <ScrollView contentContainerStyle={styles.scroll} style={styles.scroll2}>
             <Text style={style.h6}>Cài đặt lịch sử dụng</Text>
 
-            {generateCards()}
+              {generateCards()}
 
             <TouchableOpacity style={[style.center]} onPress={handleAddCard}>
               <Text style={[style.h4, style.primary]}>
                 + Thêm thời gian nhắc
               </Text>
             </TouchableOpacity>
-          </View>
+          </ScrollView>
         )}
 
         {/* Tùy chỉnh */}
@@ -438,5 +439,14 @@ const styles = StyleSheet.create({
     margin: 10,
     fontFamily: Fonts.bold,
     color: BCarefulTheme.colors.secondary,
+  },
+  scroll: {
+    flexGrow: 1,
+    marginTop: 12,
+    paddingRight: 5,
+    paddingBottom: 5,
+  },
+  scroll2: {
+    marginRight: -1,
   },
 });

@@ -139,7 +139,7 @@ const CarouselScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   indicatorContainer: {
@@ -181,9 +181,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '80%',
-    position: 'absolute',
-    bottom: 70,
+    width: '100%',
+    paddingHorizontal: 20,
+    marginBottom: 30,
+    marginRight: 18,
+    marginTop: -20,
   },
   loginButton: {
     backgroundColor: '#7864EA',
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 16,
-    width: '35%',
+    width: '40%',
   },
   registerButton: {
     backgroundColor: '#EA793A',

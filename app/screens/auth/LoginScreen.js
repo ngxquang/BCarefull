@@ -213,12 +213,12 @@ const LoginScreen = ({navigation}) => {
             </View>
           </View>
           <View style={styles.container023}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 navigation.navigate('ForgotPassword');
               }}>
               <Text style={style.t5}>Quên Mật Khẩu?</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={[style.btn]} onPress={handleLogin}>
               <Text style={[style.h4, style.white]}>Đăng Nhập</Text>
             </TouchableOpacity>
@@ -273,8 +273,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'back',
-    paddingVertical: 20,
-    margin: 18,
+    paddingVertical: 10,
+    // margin: 18,
   },
   logo: {
     marginLeft: 40,

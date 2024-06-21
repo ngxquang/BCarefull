@@ -155,7 +155,7 @@ function HomeScreen({navigation}) {
           <View style={styles.menu}>
             <View style={[styles.column, {paddingRight: 10}]}>
               <ButtonHome
-                title={'Đặt lịch khám'}
+                title={'Đặt  lịch khám'}
                 name={'DatLich'}
                 navigation={navigation}
               />
@@ -284,6 +284,7 @@ const styles = StyleSheet.create({
     alignContent: 'space-between',
     paddingTop: 10,
     paddingBottom: 0,
+    marginBottom: -5,
   },
   title: {
     fontFamily: Fonts.bold,
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
   },
   carousel: {
     flex: 1,
-    height: 220,
+    height: 227,
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: 'gainsboro',

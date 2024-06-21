@@ -156,7 +156,13 @@ function ThanhToanScreen({navigation, route}) {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name={'arrow-back'} style={styles.icon} />
+        </TouchableOpacity>
         <Text style={styles.headerText}>Hóa Đơn</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Icon name={'home'} style={styles.iconGoHome} />
+        </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.separator} />
@@ -274,10 +280,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
+    flexDirection: 'row',
     backgroundColor: '#7864EA',
     flexGrow: 1,
     height: 111,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   headerText: {
@@ -366,6 +373,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 5,
+  },
+  icon: {
+    fontSize: 26,
+    color: '#FFF',
+    marginLeft: 15,
+  },
+  iconGoHome: {
+    fontSize: 26,
+    color: '#FFF',
+    marginRight: 15,
   },
 });
 

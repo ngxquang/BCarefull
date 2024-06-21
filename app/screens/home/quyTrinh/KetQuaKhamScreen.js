@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,16 +7,16 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../../../assets/fonts/Fonts';
-import { BCarefulTheme, style } from '../../../component/Theme';
-import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
+import {BCarefulTheme, style} from '../../../component/Theme';
+import {Table, TableWrapper, Row, Rows} from 'react-native-table-component';
 import ImageView from 'react-native-image-viewing';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchNewsAction } from '../../../redux/action/fetchNewsAction';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchNewsAction} from '../../../redux/action/fetchNewsAction';
 
-function KetQuaKhamScreen({ navigation, route }) {
+function KetQuaKhamScreen({navigation, route}) {
   const dispatch = useDispatch();
   const data = route.params.item;
   const ctdtById = route.params.ctdtById;
@@ -54,9 +54,9 @@ function KetQuaKhamScreen({ navigation, route }) {
   useEffect(() => {
     if (benhById.length > 0) {
       const {TENBENH} = benhById[0];
-      dispatch(fetchNewsAction(TENBENH))
+      dispatch(fetchNewsAction(TENBENH));
     }
-  }, [benhById])
+  }, [benhById]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,7 +68,7 @@ function KetQuaKhamScreen({ navigation, route }) {
           {data?.TENLOAIDV === 'Hóa đơn thuốc' ? (
             <>
               <Text style={style.h4}>Chi tiết đơn thuốc</Text>
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
@@ -78,12 +78,12 @@ function KetQuaKhamScreen({ navigation, route }) {
                   Thời gian tạo:{'   '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
-              </View>
+              </View> */}
             </>
           ) : (
             <>
               <Text style={styles.content}>Kết quả khám</Text>
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
@@ -93,7 +93,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                   Thời gian khám:{'   '}
                 </Text>
                 <Text style={styles.dateTime}>{data.NGAYKHAMMIN}</Text>
-              </View>
+              </View> */}
             </>
           )}
 
@@ -103,7 +103,7 @@ function KetQuaKhamScreen({ navigation, route }) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={[styles.dateTime, { fontFamily: Fonts.bold }]}>
+            <Text style={[styles.dateTime, {fontFamily: Fonts.bold}]}>
               Loại dịch vụ:{'   '}
             </Text>
             <Text style={styles.dateTime}>
@@ -111,12 +111,19 @@ function KetQuaKhamScreen({ navigation, route }) {
             </Text>
           </View>
         </View>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Icon name={'home'} style={styles.iconGoHome} />
+        </TouchableOpacity>
       </View>
       {data.TENLOAIDV === 'Hóa đơn thuốc' ? (
         <>
           <ScrollView style={styles.body}>
             <View style={styles.itemContainer}>
               <Text style={styles.text}>Thông tin đơn thuốc</Text>
+              <View style={styles.itemGroup}>
+                <Text style={style.t1}>Thời gian tạo </Text>
+                <Text style={style.t2}>{data.NGAYKHAMMIN}</Text>
+              </View>
               <View style={styles.itemGroup}>
                 <Text style={style.t1}>Người bán </Text>
                 <Text style={style.t2}>{data.NGUOIBAN}</Text>
@@ -146,7 +153,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                       widthArr={widthArrCTDTById}
                       textStyle={[
                         styles.text,
-                        { fontFamily: Fonts.regular, textAlign: 'center' },
+                        {fontFamily: Fonts.regular, textAlign: 'center'},
                       ]}
                     />
                   </TableWrapper>
@@ -162,37 +169,37 @@ function KetQuaKhamScreen({ navigation, route }) {
               <View style={styles.itemContainer}>
                 <Text style={[styles.text]}>Thông tin khám</Text>
                 <View style={styles.itemGroup}>
-                  <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                     BSCD{'   '}
                   </Text>
                   <Text style={style.t2}>{data.INFOBSCD}</Text>
                 </View>
                 <View style={styles.itemGroup}>
-                  <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                     BSTH{'   '}
                   </Text>
                   <Text style={style.t2}>{data.INFOBSTH}</Text>
                 </View>
                 <View style={styles.itemGroup}>
-                  <Text
-                    style={[
-                      style.t2,
-                      { fontFamily: Fonts.semiBold },
-                    ]}>
-                    Nội dung khám{'   '}
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    Thời gian khám
                   </Text>
-                  <Text style={[style.t2]}>
-                    {data.TENDV}
-                  </Text>
+                  <Text style={style.t2}>{data.NGAYKHAMMIN}</Text>
                 </View>
                 <View style={styles.itemGroup}>
-                  <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                    Nội dung khám{'   '}
+                  </Text>
+                  <Text style={[style.t2]}>{data.TENDV}</Text>
+                </View>
+                <View style={styles.itemGroup}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                     Trạng thái thực hiện{'   '}
                   </Text>
                   <Text style={style.t2}>{data.TRANGTHAITH}</Text>
                 </View>
                 <View style={styles.itemGroup}>
-                  <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                     Trạng thái thanh toán{'   '}
                   </Text>
                   <Text style={style.t2}>{data.TTTT}</Text>
@@ -201,7 +208,7 @@ function KetQuaKhamScreen({ navigation, route }) {
               <View style={styles.itemContainer}>
                 <Text style={styles.text}>Kết quả khám</Text>
                 <View style={styles.itemGroup}>
-                  <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                     Mô tả{'   '}
                   </Text>
                   <Text style={style.t2}>
@@ -209,7 +216,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                   </Text>
                 </View>
                 <View style={styles.itemGroup}>
-                  <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                  <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                     Kết luận{'   '}
                   </Text>
                   <Text style={style.t2}>
@@ -222,17 +229,23 @@ function KetQuaKhamScreen({ navigation, route }) {
                 {data?.IMAGE ? (
                   <TouchableOpacity onPress={() => setIsImageViewVisible(true)}>
                     <Image
-                      source={{ uri: data.IMAGE }}
-                      style={{ width: '100%', height: 200 }}
+                      source={{uri: data.IMAGE}}
+                      style={{width: '100%', height: 200}}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
                 ) : (
-                  <Text style={[style.t2, {fontFamily: Fonts.italic, color: 'red'}]}>Không có ảnh</Text>
+                  <Text
+                    style={[
+                      style.t2,
+                      {fontFamily: Fonts.italic, color: 'red'},
+                    ]}>
+                    Không có ảnh
+                  </Text>
                 )}
               </View>
               <ImageView
-                images={[{ uri: data.IMAGE }]}
+                images={[{uri: data.IMAGE}]}
                 imageIndex={0}
                 visible={isImageViewVisible}
                 onRequestClose={() => setIsImageViewVisible(false)}
@@ -246,44 +259,44 @@ function KetQuaKhamScreen({ navigation, route }) {
             <View style={styles.itemContainer}>
               <Text style={styles.text}>Thông tin khám</Text>
               <View style={styles.itemGroup}>
-                <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                   Bác sĩ{'   '}
                 </Text>
                 <Text style={style.t2}>{data.INFOBS}</Text>
+              </View>
+              <View style={styles.itemGroup}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
+                  Thời gian khám
+                </Text>
+                <Text style={style.t2}>{data.NGAYKHAMMIN}</Text>
               </View>
               <View style={styles.itemGroup}>
                 <Text
                   style={[
                     style.t2,
                     styles.itemGroupTextLeft,
-                    { fontFamily: Fonts.semiBold },
+                    {fontFamily: Fonts.semiBold},
                   ]}>
                   Lý do khám{'   '}
                 </Text>
-                <Text style={[style.t2, styles.itemGroupTextRight]}>
+                <Text style={[style.t2]}>
                   {data.LYDOKHAM}
                 </Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text
-                  style={[
-                    style.t2,
-                    { fontFamily: Fonts.semiBold },
-                  ]}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                   Nội dung khám{'   '}
                 </Text>
-                <Text style={[style.t2]}>
-                  {data.TENDV}
-                </Text>
+                <Text style={[style.t2]}>{data.TENDV}</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                   Trạng thái thực hiện{'   '}
                 </Text>
                 <Text style={style.t2}>{data.TRANGTHAITH}</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                   Trạng thái thanh toán{'   '}
                 </Text>
                 <Text style={style.t2}>{data.TTTT}</Text>
@@ -292,19 +305,19 @@ function KetQuaKhamScreen({ navigation, route }) {
             <View style={styles.itemContainer}>
               <Text style={styles.text}>Chỉ số sinh tồn</Text>
               <View style={styles.itemGroup}>
-                <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                   Huyết áp{'   '}
                 </Text>
                 <Text style={style.t2}>{data?.HUYETAP} mmHg</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                   Chiều cao{'   '}
                 </Text>
                 <Text style={style.t2}>{data?.CHIEUCAO} cm</Text>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={[style.t2, { fontFamily: Fonts.semiBold }]}>
+                <Text style={[style.t2, {fontFamily: Fonts.semiBold}]}>
                   Cân nặng{'   '}
                 </Text>
                 <Text style={style.t2}>{data?.CANNANG} kg</Text>
@@ -317,7 +330,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                   style={[
                     style.t2,
                     styles.itemGroupTextLeft,
-                    { fontFamily: Fonts.semiBold },
+                    {fontFamily: Fonts.semiBold},
                   ]}>
                   Bệnh sử{'   '}
                 </Text>
@@ -330,7 +343,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                   style={[
                     style.t2,
                     styles.itemGroupTextLeft,
-                    { fontFamily: Fonts.semiBold },
+                    {fontFamily: Fonts.semiBold},
                   ]}>
                   Khám CLS{'   '}
                 </Text>
@@ -343,7 +356,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                   style={[
                     style.t2,
                     styles.itemGroupTextLeft,
-                    { fontFamily: Fonts.semiBold },
+                    {fontFamily: Fonts.semiBold},
                   ]}>
                   Kết luận{'   '}
                 </Text>
@@ -374,7 +387,7 @@ function KetQuaKhamScreen({ navigation, route }) {
                         widthArr={widthArrBenhById}
                         textStyle={[
                           styles.text,
-                          { fontFamily: Fonts.regular, textAlign: 'center' },
+                          {fontFamily: Fonts.regular, textAlign: 'center'},
                         ]}
                       />
                     </TableWrapper>
@@ -421,6 +434,11 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: '#000',
     marginLeft: 10,
+  },
+  iconGoHome: {
+    fontSize: 26,
+    color: '#000',
+    marginRight: 10,
   },
   body: {
     marginTop: 20,

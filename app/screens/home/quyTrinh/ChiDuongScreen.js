@@ -51,7 +51,9 @@ function ChiDuongScreen({navigation, route}) {
             {item.TENPHONG} {item.SOPHONG}
           </Text>
         </View>
-        <View style={styles.rightIconSpacer} />
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Icon name={'home'} style={styles.iconGoHome} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.body}>
@@ -101,6 +103,11 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: '#000',
     marginLeft: 10,
+  },
+  iconGoHome: {
+    fontSize: 26,
+    color: '#000',
+    marginRight: 10,
   },
   rightIconSpacer: {
     width: 26, // Same width as the icon for symmetry
