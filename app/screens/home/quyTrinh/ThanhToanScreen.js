@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import axios from '../../../setup/axios';
 import {Linking} from 'react-native';
@@ -15,7 +16,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {onDisplayNotification} from '../../../util/appUtil';
-import { setNewPKHD } from '../../../redux/slice/selectedItemSlice';
+import {setNewPKHD} from '../../../redux/slice/selectedItemSlice';
 
 function ThanhToanScreen({navigation, route}) {
   const dispatch = useDispatch();
@@ -91,7 +92,25 @@ function ThanhToanScreen({navigation, route}) {
           return Linking.openURL(url);
         }
       })
-      .catch(err => console.error('An error occurred', err));
+      .catch(err => {
+        console.error('An error occurred', err);
+        Alert.alert(
+          'Thông báo',
+          'Tải về MoMo for Developer để thực thiện tính năng thanh toán.',
+          [
+            {
+              text: 'OK',
+              onPress: () =>
+                Linking.openURL('https://developers.momo.vn/v3/download/'),
+            },
+            {
+              text: 'Cancle',
+              onPress: () =>
+                Linking.openURL('https://developers.momo.vn/v3/download/'),
+            },
+          ],
+        );
+      });
   };
 
   const handleThanhToan = async () => {
@@ -101,7 +120,7 @@ function ThanhToanScreen({navigation, route}) {
     }
     if (itemThanhToan.TTTT === 'Chưa thanh toán') {
       const response = await axios.post('hoadon/test-momo', {
-        MAHD: itemThanhToan.MAHD || "",
+        MAHD: itemThanhToan.MAHD || '',
         TENLOAIDV: itemThanhToan.TENLOAIDV,
         THANHTIEN: itemThanhToan.THANHTIEN,
       });
@@ -216,7 +235,13 @@ function ThanhToanScreen({navigation, route}) {
 
         <View style={styles.row}>
           <Text style={styles.label}>Phương thức thanh toán</Text>
-          <Text style={styles.value}>Momo</Text>
+          <Text
+            style={styles.linkValue}
+            onPress={() =>
+              Linking.openURL('https://developers.momo.vn/v3/download/')
+            }>
+            Momo DEV
+          </Text>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -289,6 +314,14 @@ const styles = StyleSheet.create({
     color: '#000000',
     flex: 2,
     textAlign: 'right',
+  },
+  linkValue: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: '#D82D8B',
+    flex: 2,
+    textAlign: 'right',
+    textDecorationLine: 'underline'
   },
   labelBold: {
     fontFamily: Fonts.bold,
