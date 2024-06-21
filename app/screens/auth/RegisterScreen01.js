@@ -122,7 +122,7 @@ const RegisterScreen01 = ({navigation}) => {
           </View>
           <View style={styles.container02}>
             <View style={styles.container021}>
-              <Text style={style.h1}>Chào Mừng Đến Với BCareful!</Text>
+              <Text style={style.h1}>Chào Mừng Đến Với BCarefull!</Text>
               <Text style={style.t1}>Nhập Email Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>

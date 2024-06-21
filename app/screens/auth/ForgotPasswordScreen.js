@@ -18,6 +18,7 @@ import {
 import Fonts from '../../../assets/fonts/Fonts';
 import {login} from '../../redux/slice/authSlice';
 import {useDispatch} from 'react-redux';
+import {style} from '../../component/Theme';
 
 const ForgotPassword = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -88,14 +89,14 @@ const ForgotPassword = ({navigation}) => {
           <View style={styles.container02}>
             <View style={styles.container021}>
               <Text style={styles.title}>Chào Mừng Đến Với BCareful!</Text>
-              <Text style={styles.content}>Đăng Ký Để Tiếp Tục</Text>
+              <Text style={styles.content}>Nhập lại các thông tin</Text>
             </View>
             <View style={styles.container022}>
               <View style={styles.itemGroup}>
                 <Text style={styles.itemText}>Số Điện Thoại</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidPhoneNumber
                         ? '#7864EA'
@@ -116,10 +117,10 @@ const ForgotPassword = ({navigation}) => {
                 </View>
               </View>
               <View style={styles.itemGroup}>
-                <Text style={styles.itemText}>Mật Khẩu</Text>
+                <Text style={styles.itemText}>Mật Khẩu mới</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidPassword
                         ? '#7864EA'
@@ -143,7 +144,7 @@ const ForgotPassword = ({navigation}) => {
                 </View>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidConfirmPassword
                         ? '#7864EA'
@@ -177,20 +178,18 @@ const ForgotPassword = ({navigation}) => {
                 </View> */}
             </View>
             <View style={styles.container023}>
-              <TouchableOpacity
-                style={styles.registerBtn}
-                onPress={handleRegister}>
-                <Text style={styles.registerText}>Đăng Ký</Text>
+              <TouchableOpacity style={style.btnSub} onPress={handleRegister}>
+                <Text style={[style.h4, style.white]}>Đăng Ký</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.container03}>
             <TouchableOpacity
-              style={styles.loginBtn}
+              style={style.btnOutline}
               onPress={() => {
                 navigation.navigate('Login');
               }}>
-              <Text style={styles.loginText}>Đăng Nhập Tài Khoản</Text>
+              <Text style={[style.h4]}>Đăng Nhập Tài Khoản</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

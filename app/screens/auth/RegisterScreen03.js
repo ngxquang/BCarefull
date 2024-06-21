@@ -21,6 +21,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import socket from '../../setup/socket';
+import {style} from '../../component/Theme';
 
 // NHAP HO SO DANG KI (PASSWORD, INFO)
 const RegisterScreen03 = ({navigation, route}) => {
@@ -112,7 +113,7 @@ const RegisterScreen03 = ({navigation, route}) => {
                 <Text style={styles.itemText}>Họ Tên</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidHoTen
                         ? '#7864EA'
@@ -136,7 +137,7 @@ const RegisterScreen03 = ({navigation, route}) => {
                 <Text style={styles.itemText}>CCCD</Text>
                 <TextInput
                   style={[
-                    styles.itemTextInput,
+                    style.input,
                     {
                       borderColor: objValidInput.isValidCCCD
                         ? '#7864EA'
@@ -166,7 +167,11 @@ const RegisterScreen03 = ({navigation, route}) => {
                       handleChange('gioiTinh', selectedItem.gioiTinh);
                     }}
                     renderButton={(selectedItem, isOpened) => (
-                      <View style={[styles.dropdownButtonStyle, {width: 130}]}>
+                      <View
+                        style={[
+                          style.input,
+                          {width: 130, flexDirection: 'row'},
+                        ]}>
                         <Text style={styles.dropdownButtonTxtStyle}>
                           {(selectedItem && selectedItem.gioiTinh) ||
                             formData.gioiTinh ||
@@ -199,7 +204,7 @@ const RegisterScreen03 = ({navigation, route}) => {
                   <TouchableOpacity
                     onPress={() => setDatePickerVisibility(true)}>
                     <TextInput
-                      style={[styles.itemTextInput, {width: 160}]}
+                      style={[style.input, {width: 160}]}
                       value={formData.ngaySinh}
                       editable={false}
                     />
@@ -216,7 +221,7 @@ const RegisterScreen03 = ({navigation, route}) => {
               <View>
                 <Text style={styles.itemText}>Số Điện Thoại</Text>
                 <TextInput
-                  style={[styles.itemTextInput]}
+                  style={[style.input]}
                   value={formData.soDienThoai}
                   onChangeText={value => handleChange('soDienThoai', value)}
                 />
@@ -224,7 +229,7 @@ const RegisterScreen03 = ({navigation, route}) => {
               <View>
                 <Text style={styles.itemText}>Địa Chỉ</Text>
                 <TextInput
-                  style={[styles.itemTextInput]}
+                  style={[style.input]}
                   value={formData.diaChi}
                   onChangeText={value => handleChange('diaChi', value)}
                 />
@@ -232,7 +237,7 @@ const RegisterScreen03 = ({navigation, route}) => {
               <View>
                 <Text style={styles.itemText}>Tiền Sử Bệnh</Text>
                 <TextInput
-                  style={[styles.itemTextInput]}
+                  style={[style.input]}
                   value={formData.tienSuBenh}
                   onChangeText={value => handleChange('tienSuBenh', value)}
                 />
@@ -240,17 +245,15 @@ const RegisterScreen03 = ({navigation, route}) => {
               <View>
                 <Text style={styles.itemText}>Dị Ứng</Text>
                 <TextInput
-                  style={[styles.itemTextInput]}
+                  style={[style.input]}
                   value={formData.diUng}
                   onChangeText={value => handleChange('diUng', value)}
                 />
               </View>
             </View>
             <View style={styles.container023}>
-              <TouchableOpacity
-                style={styles.registerBtn}
-                onPress={handleRegister}>
-                <Text style={styles.registerText}>Đăng Ký</Text>
+              <TouchableOpacity style={style.btnSub} onPress={handleRegister}>
+                <Text style={[style.h4, style.white]}>Đăng Ký</Text>
               </TouchableOpacity>
             </View>
           </View>

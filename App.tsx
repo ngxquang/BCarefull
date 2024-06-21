@@ -73,7 +73,7 @@ function HomeTabsScreen() {
             iconName = focused ? 'notifications' : 'notifications-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'System') {
+          } else if (route.name === 'More') {
             iconName = focused ? 'menu' : 'menu-outline';
           }
           return <Icon name={iconName} type="ionicon" color={color} />;
@@ -83,7 +83,7 @@ function HomeTabsScreen() {
       <Home.Screen name="Home" component={HomeScreen} />
       <Home.Screen name="Notification" component={NotificationScreen} />
       <Home.Screen name="Profile" component={ProfileScreen} />
-      <Home.Screen name="System" component={SystemScreen} />
+      <Home.Screen name="More" component={SystemScreen} />
     </Home.Navigator>
   );
 }
@@ -111,7 +111,7 @@ function App({navigation} : any): React.JSX.Element {
   return (
       <NavigationContainer theme={BCarefulTheme} linking={linking}>
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName="Carousel"
           screenOptions={{
             headerShown: false,
             animation: 'slide_from_right',

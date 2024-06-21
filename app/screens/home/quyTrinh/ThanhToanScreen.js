@@ -93,7 +93,7 @@ function ThanhToanScreen({navigation, route}) {
         }
       })
       .catch(err => {
-        console.error('An error occurred', err);
+        console.log('An error occurred', err);
         Alert.alert(
           'Thông báo',
           'Tải về MoMo for Developer để thực thiện tính năng thanh toán.',
@@ -235,13 +235,13 @@ function ThanhToanScreen({navigation, route}) {
 
         <View style={styles.row}>
           <Text style={styles.label}>Phương thức thanh toán</Text>
-          <Text
+          <TouchableOpacity
             style={styles.linkValue}
             onPress={() =>
               Linking.openURL('https://developers.momo.vn/v3/download/')
             }>
-            Momo DEV
-          </Text>
+            <Text style={styles.linkValue}>Momo DEV</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     color: '#D82D8B',
     flex: 2,
     textAlign: 'right',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   labelBold: {
     fontFamily: Fonts.bold,

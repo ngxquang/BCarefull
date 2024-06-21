@@ -141,7 +141,7 @@ function HomeScreen({navigation}) {
     <ThemeProvider theme={BCarefulTheme2}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
-          Bcareful
+          BCarefull
           <Text style={{fontFamily: Fonts.medium, fontSize: 24}}>
             {' '}
             Xin chào,

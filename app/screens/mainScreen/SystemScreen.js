@@ -41,7 +41,7 @@ function HomeScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Hệ Thống</Text>
+      <Text style={styles.title}>More</Text>
       <View style={styles.menu}>
         <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('Game')} >
           <Icon name={'book-outline'} style={styles.icon} />
