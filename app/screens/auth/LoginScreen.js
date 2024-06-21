@@ -104,7 +104,7 @@ const LoginScreen = ({navigation}) => {
           </View>
           <View style={styles.container02}>
             <View style={styles.container021}>
-              <Text style={[style.h1]}>Chào Mừng Trở Lại BCareful!</Text>
+              <Text style={[style.h1]}>Chào Mừng Trở Lại BCarefull!</Text>
               <Text style={style.t1}>Đăng Nhập Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>
@@ -213,14 +213,14 @@ const LoginScreen = ({navigation}) => {
             </View>
           </View>
           <View style={styles.container023}>
-            <TouchableOpacity style={style.btn} onPress={handleLogin}>
-              <Text style={[style.h4, style.white]}>Đăng Nhập</Text>
-            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('ForgotPassword');
               }}>
-              <Text style={style.t4}>Quên Mật Khẩu?</Text>
+              <Text style={style.t5}>Quên Mật Khẩu?</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[style.btn]} onPress={handleLogin}>
+              <Text style={[style.h4, style.white]}>Đăng Nhập</Text>
             </TouchableOpacity>
           </View>
           <View style={{paddingVertical: 20}}>
@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: 'back',
     paddingVertical: 20,
+    margin: 18,
   },
   logo: {
     marginLeft: 40,

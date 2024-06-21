@@ -40,11 +40,11 @@ function HomeScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Hệ Thống</Text>
+      <Text style={styles.title}>More</Text>
       <View style={styles.menu}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('Game')} >
           <Icon name={'book-outline'} style={styles.icon} />
-          <Text style={styles.text}>Câu hỏi thường gặp</Text>
+          <Text style={styles.text}>Trò chơi giải trí</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleAI}>
           <Icon name={'document-text-outline'} style={styles.icon} />

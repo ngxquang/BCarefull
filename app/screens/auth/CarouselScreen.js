@@ -21,21 +21,27 @@ const CarouselScreen = ({navigation}) => {
   const carouselData = [
     {
       id: '01',
-      title: 'Some Bold Title',
-      text: 'And Some Regular Lorem Ipsum Dolor Sit Amet.',
+      title: 'Welcome To BCarefull',
+      text: 'Đăng ký khám và Theo dõi hành trình khám bệnh.',
       image: require('../../../assets/images/Carousel2.png'),
     },
     {
       id: '02',
-      title: 'Some Bold Title',
-      text: 'And Some Regular Lorem Ipsum Dolor Sit Amet.',
+      title: 'Đi Khám Nhanh Hơn',
+      text: 'Chỉ đường đến và trong phòng khám, Thanh toán online các dịch vụ.',
       image: require('../../../assets/images/Carousel3.png'),
     },
     {
       id: '03',
-      title: 'Some Bold Title',
-      text: 'And Some Regular Lorem Ipsum Dolor Sit Amet.',
+      title: 'Theo Dõi Sức Khỏe Chi Tiết',
+      text: 'Xem lại kết quả khám, Đặt lịch nhắc uống thuốc.',
       image: require('../../../assets/images/Carousel1.png'),
+    },
+    {
+      id: '04',
+      title: 'Và Nhiều Tiện Ích Khác!',
+      text: 'Trợ lý ảo, mini game, tin tức cá nhân hóa, chẩn đoán hình ảnh bằng AI.',
+      image: require('../../../assets/images/Carousel4.png'),
     },
   ];
 
@@ -154,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: '85%',
+    width: '80%',
     height: 400,
     borderRadius: 10,
     marginBottom: 15,
@@ -170,13 +176,14 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     textAlign: 'center',
     marginBottom: 20,
+    marginHorizontal: 20,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '80%',
     position: 'absolute',
-    bottom: 80,
+    bottom: 70,
   },
   loginButton: {
     backgroundColor: '#7864EA',

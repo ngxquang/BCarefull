@@ -211,8 +211,9 @@ function ThemThuocScreen({route}) {
 
     if (response && response.data && response.data.errcode === 0) {
       Alert.alert(response.data.message);
+      const maPK = route.params?.item?.maPK;
       dispatch(fetchDatLichThuocByIdAction(MACTDT));
-      dispatch(fetchCTDTByIdAction(route.params?.item?.maPK));
+      maPK && dispatch(fetchCTDTByIdAction(maPK));
       dispatch(fetchAllGioDatLichAction(user.MABN));
       // xóa các thông báo cũ để tạo thông báo mới
       await cancelThongBao(MACTDT);

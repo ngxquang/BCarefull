@@ -12,9 +12,9 @@ import {
   StyleSheet,
 } from 'react-native';
 import Fonts from '../../../assets/fonts/Fonts';
-import { registerUserTK } from '../../services/userService';
+import {registerUserTK} from '../../services/userService';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { style } from '../../component/Theme';
+import {style} from '../../component/Theme';
 
 // NHAP PASSWORD
 const verifyPassword = password => {
@@ -88,7 +88,7 @@ const RegisterScreen02 = ({navigation, route}) => {
           </View>
           <View style={styles.container02}>
             <View style={styles.container021}>
-              <Text style={style.h1}>Chào Mừng Đến Với BCareful!</Text>
+              <Text style={style.h1}>Chào Mừng Đến Với BCarefull!</Text>
               <Text style={style.p1}>Nhập Password Để Tiếp Tục</Text>
             </View>
             <View style={styles.container022}>
@@ -114,12 +114,13 @@ const RegisterScreen02 = ({navigation, route}) => {
                 />
                 <View style={styles.error}>
                   {!objValidInput.isValidPassword && (
-                    <Text style={[style.t3, style.danger]}>Chưa nhập mật khẩu</Text>
+                    <Text style={[style.t3, style.danger]}>
+                      Chưa nhập mật khẩu
+                    </Text>
                   )}
                   {!objValidInput.isPassword && (
                     <Text style={[style.t3, style.danger]}>
-                      Mật khẩu ít nhất 8 kí tự (chữ hoa, thường, số, ký tự đặc
-                      biệt).
+                      Mật khẩu ít nhất 8 kí tự (chữ hoa, thường, số,... ).
                     </Text>
                   )}
                 </View>
@@ -160,9 +161,7 @@ const RegisterScreen02 = ({navigation, route}) => {
               </View>
             </View>
             <View style={[style.center]}>
-              <TouchableOpacity
-                style={style.btnSub}
-                onPress={handlePassword}>
+              <TouchableOpacity style={style.btnSub} onPress={handlePassword}>
                 <Text style={[style.h4, style.white]}>Tiếp tục</Text>
               </TouchableOpacity>
             </View>
