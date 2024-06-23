@@ -43,7 +43,7 @@ function HomeScreen({navigation}) {
       <Text style={styles.title}>More</Text>
       <View style={styles.menu}>
         <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('Game')} >
-          <Icon name={'book-outline'} style={styles.icon} />
+          <Icon name={'game-controller-outline'} style={styles.icon} />
           <Text style={styles.text}>Trò chơi giải trí</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleAI}>

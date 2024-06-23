@@ -145,7 +145,7 @@ function HomeScreen({navigation}) {
           style={styles.scrollView}
           keyboardShouldPersistTaps="handle">
           <Text style={styles.title}>
-            Bcareful
+            BCarefull
             <Text style={{fontFamily: Fonts.medium, fontSize: 24}}>
               {' '}
               Xin chào,

@@ -57,7 +57,7 @@ const ChanDoanXQuangScreen = () => {
 
     try {
       const response = await axios.post(
-        'http://127.0.0.1:5000/predict',
+        'http://152.69.209.236:5000/predict',
         formData,
         {
           headers: {
