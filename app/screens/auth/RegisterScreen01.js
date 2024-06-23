@@ -98,6 +98,7 @@ const RegisterScreen01 = ({navigation}) => {
 
   const handlePatientSelect = selectedItem => {
     setOldPatient({...selectedItem});
+    setObjValidInput(defaultObjValidInput);
   };
 
   return (
@@ -409,6 +410,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    marginBottom: 20,
   },
   logo: {
     marginLeft: 40,
@@ -451,7 +453,8 @@ const styles = StyleSheet.create({
   },
   displayTTBN: {
     height: 140,
-    marginTop: 14,
+    marginTop: 15,
+    marginBottom: 20,
   },
   errorText: {
     color: 'red',
@@ -459,7 +462,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
   },
   error: {
-    height: 20,
+    height: 'auto',
   },
   verifyBtn: {
     backgroundColor: '#EA793A',
