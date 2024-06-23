@@ -28,6 +28,7 @@ import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
 import {fetchAllGioDatLichAction} from '../../redux/action/fetchAllGioDatLichAction';
 import axios from '../../setup/axios';
 import getArticles from '../../services/newsService';
+import { selectItem } from '../../redux/slice/selectedItemSlice';
 const {width: screenWidth} = Dimensions.get('window');
 
 const data = [
@@ -85,6 +86,7 @@ function HomeScreen({navigation}) {
       const response = await axios.get(`/phieukham/chitiet-pk/getById/${maPK}`);
       const item = response.data.data;
       console.log('DESTINATION PHIEUIKHAM >>>>>>>>>> ', item);
+      dispatch(selectItem(item));
       navigation.navigate('DSDV', {item});
     });
   }, []);
