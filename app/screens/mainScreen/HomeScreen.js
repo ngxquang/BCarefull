@@ -28,7 +28,7 @@ import {fetchLSKByIdBnAction} from '../../redux/action/fetchPhieuKhamAction';
 import {fetchAllGioDatLichAction} from '../../redux/action/fetchAllGioDatLichAction';
 import axios from '../../setup/axios';
 import getArticles from '../../services/newsService';
-import { selectItem } from '../../redux/slice/selectedItemSlice';
+import {selectItem} from '../../redux/slice/selectedItemSlice';
 const {width: screenWidth} = Dimensions.get('window');
 
 const data = [
@@ -76,6 +76,7 @@ function HomeScreen({navigation}) {
           // chỉ có maID là maPK thì mới tới đc bước này, nếu maID là maBN thì ko có title, message
         }
         // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
+        // Helooooooooooooooooooo
       }
     });
 
