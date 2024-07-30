@@ -76,7 +76,6 @@ function HomeScreen({navigation}) {
           // chỉ có maID là maPK thì mới tới đc bước này, nếu maID là maBN thì ko có title, message
         }
         // toast(`Người dùng ${data.id} vừa thực hiện thay đổi`)
-        // Nguyen test pull request
       }
     });
 
